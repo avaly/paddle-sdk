@@ -1,0 +1,45 @@
+{
+  "name": "paddle-sdk",
+  "description": "The Paddle.com Node.js SDK",
+  "version": "1.0.0",
+  "main": "sdk.js",
+  "author": "Valentin Agachi <github-com@agachi.name>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/avaly/paddle-sdk"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.5.0"
+  },
+  "files": [
+    "sdk.js"
+  ],
+  "scripts": {
+    "commitmsg": "validate-commit-msg",
+    "docs": "jsdoc2md --partial docs/main.hbs --helper docs/helpers.js --files sdk.js > Documenation.md",
+    "lint": "eslint . --cache --fix --ignore-pattern '!.eslintrc.js'",
+    "pretty": "prettier --write --list-different \"**/*.js\"",
+    "precommit": "yarn docs && git add Documenation.md && lint-staged",
+    "test:jest": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test": "npm run test:jest",
+    "version": "standard-version",
+    "pretest": "npm run lint"
+  },
+  "dependencies": {
+    "got": "^8.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.11.0",
+    "husky": "^0.14.3",
+    "jest": "^21.2.1",
+    "jsdoc-to-markdown": "^3.0.2",
+    "lint-staged": "^5.0.0",
+    "nock": "^9.1.0",
+    "prettier": "^1.8.2",
+    "standard-version": "^4.2.0",
+    "validate-commit-msg": "^2.14.0"
+  }
+}
