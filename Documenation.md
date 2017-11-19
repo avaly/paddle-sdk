@@ -187,4 +187,4 @@ const checkoutTransactions = await client.getCheckoutTransactions(123);
 ```
 ---
 
-Documentation generated on **Sun, 19 Nov 2017 17:53:58 GMT**
+Documentation generated on **Sun, 19 Nov 2017 17:59:18 GMT**
