@@ -17,10 +17,10 @@
   ],
   "scripts": {
     "commitmsg": "validate-commit-msg",
-    "docs": "jsdoc2md --partial docs/main.hbs --helper docs/helpers.js --files sdk.js > Documenation.md",
+    "docs": "jsdoc2md --partial docs/main.hbs --helper docs/helpers.js --files sdk.js > Documentation.md",
     "lint": "eslint . --cache --fix --ignore-pattern '!.eslintrc.js'",
     "pretty": "prettier --write --list-different \"**/*.js\"",
-    "precommit": "yarn docs && git add Documenation.md && lint-staged",
+    "precommit": "yarn docs && git add Documentation.md && lint-staged",
     "test:jest": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
