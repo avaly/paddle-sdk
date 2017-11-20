@@ -21,12 +21,12 @@
     "docs": "jsdoc2md --partial docs/main.hbs --helper docs/helpers.js --files sdk.js > Documentation.md",
     "lint": "eslint . --cache --fix --ignore-pattern '!.eslintrc.js'",
     "pretty": "prettier --write --list-different \"**/*.js\"",
-    "precommit": "yarn docs && git add Documentation.md && lint-staged",
+    "precommit": "lint-staged",
+    "release": "yarn docs && git add Documentation.md && standard-version -a",
     "test:jest": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test": "npm run test:jest",
-    "version": "standard-version",
     "pretest": "npm run lint"
   },
   "dependencies": {
