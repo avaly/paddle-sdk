@@ -1,5 +1,8 @@
+const crypto = require('crypto');
 const got = require('got');
+
 const pkg = require('./package.json');
+const serialize = require('./lib/serialize');
 
 const SERVER_URL = 'https://vendors.paddle.com/api/2.0';
 
@@ -8,16 +11,19 @@ class PaddleSDK {
 	 * @class PaddleSDK
 	 * @typicalname client
 	 * @param {string} vendorID - The vendor ID for a Paddle account
-	 * @param {string} apiKey - The API Key for a Paddle account
+	 * @param {string} apiKey - The API key for a Paddle account
+	 * @param {string} [publicKey] - The public key for a Paddle account used to verify webhooks, only required for `verifyWebhookData`
 	 * @param {object} [options]
 	 * @param {string} [options.server=vendors.paddle.com/api/2.0] - The server URL prefix for all requests
 	 *
 	 * @example
-	 * const client = new PaddleSDK('your-unique-api-key-here');
+	 * const client = new PaddleSDK('your-vendor-id', 'your-unique-api-key');
+	 * const client = new PaddleSDK('your-vendor-id', 'your-unique-api-key', 'your-public-key');
 	 */
-	constructor(vendorID, apiKey, options) {
+	constructor(vendorID, apiKey, publicKey, options) {
 		this.vendorID = vendorID || 'MISSING';
 		this.apiKey = apiKey || 'MISSING';
+		this.publicKey = publicKey || 'MISSING';
 		this.server = (options && options.server) || SERVER_URL;
 	}
 
@@ -231,6 +237,48 @@ class PaddleSDK {
 	 */
 	getCheckoutTransactions(checkoutID) {
 		return this._getTransactions('checkout', checkoutID);
+	}
+
+	/**
+	 * Verify a webhook alert data using signature and a public key to validate that
+	 * it was indeed sent from Paddle.
+	 *
+	 * For more details: https://paddle.com/docs/reference-verifying-webhooks
+	 *
+	 * @method
+	 * @param  {Object} postData The object with all the parameters sent to the webhook
+	 * @return {boolean}
+	 *
+	 * @example
+	 * const client = new PaddleSDK('your-vendor-id', 'your-unique-api-key', 'your-public-key');
+	 *
+	 * // inside an Express handler which uses express.bodyParser middleware
+	 * const isVerified = client.verifyWebhookData(req.body);
+	 */
+	verifyWebhookData(postData) {
+		const signature = postData.p_signature;
+
+		const keys = Object.keys(postData)
+			.filter(key => key !== 'p_signature')
+			.sort();
+
+		const sorted = {};
+		keys.forEach(key => {
+			sorted[key] = postData[key];
+		});
+
+		// PHP style serialize! :O
+		const serialized = serialize(sorted);
+
+		try {
+			const verifier = crypto.createVerify('sha1');
+			verifier.write(serialized);
+			verifier.end();
+
+			return verifier.verify(this.publicKey, signature, 'base64');
+		} catch (err) {
+			return false;
+		}
 	}
 }
 

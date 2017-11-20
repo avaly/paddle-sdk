@@ -17,7 +17,7 @@ describe('subscription methods', () => {
 	const PLAN_ID = '23456';
 
 	beforeEach(() => {
-		instance = new PaddleSDK(VENDOR_ID, VENDOR_API_KEY, {
+		instance = new PaddleSDK(VENDOR_ID, VENDOR_API_KEY, null, {
 			server: nock.SERVER,
 		});
 	});

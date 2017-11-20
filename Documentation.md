@@ -8,7 +8,7 @@ Welcome to the [Paddle.com](http://www.paddle.com/) Node.js SDK documentation.
 **Kind**: global class  
 
 * [PaddleSDK](#PaddleSDK)
-    * [new PaddleSDK(vendorID, apiKey, [options])](#new_PaddleSDK_new)
+    * [new PaddleSDK(vendorID, apiKey, [publicKey], [options])](#new_PaddleSDK_new)
     * [.getProducts()](#PaddleSDK+getProducts) ⇒ <code>Promise</code>
     * [.getProductCoupons(productID)](#PaddleSDK+getProductCoupons) ⇒ <code>Promise</code>
     * [.getProductPlans(productID)](#PaddleSDK+getProductPlans) ⇒ <code>Promise</code>
@@ -19,21 +19,24 @@ Welcome to the [Paddle.com](http://www.paddle.com/) Node.js SDK documentation.
     * [.getSubscriptionTransactions(subscriptionID)](#PaddleSDK+getSubscriptionTransactions) ⇒ <code>Promise</code>
     * [.getOrderTransactions(orderID)](#PaddleSDK+getOrderTransactions) ⇒ <code>Promise</code>
     * [.getCheckoutTransactions(checkoutID)](#PaddleSDK+getCheckoutTransactions) ⇒ <code>Promise</code>
+    * [.verifyWebhookData(postData)](#PaddleSDK+verifyWebhookData) ⇒ <code>boolean</code>
 
 <a name="new_PaddleSDK_new"></a>
 
-### new PaddleSDK(vendorID, apiKey, [options])
+### new PaddleSDK(vendorID, apiKey, [publicKey], [options])
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | vendorID | <code>string</code> |  | The vendor ID for a Paddle account |
-| apiKey | <code>string</code> |  | The API Key for a Paddle account |
+| apiKey | <code>string</code> |  | The API key for a Paddle account |
+| [publicKey] | <code>string</code> |  | The public key for a Paddle account used to verify webhooks, only required for `verifyWebhookData` |
 | [options] | <code>object</code> |  |  |
 | [options.server] | <code>string</code> | <code>&quot;vendors.paddle.com/api/2.0&quot;</code> | The server URL prefix for all requests |
 
 **Example**  
 ```js
-const client = new PaddleSDK('your-unique-api-key-here');
+const client = new PaddleSDK('your-vendor-id', 'your-unique-api-key');
+const client = new PaddleSDK('your-vendor-id', 'your-unique-api-key', 'your-public-key');
 ```
 <a name="PaddleSDK+getProducts"></a>
 
@@ -185,6 +188,27 @@ Get the list of transations for a checkout
 ```js
 const checkoutTransactions = await client.getCheckoutTransactions(123);
 ```
+<a name="PaddleSDK+verifyWebhookData"></a>
+
+### client.verifyWebhookData(postData) ⇒ <code>boolean</code>
+Verify a webhook alert data using signature and a public key to validate that
+it was indeed sent from Paddle.
+
+For more details: https://paddle.com/docs/reference-verifying-webhooks
+
+**Kind**: instance method of [<code>PaddleSDK</code>](#PaddleSDK)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| postData | <code>Object</code> | The object with all the parameters sent to the webhook |
+
+**Example**  
+```js
+const client = new PaddleSDK('your-vendor-id', 'your-unique-api-key', 'your-public-key');
+
+// inside an Express handler which uses express.bodyParser middleware
+const isVerified = client.verifyWebhookData(req.body);
+```
 ---
 
-Documentation generated on **Sun, 19 Nov 2017 18:03:25 GMT**
+Documentation generated on **Mon, 20 Nov 2017 19:23:49 GMT**

@@ -13,7 +13,8 @@
     "node": ">=8.5.0"
   },
   "files": [
-    "sdk.js"
+    "sdk.js",
+    "lib/"
   ],
   "scripts": {
     "commitmsg": "validate-commit-msg",

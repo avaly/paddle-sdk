@@ -14,7 +14,7 @@ describe('coupons methods', () => {
 	};
 
 	beforeEach(() => {
-		instance = new PaddleSDK(VENDOR_ID, VENDOR_API_KEY, {
+		instance = new PaddleSDK(VENDOR_ID, VENDOR_API_KEY, null, {
 			server: nock.SERVER,
 		});
 	});
