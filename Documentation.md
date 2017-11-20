@@ -211,4 +211,4 @@ const isVerified = client.verifyWebhookData(req.body);
 ```
 ---
 
-Documentation generated on **Mon, 20 Nov 2017 19:23:49 GMT**
+Documentation generated on **Mon, 20 Nov 2017 19:30:02 GMT**
