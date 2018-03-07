@@ -41,7 +41,7 @@ Using `async`/`await`:
 const PaddleSDK = require('paddle-sdk');
 
 async function run() {
-  const client = new PaddleSDK('your-unique-api-key-here');
+  const client = new PaddleSDK('your-vendor-id-here', 'your-unique-api-key-here');
 
   const products = await client.getProducts();
   console.log(products);
