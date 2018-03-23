@@ -9,6 +9,13 @@
     "url": "https://github.com/avaly/paddle-sdk"
   },
   "license": "MIT",
+  "keywords": [
+    "paddle",
+    "sdk",
+    "api",
+    "payments",
+    "subscriptions"
+  ],
   "engines": {
     "node": ">=8.5.0"
   },
