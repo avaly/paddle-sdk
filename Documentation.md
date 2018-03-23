@@ -228,4 +228,4 @@ const result = await client.cancelSubscription(123);
 ```
 ---
 
-Documentation generated on **Fri, 23 Mar 2018 11:48:10 GMT**
+Documentation generated on **Fri, 23 Mar 2018 11:54:22 GMT**

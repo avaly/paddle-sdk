@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/avaly/paddle-sdk/compare/v1.1.0...v1.2.0) (2018-03-23)
+
+
+### Features
+
+* Cancel subscription ([7a2a41c](https://github.com/avaly/paddle-sdk/commit/7a2a41c))
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/avaly/paddle-sdk/compare/v1.0.0...v1.1.0) (2017-11-20)
 
