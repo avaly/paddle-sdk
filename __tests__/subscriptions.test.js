@@ -15,6 +15,7 @@ describe('subscription methods', () => {
 
 	const PRODUCT_ID = '12345';
 	const PLAN_ID = '23456';
+	const SUBSCRIPTION_ID = '34567';
 
 	beforeEach(() => {
 		instance = new PaddleSDK(VENDOR_ID, VENDOR_API_KEY, null, {
@@ -197,6 +198,43 @@ describe('subscription methods', () => {
 				.reply(400, DEFAULT_ERROR);
 
 			return instance.getPlanPayments(PLAN_ID).catch(response => {
+				expect(response.statusCode).toBe(400);
+				expect(scope.isDone()).toBeTruthy();
+			});
+		});
+	});
+
+	describe('cancelSubscription', () => {
+		const path = '/subscription/users_cancel';
+		const expectedBody = Object.assign(
+			{
+				subscription_id: SUBSCRIPTION_ID,
+			},
+			EXPECTED_BODY
+		);
+
+		it('resolves on successfull request', () => {
+			// https://paddle.com/docs/api-cancelling-subscriptions
+			const body = {
+				success: true,
+			};
+
+			const scope = nock()
+				.post(path, expectedBody)
+				.reply(200, body);
+
+			return instance.cancelSubscription(SUBSCRIPTION_ID).then(response => {
+				expect(response).toEqual(body);
+				expect(scope.isDone()).toBeTruthy();
+			});
+		});
+
+		it('rejects on error request', () => {
+			const scope = nock()
+				.post(path, expectedBody)
+				.reply(400, DEFAULT_ERROR);
+
+			return instance.cancelSubscription(SUBSCRIPTION_ID).catch(response => {
 				expect(response.statusCode).toBe(400);
 				expect(scope.isDone()).toBeTruthy();
 			});

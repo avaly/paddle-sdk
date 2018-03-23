@@ -190,10 +190,10 @@ class PaddleSDK {
 	 * @example
 	 * const userTransactions = await client.getUserTransactions(123);
 	 */
-
 	getUserTransactions(userID) {
 		return this._getTransactions('users', userID);
 	}
+
 	/**
 	 * Get the list of transations for a subscription
 	 *
@@ -205,7 +205,6 @@ class PaddleSDK {
 	 * @example
 	 * const subscriptionTransactions = await client.getSubscriptionTransactions(123);
 	 */
-
 	getSubscriptionTransactions(subscriptionID) {
 		return this._getTransactions('subscription', subscriptionID);
 	}
@@ -220,10 +219,10 @@ class PaddleSDK {
 	 * @example
 	 * const orderTransactions = await client.getOrderTransactions(123);
 	 */
-
 	getOrderTransactions(orderID) {
 		return this._getTransactions('order', orderID);
 	}
+
 	/**
 	 * Get the list of transations for a checkout
 	 *
@@ -279,6 +278,23 @@ class PaddleSDK {
 		} catch (err) {
 			return false;
 		}
+	}
+
+	/**
+	 * Cancels an active subscription
+	 *
+	 * @method
+	 * @param {number} subscriptionID
+	 * @returns {Promise}
+	 * @fulfil {object} - The result of the operation
+	 *
+	 * @example
+	 * const result = await client.cancelSubscription(123);
+	 */
+	cancelSubscription(subscriptionID) {
+		return this._request('/subscription/users_cancel', {
+			subscription_id: subscriptionID,
+		});
 	}
 }
 

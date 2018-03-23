@@ -20,6 +20,7 @@ Welcome to the [Paddle.com](http://www.paddle.com/) Node.js SDK documentation.
     * [.getOrderTransactions(orderID)](#PaddleSDK+getOrderTransactions) ⇒ <code>Promise</code>
     * [.getCheckoutTransactions(checkoutID)](#PaddleSDK+getCheckoutTransactions) ⇒ <code>Promise</code>
     * [.verifyWebhookData(postData)](#PaddleSDK+verifyWebhookData) ⇒ <code>boolean</code>
+    * [.cancelSubscription(subscriptionID)](#PaddleSDK+cancelSubscription) ⇒ <code>Promise</code>
 
 <a name="new_PaddleSDK_new"></a>
 
@@ -209,6 +210,22 @@ const client = new PaddleSDK('your-vendor-id', 'your-unique-api-key', 'your-publ
 // inside an Express handler which uses express.bodyParser middleware
 const isVerified = client.verifyWebhookData(req.body);
 ```
+<a name="PaddleSDK+cancelSubscription"></a>
+
+### client.cancelSubscription(subscriptionID) ⇒ <code>Promise</code>
+Cancels an active subscription
+
+**Kind**: instance method of [<code>PaddleSDK</code>](#PaddleSDK)  
+**Fulfil**: <code>object</code> - The result of the operation  
+
+| Param | Type |
+| --- | --- |
+| subscriptionID | <code>number</code> | 
+
+**Example**  
+```js
+const result = await client.cancelSubscription(123);
+```
 ---
 
-Documentation generated on **Mon, 20 Nov 2017 19:30:02 GMT**
+Documentation generated on **Fri, 23 Mar 2018 11:48:10 GMT**
