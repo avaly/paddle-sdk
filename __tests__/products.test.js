@@ -64,15 +64,39 @@ describe('products methods', () => {
 			});
 		});
 
-		it('rejects on error request', () => {
+		it('rejects on error response', () => {
 			const scope = nock()
 				.post(path, EXPECTED_BODY)
 				.reply(400, DEFAULT_ERROR);
 
-			return instance.getProducts().catch(response => {
-				expect(response.statusCode).toBe(400);
-				expect(scope.isDone()).toBeTruthy();
-			});
+			return instance.getProducts().then(
+				() => {
+					expect('This promise should fail').toBeFalsy();
+				},
+				response => {
+					expect(response.statusCode).toBe(400);
+					expect(scope.isDone()).toBeTruthy();
+				}
+			);
+		});
+
+		it('rejects on 200 response with error', () => {
+			const scope = nock()
+				.post(path, EXPECTED_BODY)
+				.reply(200, DEFAULT_ERROR);
+
+			return instance.getProducts().then(
+				() => {
+					expect('This promise should fail').toBeFalsy();
+				},
+				err => {
+					expect(err).toBeTruthy();
+					expect(err.message).toContain(
+						'Request http://test.paddle.com/product/get_products returned an error!'
+					);
+					expect(scope.isDone()).toBeTruthy();
+				}
+			);
 		});
 	});
 });

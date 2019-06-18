@@ -49,12 +49,17 @@ class PaddleSDK {
 		return got(url, options).then(response => {
 			const { body } = response;
 
-			let result = body;
-			if (result.success && result.response) {
-				result = result.response;
+			if (typeof body.success === 'boolean') {
+				if (body.success) {
+					return body.response || body;
+				}
+
+				throw new Error(
+					`Request ${url} returned an error! response=${JSON.stringify(body)}`
+				);
 			}
 
-			return result;
+			return body;
 		});
 	}
 
