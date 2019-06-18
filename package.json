@@ -1,7 +1,7 @@
 {
   "name": "paddle-sdk",
   "description": "The Paddle.com Node.js SDK",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "main": "sdk.js",
   "author": "Valentin Agachi <github-com@agachi.name>",
   "repository": {
