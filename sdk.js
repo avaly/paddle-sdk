@@ -35,14 +35,14 @@ class PaddleSDK {
 	 * @param {object} body - body parameters / object
 	 * @param {object} [headers] - header parameters
 	 */
-	_request(path, body = {}, headers = this._getDefaultHeaders()) {
+	_request(path, body = {}, headers = this._getDefaultHeaders(), form = true, json = true) {
 		const url = this.server + path;
 
 		const options = {
 			body: Object.assign(body, this._getDefaultBody()),
-			form: true,
+			form,
 			headers,
-			json: true,
+			json,
 			method: 'POST',
 		};
 
