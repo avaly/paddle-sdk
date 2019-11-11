@@ -37,13 +37,13 @@ class PaddleSDK {
 	 * @param {boolean} [form] - form parameter (ref: got package)
 	 * @param {boolean} [json] - json parameter (ref: got package)
 	 */
-	_request(path, body = {}, headers = this._getDefaultHeaders(), form = true, json = true) {
+	_request(path, body = {}, headers = {}, form = true, json = true) {
 		const url = this.server + path;
 
 		const options = {
 			body: Object.assign(body, this._getDefaultBody()),
 			form,
-			headers,
+			headers: this._getDefaultHeaders(headers),
 			json,
 			method: 'POST',
 		};
@@ -323,7 +323,7 @@ class PaddleSDK {
      *	});
 	 */
 	generatePayLink(body) {
-		return this._request('/product/generate_pay_link', body , form = false);
+		return this._request('/product/generate_pay_link', body, {}, false);
 	}
 }
 
