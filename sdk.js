@@ -34,15 +34,17 @@ class PaddleSDK {
 	 * @param {string} url - url to do request
 	 * @param {object} body - body parameters / object
 	 * @param {object} [headers] - header parameters
+	 * @param {boolean} [form] - form parameter (ref: got package)
+	 * @param {boolean} [json] - json parameter (ref: got package)
 	 */
-	_request(path, body = {}, headers = this._getDefaultHeaders()) {
+	_request(path, body = {}, headers = {}, form = true, json = true) {
 		const url = this.server + path;
 
 		const options = {
 			body: Object.assign(body, this._getDefaultBody()),
-			form: true,
-			headers,
-			json: true,
+			form,
+			headers: this._getDefaultHeaders(headers),
+			json,
 			method: 'POST',
 		};
 
@@ -300,6 +302,28 @@ class PaddleSDK {
 		return this._request('/subscription/users_cancel', {
 			subscription_id: subscriptionID,
 		});
+	}
+
+	/**
+	 * Generate a custom pay link 
+	 *
+	 * @method
+	 * @param {object} body
+	 * @returns {Promise}
+	 * @fulfil {object} - The new pay link url 
+	 *
+	 * @example
+	 * const custom = await client.generatePayLink({
+	 *  "title" : "my custom checkout",
+	 *  "custom_message" : "some custom message"
+	 * 	"prices": [
+	 *		"USD:19.99",
+	 *		"EUR:15.99"
+	 *	 ]
+     *	});
+	 */
+	generatePayLink(body) {
+		return this._request('/product/generate_pay_link', body, {}, false);
 	}
 }
 
