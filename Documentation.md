@@ -21,6 +21,7 @@ Welcome to the [Paddle.com](http://www.paddle.com/) Node.js SDK documentation.
     * [.getCheckoutTransactions(checkoutID)](#PaddleSDK+getCheckoutTransactions) ⇒ <code>Promise</code>
     * [.verifyWebhookData(postData)](#PaddleSDK+verifyWebhookData) ⇒ <code>boolean</code>
     * [.cancelSubscription(subscriptionID)](#PaddleSDK+cancelSubscription) ⇒ <code>Promise</code>
+    * [.generatePayLink(body)](#PaddleSDK+generatePayLink) ⇒ <code>Promise</code>
 
 <a name="new_PaddleSDK_new"></a>
 
@@ -226,6 +227,29 @@ Cancels an active subscription
 ```js
 const result = await client.cancelSubscription(123);
 ```
+<a name="PaddleSDK+generatePayLink"></a>
+
+### client.generatePayLink(body) ⇒ <code>Promise</code>
+Generate a custom pay link
+
+**Kind**: instance method of [<code>PaddleSDK</code>](#PaddleSDK)  
+**Fulfil**: <code>object</code> - The new pay link url  
+
+| Param | Type |
+| --- | --- |
+| body | <code>object</code> | 
+
+**Example**  
+```js
+const custom = await client.generatePayLink({
+ "title" : "my custom checkout",
+ "custom_message" : "some custom message"
+	"prices": [
+		"USD:19.99",
+		"EUR:15.99"
+	 ]
+	});
+```
 ---
 
-Documentation generated on **Tue, 18 Jun 2019 22:31:12 GMT**
+Documentation generated on **Tue, 12 Nov 2019 09:21:47 GMT**
