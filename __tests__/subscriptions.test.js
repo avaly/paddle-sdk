@@ -91,8 +91,8 @@ describe('subscription methods', () => {
 				.post(path, expectedBody)
 				.reply(400, DEFAULT_ERROR);
 
-			return instance.getProductPlans(PRODUCT_ID).catch(response => {
-				expect(response.statusCode).toBe(400);
+			return instance.getProductPlans(PRODUCT_ID).catch(err => {
+				expect(err.response.statusCode).toBe(400);
 				expect(scope.isDone()).toBeTruthy();
 			});
 		});
@@ -148,8 +148,8 @@ describe('subscription methods', () => {
 				.post(path, expectedBody)
 				.reply(400, DEFAULT_ERROR);
 
-			return instance.getPlanUsers(PLAN_ID).catch(response => {
-				expect(response.statusCode).toBe(400);
+			return instance.getPlanUsers(PLAN_ID).catch(err => {
+				expect(err.response.statusCode).toBe(400);
 				expect(scope.isDone()).toBeTruthy();
 			});
 		});
@@ -197,8 +197,8 @@ describe('subscription methods', () => {
 				.post(path, expectedBody)
 				.reply(400, DEFAULT_ERROR);
 
-			return instance.getPlanPayments(PLAN_ID).catch(response => {
-				expect(response.statusCode).toBe(400);
+			return instance.getPlanPayments(PLAN_ID).catch(err => {
+				expect(err.response.statusCode).toBe(400);
 				expect(scope.isDone()).toBeTruthy();
 			});
 		});
@@ -234,8 +234,8 @@ describe('subscription methods', () => {
 				.post(path, expectedBody)
 				.reply(400, DEFAULT_ERROR);
 
-			return instance.cancelSubscription(SUBSCRIPTION_ID).catch(response => {
-				expect(response.statusCode).toBe(400);
+			return instance.cancelSubscription(SUBSCRIPTION_ID).catch(err => {
+				expect(err.response.statusCode).toBe(400);
 				expect(scope.isDone()).toBeTruthy();
 			});
 		});

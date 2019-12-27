@@ -102,8 +102,8 @@ describe('webhooks methods', () => {
 				.post(path, EXPECTED_BODY)
 				.reply(400, DEFAULT_ERROR);
 
-			return instance.getWebhooksHistory().catch(response => {
-				expect(response.statusCode).toBe(400);
+			return instance.getWebhooksHistory().catch(err => {
+				expect(err.response.statusCode).toBe(400);
 				expect(scope.isDone()).toBeTruthy();
 			});
 		});

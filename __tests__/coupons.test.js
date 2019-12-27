@@ -65,8 +65,8 @@ describe('coupons methods', () => {
 				.post(path, expectedBody)
 				.reply(400, DEFAULT_ERROR);
 
-			return instance.getProductCoupons(productID).catch(response => {
-				expect(response.statusCode).toBe(400);
+			return instance.getProductCoupons(productID).catch(err => {
+				expect(err.response.statusCode).toBe(400);
 				expect(scope.isDone()).toBeTruthy();
 			});
 		});

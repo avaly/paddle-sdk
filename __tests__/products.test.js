@@ -73,8 +73,8 @@ describe('products methods', () => {
 				() => {
 					expect('This promise should fail').toBeFalsy();
 				},
-				response => {
-					expect(response.statusCode).toBe(400);
+				err => {
+					expect(err.response.statusCode).toBe(400);
 					expect(scope.isDone()).toBeTruthy();
 				}
 			);

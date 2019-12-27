@@ -17,7 +17,7 @@
     "subscriptions"
   ],
   "engines": {
-    "node": ">=8.5.0"
+    "node": ">=10.0.0"
   },
   "files": [
     "sdk.js",
@@ -35,17 +35,17 @@
     "pretest": "yarn lint"
   },
   "dependencies": {
-    "got": "^9.6.0"
+    "got": "^10.2.0"
   },
   "devDependencies": {
-    "eslint": "^5.16.0",
-    "husky": "^2.4.1",
-    "jest": "^24.8.0",
-    "jsdoc-to-markdown": "^5.0.0",
-    "lint-staged": "^8.2.1",
-    "nock": "^10.0.6",
-    "prettier": "^1.18.2",
-    "standard-version": "^6.0.1",
+    "eslint": "^6.8.0",
+    "husky": "^3.1.0",
+    "jest": "^24.9.0",
+    "jsdoc-to-markdown": "^5.0.3",
+    "lint-staged": "^9.5.0",
+    "nock": "^11.7.0",
+    "prettier": "^1.19.1",
+    "standard-version": "^7.0.1",
     "validate-commit-msg": "^2.14.0"
   },
   "husky": {
