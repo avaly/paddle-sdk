@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/avaly/paddle-sdk/compare/v1.3.0...v2.0.0) (2019-12-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* Requires node v10+
+
+### Features
+
+* Upgrade all dependencies ([ce2d240](https://github.com/avaly/paddle-sdk/commit/ce2d2401681d1564e1c77f7904a98de0186fb85a))
+
 ## [1.3.0](https://github.com/avaly/paddle-sdk/compare/v1.2.2...v1.3.0) (2019-11-12)
 
 
