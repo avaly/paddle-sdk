@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/avaly/paddle-sdk/compare/v2.0.0...v2.1.0) (2019-12-29)
+
+
+### Features
+
+* Update subscription plan method ([310f54d](https://github.com/avaly/paddle-sdk/commit/310f54d932b3d4f6715c9ee668cdc6c43523ce4b))
+
 ## [2.0.0](https://github.com/avaly/paddle-sdk/compare/v1.3.0...v2.0.0) (2019-12-27)
 
 

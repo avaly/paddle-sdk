@@ -20,6 +20,7 @@ Welcome to the [Paddle.com](http://www.paddle.com/) Node.js SDK documentation.
     * [.getOrderTransactions(orderID)](#PaddleSDK+getOrderTransactions) ⇒ <code>Promise</code>
     * [.getCheckoutTransactions(checkoutID)](#PaddleSDK+getCheckoutTransactions) ⇒ <code>Promise</code>
     * [.verifyWebhookData(postData)](#PaddleSDK+verifyWebhookData) ⇒ <code>boolean</code>
+    * [.updateSubscriptionPlan(subscriptionID, planID, prorate)](#PaddleSDK+updateSubscriptionPlan) ⇒ <code>Promise</code>
     * [.cancelSubscription(subscriptionID)](#PaddleSDK+cancelSubscription) ⇒ <code>Promise</code>
     * [.generatePayLink(body)](#PaddleSDK+generatePayLink) ⇒ <code>Promise</code>
 
@@ -211,6 +212,24 @@ const client = new PaddleSDK('your-vendor-id', 'your-unique-api-key', 'your-publ
 // inside an Express handler which uses express.bodyParser middleware
 const isVerified = client.verifyWebhookData(req.body);
 ```
+<a name="PaddleSDK+updateSubscriptionPlan"></a>
+
+### client.updateSubscriptionPlan(subscriptionID, planID, prorate) ⇒ <code>Promise</code>
+Update (upgrade/downgrade) the plan of a subscription
+
+**Kind**: instance method of [<code>PaddleSDK</code>](#PaddleSDK)  
+**Fulfill**: <code>object</code> - The result of the operation  
+
+| Param | Type | Default |
+| --- | --- | --- |
+| subscriptionID | <code>number</code> |  | 
+| planID | <code>number</code> |  | 
+| prorate | <code>boolean</code> | <code>false</code> | 
+
+**Example**  
+```js
+const result = await client.updateSubscriptionPlan(123);
+```
 <a name="PaddleSDK+cancelSubscription"></a>
 
 ### client.cancelSubscription(subscriptionID) ⇒ <code>Promise</code>
@@ -252,4 +271,4 @@ const custom = await client.generatePayLink({
 ```
 ---
 
-Documentation generated on **Fri, 27 Dec 2019 21:22:36 GMT**
+Documentation generated on **Sun, 29 Dec 2019 09:25:36 GMT**
