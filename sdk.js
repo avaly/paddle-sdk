@@ -302,6 +302,29 @@ class PaddleSDK {
 	}
 
 	/**
+	 * Update (upgrade/downgrade) the plan of a subscription
+	 *
+	 * @method
+	 * @param {number} subscriptionID
+	 * @param {number} planID
+	 * @param {boolean} prorate
+	 * @returns {Promise}
+	 * @fulfill {object} - The result of the operation
+	 *
+	 * @example
+	 * const result = await client.updateSubscriptionPlan(123);
+	 */
+	updateSubscriptionPlan(subscriptionID, planID, prorate = false) {
+		return this._request('/subscription/users/update', {
+			body: {
+				subscription_id: subscriptionID,
+				plan_id: planID,
+				prorate,
+			},
+		});
+	}
+
+	/**
 	 * Cancels an active subscription
 	 *
 	 * @method
