@@ -3,5 +3,9 @@
 		"prettier --write --list-different",
 		"eslint --fix --ignore-pattern '!.eslintrc.js'",
 		"git add"
+	],
+	"sdk.js": [
+		"yarn declaration:build",
+		"git add sdk.d.ts"
 	]
 }
