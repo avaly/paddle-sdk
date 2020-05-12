@@ -6,6 +6,6 @@
 	],
 	"sdk.js": [
 		"yarn declaration:build",
-		"git add"
+		"git add sdk.d.ts"
 	]
 }
