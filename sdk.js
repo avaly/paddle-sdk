@@ -196,8 +196,8 @@ class PaddleSDK {
 	 * @returns {Promise}
 	 * @fulfil {object} - The transations list
 	 */
-	_getTransactions(type, id) {
-		return this._request(`/${type}/${id}/transactions`);
+	_getTransactions(type, id, body = {}) {
+		return this._request(`/${type}/${id}/transactions`, { body });
 	}
 
 	/**
@@ -205,14 +205,15 @@ class PaddleSDK {
 	 *
 	 * @method
 	 * @param {number} userID
+	 * @param {object} [body]
 	 * @returns {Promise}
 	 * @fulfil {object} - The transations list
 	 *
 	 * @example
 	 * const userTransactions = await client.getUserTransactions(123);
 	 */
-	getUserTransactions(userID) {
-		return this._getTransactions('users', userID);
+	getUserTransactions(userID, body) {
+		return this._getTransactions('user', userID, body);
 	}
 
 	/**
@@ -220,28 +221,30 @@ class PaddleSDK {
 	 *
 	 * @method
 	 * @param {number} subscriptionID
+	 * @param {object} [body]
 	 * @returns {Promise}
 	 * @fulfil {object} - The transations list
 	 *
 	 * @example
 	 * const subscriptionTransactions = await client.getSubscriptionTransactions(123);
 	 */
-	getSubscriptionTransactions(subscriptionID) {
-		return this._getTransactions('subscription', subscriptionID);
+	getSubscriptionTransactions(subscriptionID, body) {
+		return this._getTransactions('subscription', subscriptionID, body);
 	}
 	/**
 	 * Get the list of transations for an order
 	 *
 	 * @method
 	 * @param {number} orderID
+	 * @param {object} [body]
 	 * @returns {Promise}
 	 * @fulfil {object} - The transations list
 	 *
 	 * @example
 	 * const orderTransactions = await client.getOrderTransactions(123);
 	 */
-	getOrderTransactions(orderID) {
-		return this._getTransactions('order', orderID);
+	getOrderTransactions(orderID, body) {
+		return this._getTransactions('order', orderID, body);
 	}
 
 	/**
@@ -249,14 +252,15 @@ class PaddleSDK {
 	 *
 	 * @method
 	 * @param {number} checkoutID
+	 * @param {object} [body]
 	 * @returns {Promise}
 	 * @fulfil {object} - The transations list
 	 *
 	 * @example
 	 * const checkoutTransactions = await client.getCheckoutTransactions(123);
 	 */
-	getCheckoutTransactions(checkoutID) {
-		return this._getTransactions('checkout', checkoutID);
+	getCheckoutTransactions(checkoutID, body) {
+		return this._getTransactions('checkout', checkoutID, body);
 	}
 
 	/**
