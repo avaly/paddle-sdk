@@ -325,6 +325,35 @@ class PaddleSDK {
 	}
 
 	/**
+	 * Update subscription details, quantity, price and or currency
+	 *
+	 * @method
+	 * @param {number} subscriptionID
+	 * @param {Object} postData { quantity, price, planID, currency }
+	 * @returns {Promise}
+	 * @fulfill {object} - The result of the operation
+	 *
+	 * @example
+	 * const result = await client.updateSubscriptionPlan(123, { quantity: 2 });
+	 */
+	updateSubscription(subscriptionID, postData) {
+		const { quantity, price, planID, currency } = postData;
+		const body = {
+			subscription_id: subscriptionID,
+			quantity,
+			price,
+			plan_id: planID,
+			currency,
+		};
+		// remove all empty params
+		Object.keys(body).forEach(k => body[k] == undefined && delete body[k]);
+
+		return this._request('/subscription/users/update', {
+			body: body,
+		});
+	}
+
+	/**
 	 * Cancels an active subscription
 	 *
 	 * @method

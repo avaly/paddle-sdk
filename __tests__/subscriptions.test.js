@@ -32,7 +32,7 @@ describe('subscription methods', () => {
 			EXPECTED_BODY
 		);
 
-		it('resolves on successfull request', () => {
+		it('resolves on successful request', () => {
 			// https://paddle.com/docs/api-list-plans
 			const body = {
 				success: true,
@@ -107,7 +107,7 @@ describe('subscription methods', () => {
 			EXPECTED_BODY
 		);
 
-		it('resolves on successfull request', () => {
+		it('resolves on successful request', () => {
 			// https://paddle.com/docs/api-list-users
 			const body = {
 				success: true,
@@ -164,7 +164,7 @@ describe('subscription methods', () => {
 			EXPECTED_BODY
 		);
 
-		it('resolves on successfull request', () => {
+		it('resolves on successful request', () => {
 			// https://paddle.com/docs/api-list-payments
 			const body = {
 				success: true,
@@ -204,7 +204,7 @@ describe('subscription methods', () => {
 		});
 	});
 
-	describe('updateSubscription', () => {
+	describe('updateSubscriptionPlan', () => {
 		const path = '/subscription/users/update';
 		const expectedBody = Object.assign(
 			{
@@ -215,7 +215,7 @@ describe('subscription methods', () => {
 			EXPECTED_BODY
 		);
 
-		it('resolves on successfull request', () => {
+		it('resolves on successful request', () => {
 			// https://developer.paddle.com/api-reference/subscription-api/subscription-users/updateuser
 			const body = {
 				success: true,
@@ -247,6 +247,88 @@ describe('subscription methods', () => {
 		});
 	});
 
+	describe('updateSubscription', () => {
+		const path = '/subscription/users/update';
+		const expectedBody = Object.assign(
+			{
+				subscription_id: SUBSCRIPTION_ID,
+				plan_id: PLAN_ID,
+				quantity: 2,
+				price: 25.5,
+				currency: 'GBP',
+			},
+			EXPECTED_BODY
+		);
+
+		it('resolves on successful request all params', () => {
+			// https://developer.paddle.com/api-reference/subscription-api/subscription-users/updateuser
+			const body = {
+				success: true,
+			};
+
+			const scope = nock()
+				.post(path, expectedBody)
+				.reply(200, body);
+
+			return instance
+				.updateSubscription(SUBSCRIPTION_ID, {
+					planID: PLAN_ID,
+					quantity: 2,
+					price: 25.5,
+					currency: 'GBP',
+				})
+				.then(response => {
+					expect(response).toEqual(body);
+					expect(scope.isDone()).toBeTruthy();
+				});
+		});
+
+		it('resolves on successful request quantity', () => {
+			const expectedBodyQuantity = Object.assign(
+				{
+					subscription_id: SUBSCRIPTION_ID,
+					quantity: 2,
+				},
+				EXPECTED_BODY
+			);
+			// https://developer.paddle.com/api-reference/subscription-api/subscription-users/updateuser
+			const body = {
+				success: true,
+			};
+
+			const scope = nock()
+				.post(path, expectedBodyQuantity)
+				.reply(200, body);
+
+			return instance
+				.updateSubscription(SUBSCRIPTION_ID, {
+					quantity: 2,
+				})
+				.then(response => {
+					expect(response).toEqual(body);
+					expect(scope.isDone()).toBeTruthy();
+				});
+		});
+
+		it('rejects on error request', () => {
+			const scope = nock()
+				.post(path, expectedBody)
+				.reply(400, DEFAULT_ERROR);
+
+			return instance
+				.updateSubscription(SUBSCRIPTION_ID, {
+					planID: PLAN_ID,
+					quantity: 2,
+					price: 25.5,
+					currency: 'GBP',
+				})
+				.catch(err => {
+					expect(err.response.statusCode).toBe(400);
+					expect(scope.isDone()).toBeTruthy();
+				});
+		});
+	});
+
 	describe('cancelSubscription', () => {
 		const path = '/subscription/users_cancel';
 		const expectedBody = Object.assign(
@@ -256,7 +338,7 @@ describe('subscription methods', () => {
 			EXPECTED_BODY
 		);
 
-		it('resolves on successfull request', () => {
+		it('resolves on successful request', () => {
 			// https://paddle.com/docs/api-cancelling-subscriptions
 			const body = {
 				success: true,
