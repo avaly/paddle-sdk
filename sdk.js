@@ -341,16 +341,16 @@ class PaddleSDK {
 		const body = {
 			subscription_id: subscriptionID,
 		};
-		if (undefined != quantity) {
+		if (quantity) {
 			body.quantity = quantity;
 		}
-		if (undefined != price) {
+		if (price) {
 			body.recurring_price = price;
 		}
-		if (undefined != planID) {
+		if (planID) {
 			body.plan_id = planID;
 		}
-		if (undefined != currency) {
+		if (currency) {
 			body.currency = currency;
 		}
 
