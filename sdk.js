@@ -325,6 +325,41 @@ class PaddleSDK {
 	}
 
 	/**
+	 * Update subscription details, quantity, price and or currency
+	 *
+	 * @method
+	 * @param {number} subscriptionID
+	 * @param {Object} postData { quantity, price, planID, currency }
+	 * @returns {Promise}
+	 * @fulfill {object} - The result of the operation
+	 *
+	 * @example
+	 * const result = await client.updateSubscriptionPlan(123, { quantity: 2 });
+	 */
+	updateSubscription(subscriptionID, postData) {
+		const { quantity, price, planID, currency } = postData;
+		const body = {
+			subscription_id: subscriptionID,
+		};
+		if (quantity) {
+			body.quantity = quantity;
+		}
+		if (price) {
+			body.recurring_price = price;
+		}
+		if (planID) {
+			body.plan_id = planID;
+		}
+		if (currency) {
+			body.currency = currency;
+		}
+
+		return this._request('/subscription/users/update', {
+			body: body,
+		});
+	}
+
+	/**
 	 * Cancels an active subscription
 	 *
 	 * @method
