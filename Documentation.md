@@ -21,6 +21,7 @@ Welcome to the [Paddle.com](http://www.paddle.com/) Node.js SDK documentation.
     * [.getCheckoutTransactions(checkoutID)](#PaddleSDK+getCheckoutTransactions) ⇒ <code>Promise</code>
     * [.verifyWebhookData(postData)](#PaddleSDK+verifyWebhookData) ⇒ <code>boolean</code>
     * [.updateSubscriptionPlan(subscriptionID, planID, prorate)](#PaddleSDK+updateSubscriptionPlan) ⇒ <code>Promise</code>
+    * [.updateSubscription(subscriptionID, postData)](#PaddleSDK+updateSubscription) ⇒ <code>Promise</code>
     * [.cancelSubscription(subscriptionID)](#PaddleSDK+cancelSubscription) ⇒ <code>Promise</code>
     * [.generatePayLink(body)](#PaddleSDK+generatePayLink) ⇒ <code>Promise</code>
 
@@ -230,6 +231,23 @@ Update (upgrade/downgrade) the plan of a subscription
 ```js
 const result = await client.updateSubscriptionPlan(123);
 ```
+<a name="PaddleSDK+updateSubscription"></a>
+
+### client.updateSubscription(subscriptionID, postData) ⇒ <code>Promise</code>
+Update subscription details, quantity, price and or currency
+
+**Kind**: instance method of [<code>PaddleSDK</code>](#PaddleSDK)  
+**Fulfill**: <code>object</code> - The result of the operation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| subscriptionID | <code>number</code> |  |
+| postData | <code>Object</code> | { quantity, price, planID, currency } |
+
+**Example**  
+```js
+const result = await client.updateSubscriptionPlan(123, { quantity: 2 });
+```
 <a name="PaddleSDK+cancelSubscription"></a>
 
 ### client.cancelSubscription(subscriptionID) ⇒ <code>Promise</code>
@@ -271,4 +289,4 @@ const custom = await client.generatePayLink({
 ```
 ---
 
-Documentation generated on **Tue, 12 May 2020 09:35:32 GMT**
+Documentation generated on **Thu, 01 Jul 2021 13:13:41 GMT**
