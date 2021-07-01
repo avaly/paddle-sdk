@@ -254,7 +254,7 @@ describe('subscription methods', () => {
 				subscription_id: SUBSCRIPTION_ID,
 				plan_id: PLAN_ID,
 				quantity: 2,
-				price: 25.5,
+				recurring_price: 25.5,
 				currency: 'GBP',
 			},
 			EXPECTED_BODY

@@ -340,13 +340,19 @@ class PaddleSDK {
 		const { quantity, price, planID, currency } = postData;
 		const body = {
 			subscription_id: subscriptionID,
-			quantity,
-			price,
-			plan_id: planID,
-			currency,
 		};
-		// remove all empty params
-		Object.keys(body).forEach(k => body[k] == undefined && delete body[k]);
+		if (undefined != quantity) {
+			body.quantity = quantity;
+		}
+		if (undefined != price) {
+			body.recurring_price = price;
+		}
+		if (undefined != planID) {
+			body.plan_id = planID;
+		}
+		if (undefined != currency) {
+			body.currency = currency;
+		}
 
 		return this._request('/subscription/users/update', {
 			body: body,
