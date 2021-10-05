@@ -20,11 +20,15 @@ class PaddleSDK {
 	 * const client = new PaddleSDK('your-vendor-id', 'your-unique-api-key');
 	 * const client = new PaddleSDK('your-vendor-id', 'your-unique-api-key', 'your-public-key');
 	 */
-	constructor(vendorID, apiKey, publicKey, options) {
+	constructor(vendorID, apiKey, publicKey, sandbox=false, options) {
 		this.vendorID = vendorID || 'MISSING';
 		this.apiKey = apiKey || 'MISSING';
 		this.publicKey = publicKey || 'MISSING';
 		this.server = (options && options.server) || SERVER_URL;
+		if(sandbox)
+		{
+		    this.server = "https://sandbox-vendors.paddle.com/api/2.0";
+		}
 	}
 
 	/**
