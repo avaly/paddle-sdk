@@ -193,13 +193,14 @@ declare class PaddleSDK {
      * @param {number} subscriptionID
      * @param {number} planID
      * @param {boolean} prorate
+	 * @param {boolean} billImmediately
      * @returns {Promise}
      * @fulfill {object} - The result of the operation
      *
      * @example
      * const result = await client.updateSubscriptionPlan(123);
      */
-    updateSubscriptionPlan(subscriptionID: number, planID: number, prorate?: boolean): Promise<any>;
+    updateSubscriptionPlan(subscriptionID: number, planID: number, prorate?: boolean, billImmediately?: boolean): Promise<any>;
     /**
      * Update subscription details, quantity, price and or currency
      *
