@@ -128,7 +128,7 @@ class PaddleSDK {
 	 * Get the current list of plans for a subscription
 	 *
 	 * @method
-	 * @param {number} productID
+	 * @param {number} [productID]
 	 * @returns {Promise}
 	 * @fulfil {object} - The plans list
 	 *
@@ -145,7 +145,7 @@ class PaddleSDK {
 	 * Get the current list of users for a subscription plan
 	 *
 	 * @method
-	 * @param {number} planID
+	 * @param {number} [planID]
 	 * @returns {Promise}
 	 * @fulfil {object} - The users list
 	 *
