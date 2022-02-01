@@ -67,7 +67,7 @@ declare class PaddleSDK {
      */
     getProductCoupons(productID: number): Promise<any>;
     /**
-     * Get the current list of plans for a subscription
+     * Get the current list of all plans or plans for a subscription
      *
      * @method
      * @param {number} [productID]
@@ -75,11 +75,12 @@ declare class PaddleSDK {
      * @fulfil {object} - The plans list
      *
      * @example
+     * const plans = await client.getProductPlans();
      * const plans = await client.getProductPlans(123);
      */
     getProductPlans(productID?: number): Promise<any>;
     /**
-     * Get the current list of users for a subscription plan
+     * Get the current list of all users or users for a subscription plan
      *
      * @method
      * @param {number} [planID]
@@ -87,11 +88,12 @@ declare class PaddleSDK {
      * @fulfil {object} - The users list
      *
      * @example
+     * const users = await client.getPlanUsers();
      * const users = await client.getPlanUsers(123);
      */
     getPlanUsers(planID?: number): Promise<any>;
     /**
-     * Get the list of payments for a subscription plan
+     * Get the list of all payments or payments for a subscription plan
      *
      * @method
      * @param {number} [planID]
@@ -99,6 +101,7 @@ declare class PaddleSDK {
      * @fulfil {object} - The payments list
      *
      * @example
+     * const payments = await client.getPlanPayments();
      * const payments = await client.getPlanPayments(123);
      */
     getPlanPayments(planID?: number): Promise<any>;
