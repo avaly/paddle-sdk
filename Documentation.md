@@ -72,7 +72,7 @@ const coupons = await client.getProductCoupons(123);
 <a name="PaddleSDK+getProductPlans"></a>
 
 ### client.getProductPlans([productID]) ⇒ <code>Promise</code>
-Get the current list of all plans or plans for a product
+Get the current list of all plans or plans for a subscription
 
 **Kind**: instance method of [<code>PaddleSDK</code>](#PaddleSDK)  
 **Fulfil**: <code>object</code> - The plans list  
@@ -292,4 +292,4 @@ const custom = await client.generatePayLink({
 ```
 ---
 
-Documentation generated on **Thu, 01 Jul 2021 13:13:41 GMT**
+Documentation generated on **Tue, 01 Feb 2022 11:32:54 GMT**
