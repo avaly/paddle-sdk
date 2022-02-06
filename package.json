@@ -31,6 +31,7 @@
     "pretty": "prettier --write --list-different \"**/*.js\"",
     "release": "yarn docs && git add Documentation.md && standard-version -a",
     "test:jest": "jest",
+    "test:pretty": "prettier --check \"**/*.js\"",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test": "yarn test:jest",
