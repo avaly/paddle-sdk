@@ -128,49 +128,57 @@ declare class PaddleSDK {
      *
      * @method
      * @param {number} userID
+     * @param {number} [page]
      * @returns {Promise}
      * @fulfil {object} - The transations list
      *
      * @example
      * const userTransactions = await client.getUserTransactions(123);
+     * const userTransactionsNext = await client.getUserTransactions(123, 2);
      */
-    getUserTransactions(userID: number): Promise<any>;
+    getUserTransactions(userID: number, page?: number): Promise<any>;
     /**
      * Get the list of transations for a subscription
      *
      * @method
      * @param {number} subscriptionID
+     * @param {number} [page]
      * @returns {Promise}
      * @fulfil {object} - The transations list
      *
      * @example
      * const subscriptionTransactions = await client.getSubscriptionTransactions(123);
+     * const subscriptionTransactionsNext = await client.getSubscriptionTransactions(123, 2);
      */
-    getSubscriptionTransactions(subscriptionID: number): Promise<any>;
+    getSubscriptionTransactions(subscriptionID: number, page?: number): Promise<any>;
     /**
      * Get the list of transations for an order
      *
      * @method
      * @param {number} orderID
+     * @param {number} [page]
      * @returns {Promise}
      * @fulfil {object} - The transations list
      *
      * @example
      * const orderTransactions = await client.getOrderTransactions(123);
+     * const orderTransactionsNext = await client.getOrderTransactions(123, 2);
      */
-    getOrderTransactions(orderID: number): Promise<any>;
+    getOrderTransactions(orderID: number, page?: number): Promise<any>;
     /**
      * Get the list of transations for a checkout
      *
      * @method
      * @param {number} checkoutID
+     * @param {number} [page]
      * @returns {Promise}
      * @fulfil {object} - The transations list
      *
      * @example
      * const checkoutTransactions = await client.getCheckoutTransactions(123);
+     * const checkoutTransactionsNext = await client.getCheckoutTransactions(123, 2);
      */
-    getCheckoutTransactions(checkoutID: number): Promise<any>;
+    getCheckoutTransactions(checkoutID: number, page?: number): Promise<any>;
     /**
      * Verify a webhook alert data using signature and a public key to validate that
      * it was indeed sent from Paddle.
