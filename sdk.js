@@ -216,7 +216,7 @@ class PaddleSDK {
 	 * const userTransactions = await client.getUserTransactions(123);
 	 */
 	getUserTransactions(userID) {
-		return this._getTransactions('users', userID);
+		return this._getTransactions('user', userID);
 	}
 
 	/**

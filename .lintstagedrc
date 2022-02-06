@@ -5,7 +5,6 @@
 		"git add"
 	],
 	"sdk.js": [
-		"yarn docs",
 		"yarn declaration:build",
 		"git add sdk.d.ts"
 	]
