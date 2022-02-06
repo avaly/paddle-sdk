@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.0](https://github.com/avaly/paddle-sdk/compare/v2.3.0...v2.4.0) (2022-02-06)
+
+
+### Features
+
+* Support sandbox server URL ([#38](https://github.com/avaly/paddle-sdk/issues/38)) ([a9ff773](https://github.com/avaly/paddle-sdk/commit/a9ff773bd2cc49b4d188c964e5250fb8af876e95))
+* Support transactions page ([79a7912](https://github.com/avaly/paddle-sdk/commit/79a79129d7b0e5202d4014bb6b4295e4f37203b1))
+
+
+### Bug Fixes
+
+* Get users transactions correctly ([#40](https://github.com/avaly/paddle-sdk/issues/40)) ([461fb03](https://github.com/avaly/paddle-sdk/commit/461fb0390ac31bc243d7f5f8c2e568dbabcdd71d))
+
 ## [2.3.0](https://github.com/avaly/paddle-sdk/compare/v2.2.0...v2.3.0) (2021-07-01)
 
 
