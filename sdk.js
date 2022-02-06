@@ -4,6 +4,7 @@ const got = require('got');
 const pkg = require('./package.json');
 const serialize = require('./lib/serialize');
 
+const SANDBOX_URL = 'https://sandbox-vendors.paddle.com/api/2.0';
 const SERVER_URL = 'https://vendors.paddle.com/api/2.0';
 
 class PaddleSDK {
@@ -14,6 +15,7 @@ class PaddleSDK {
 	 * @param {string} apiKey - The API key for a Paddle account
 	 * @param {string} [publicKey] - The public key for a Paddle account used to verify webhooks, only required for `verifyWebhookData`
 	 * @param {object} [options]
+	 * @param {string} [options.sandbox=false] - Whether to use the sandbox server URL
 	 * @param {string} [options.server=vendors.paddle.com/api/2.0] - The server URL prefix for all requests
 	 *
 	 * @example
@@ -24,7 +26,9 @@ class PaddleSDK {
 		this.vendorID = vendorID || 'MISSING';
 		this.apiKey = apiKey || 'MISSING';
 		this.publicKey = publicKey || 'MISSING';
-		this.server = (options && options.server) || SERVER_URL;
+		this.server =
+			(options && options.server) ||
+			(options && options.sandbox ? SANDBOX_URL : SERVER_URL);
 	}
 
 	/**
