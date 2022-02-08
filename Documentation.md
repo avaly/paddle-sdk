@@ -11,9 +11,9 @@ Welcome to the [Paddle.com](http://www.paddle.com/) Node.js SDK documentation.
     * [new PaddleSDK(vendorID, apiKey, [publicKey], [options])](#new_PaddleSDK_new)
     * [.getProducts()](#PaddleSDK+getProducts) ⇒ <code>Promise</code>
     * [.getProductCoupons(productID)](#PaddleSDK+getProductCoupons) ⇒ <code>Promise</code>
-    * [.getProductPlans(productID)](#PaddleSDK+getProductPlans) ⇒ <code>Promise</code>
-    * [.getPlanUsers(planID)](#PaddleSDK+getPlanUsers) ⇒ <code>Promise</code>
-    * [.getPlanPayments(planID)](#PaddleSDK+getPlanPayments) ⇒ <code>Promise</code>
+    * [.getProductPlans([productID])](#PaddleSDK+getProductPlans) ⇒ <code>Promise</code>
+    * [.getPlanUsers([planID])](#PaddleSDK+getPlanUsers) ⇒ <code>Promise</code>
+    * [.getPlanPayments([planID])](#PaddleSDK+getPlanPayments) ⇒ <code>Promise</code>
     * [.getWebhooksHistory()](#PaddleSDK+getWebhooksHistory) ⇒ <code>Promise</code>
     * [.getUserTransactions(userID, [page])](#PaddleSDK+getUserTransactions) ⇒ <code>Promise</code>
     * [.getSubscriptionTransactions(subscriptionID, [page])](#PaddleSDK+getSubscriptionTransactions) ⇒ <code>Promise</code>
@@ -72,50 +72,53 @@ const coupons = await client.getProductCoupons(123);
 ```
 <a name="PaddleSDK+getProductPlans"></a>
 
-### client.getProductPlans(productID) ⇒ <code>Promise</code>
-Get the current list of plans for a subscription
+### client.getProductPlans([productID]) ⇒ <code>Promise</code>
+Get the current list of all plans or plans for a subscription
 
 **Kind**: instance method of [<code>PaddleSDK</code>](#PaddleSDK)  
 **Fulfil**: <code>object</code> - The plans list  
 
 | Param | Type |
 | --- | --- |
-| productID | <code>number</code> | 
+| [productID] | <code>number</code> | 
 
 **Example**  
 ```js
+const plans = await client.getProductPlans();
 const plans = await client.getProductPlans(123);
 ```
 <a name="PaddleSDK+getPlanUsers"></a>
 
-### client.getPlanUsers(planID) ⇒ <code>Promise</code>
-Get the current list of users for a subscription plan
+### client.getPlanUsers([planID]) ⇒ <code>Promise</code>
+Get the current list of all users or users for a subscription plan
 
 **Kind**: instance method of [<code>PaddleSDK</code>](#PaddleSDK)  
 **Fulfil**: <code>object</code> - The users list  
 
 | Param | Type |
 | --- | --- |
-| planID | <code>number</code> | 
+| [planID] | <code>number</code> | 
 
 **Example**  
 ```js
+const users = await client.getPlanUsers();
 const users = await client.getPlanUsers(123);
 ```
 <a name="PaddleSDK+getPlanPayments"></a>
 
-### client.getPlanPayments(planID) ⇒ <code>Promise</code>
-Get the list of payments for a subscription plan
+### client.getPlanPayments([planID]) ⇒ <code>Promise</code>
+Get the list of all payments or payments for a subscription plan
 
 **Kind**: instance method of [<code>PaddleSDK</code>](#PaddleSDK)  
 **Fulfil**: <code>object</code> - The payments list  
 
 | Param | Type |
 | --- | --- |
-| planID | <code>number</code> | 
+| [planID] | <code>number</code> | 
 
 **Example**  
 ```js
+const payments = await client.getPlanPayments();
 const payments = await client.getPlanPayments(123);
 ```
 <a name="PaddleSDK+getWebhooksHistory"></a>
@@ -298,4 +301,4 @@ const custom = await client.generatePayLink({
 ```
 ---
 
-Documentation generated on **Sun, 06 Feb 2022 18:25:23 GMT**
+Documentation generated on **Tue, 08 Feb 2022 08:28:09 GMT**
