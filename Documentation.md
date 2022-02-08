@@ -15,10 +15,10 @@ Welcome to the [Paddle.com](http://www.paddle.com/) Node.js SDK documentation.
     * [.getPlanUsers([planID])](#PaddleSDK+getPlanUsers) ⇒ <code>Promise</code>
     * [.getPlanPayments([planID])](#PaddleSDK+getPlanPayments) ⇒ <code>Promise</code>
     * [.getWebhooksHistory()](#PaddleSDK+getWebhooksHistory) ⇒ <code>Promise</code>
-    * [.getUserTransactions(userID)](#PaddleSDK+getUserTransactions) ⇒ <code>Promise</code>
-    * [.getSubscriptionTransactions(subscriptionID)](#PaddleSDK+getSubscriptionTransactions) ⇒ <code>Promise</code>
-    * [.getOrderTransactions(orderID)](#PaddleSDK+getOrderTransactions) ⇒ <code>Promise</code>
-    * [.getCheckoutTransactions(checkoutID)](#PaddleSDK+getCheckoutTransactions) ⇒ <code>Promise</code>
+    * [.getUserTransactions(userID, [page])](#PaddleSDK+getUserTransactions) ⇒ <code>Promise</code>
+    * [.getSubscriptionTransactions(subscriptionID, [page])](#PaddleSDK+getSubscriptionTransactions) ⇒ <code>Promise</code>
+    * [.getOrderTransactions(orderID, [page])](#PaddleSDK+getOrderTransactions) ⇒ <code>Promise</code>
+    * [.getCheckoutTransactions(checkoutID, [page])](#PaddleSDK+getCheckoutTransactions) ⇒ <code>Promise</code>
     * [.verifyWebhookData(postData)](#PaddleSDK+verifyWebhookData) ⇒ <code>boolean</code>
     * [.updateSubscriptionPlan(subscriptionID, planID, prorate)](#PaddleSDK+updateSubscriptionPlan) ⇒ <code>Promise</code>
     * [.updateSubscription(subscriptionID, postData)](#PaddleSDK+updateSubscription) ⇒ <code>Promise</code>
@@ -35,6 +35,7 @@ Welcome to the [Paddle.com](http://www.paddle.com/) Node.js SDK documentation.
 | apiKey | <code>string</code> |  | The API key for a Paddle account |
 | [publicKey] | <code>string</code> |  | The public key for a Paddle account used to verify webhooks, only required for `verifyWebhookData` |
 | [options] | <code>object</code> |  |  |
+| [options.sandbox] | <code>string</code> | <code>false</code> | Whether to use the sandbox server URL |
 | [options.server] | <code>string</code> | <code>&quot;vendors.paddle.com/api/2.0&quot;</code> | The server URL prefix for all requests |
 
 **Example**  
@@ -133,7 +134,7 @@ const webhooksHistory = await client.getWebhooksHistory();
 ```
 <a name="PaddleSDK+getUserTransactions"></a>
 
-### client.getUserTransactions(userID) ⇒ <code>Promise</code>
+### client.getUserTransactions(userID, [page]) ⇒ <code>Promise</code>
 Get the list of transations for a user
 
 **Kind**: instance method of [<code>PaddleSDK</code>](#PaddleSDK)  
@@ -142,14 +143,16 @@ Get the list of transations for a user
 | Param | Type |
 | --- | --- |
 | userID | <code>number</code> | 
+| [page] | <code>number</code> | 
 
 **Example**  
 ```js
 const userTransactions = await client.getUserTransactions(123);
+const userTransactionsNext = await client.getUserTransactions(123, 2);
 ```
 <a name="PaddleSDK+getSubscriptionTransactions"></a>
 
-### client.getSubscriptionTransactions(subscriptionID) ⇒ <code>Promise</code>
+### client.getSubscriptionTransactions(subscriptionID, [page]) ⇒ <code>Promise</code>
 Get the list of transations for a subscription
 
 **Kind**: instance method of [<code>PaddleSDK</code>](#PaddleSDK)  
@@ -158,14 +161,16 @@ Get the list of transations for a subscription
 | Param | Type |
 | --- | --- |
 | subscriptionID | <code>number</code> | 
+| [page] | <code>number</code> | 
 
 **Example**  
 ```js
 const subscriptionTransactions = await client.getSubscriptionTransactions(123);
+const subscriptionTransactionsNext = await client.getSubscriptionTransactions(123, 2);
 ```
 <a name="PaddleSDK+getOrderTransactions"></a>
 
-### client.getOrderTransactions(orderID) ⇒ <code>Promise</code>
+### client.getOrderTransactions(orderID, [page]) ⇒ <code>Promise</code>
 Get the list of transations for an order
 
 **Kind**: instance method of [<code>PaddleSDK</code>](#PaddleSDK)  
@@ -174,14 +179,16 @@ Get the list of transations for an order
 | Param | Type |
 | --- | --- |
 | orderID | <code>number</code> | 
+| [page] | <code>number</code> | 
 
 **Example**  
 ```js
 const orderTransactions = await client.getOrderTransactions(123);
+const orderTransactionsNext = await client.getOrderTransactions(123, 2);
 ```
 <a name="PaddleSDK+getCheckoutTransactions"></a>
 
-### client.getCheckoutTransactions(checkoutID) ⇒ <code>Promise</code>
+### client.getCheckoutTransactions(checkoutID, [page]) ⇒ <code>Promise</code>
 Get the list of transations for a checkout
 
 **Kind**: instance method of [<code>PaddleSDK</code>](#PaddleSDK)  
@@ -190,10 +197,12 @@ Get the list of transations for a checkout
 | Param | Type |
 | --- | --- |
 | checkoutID | <code>number</code> | 
+| [page] | <code>number</code> | 
 
 **Example**  
 ```js
 const checkoutTransactions = await client.getCheckoutTransactions(123);
+const checkoutTransactionsNext = await client.getCheckoutTransactions(123, 2);
 ```
 <a name="PaddleSDK+verifyWebhookData"></a>
 
@@ -292,4 +301,4 @@ const custom = await client.generatePayLink({
 ```
 ---
 
-Documentation generated on **Tue, 01 Feb 2022 11:32:54 GMT**
+Documentation generated on **Tue, 08 Feb 2022 08:28:09 GMT**

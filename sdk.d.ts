@@ -7,6 +7,7 @@ declare class PaddleSDK {
      * @param {string} apiKey - The API key for a Paddle account
      * @param {string} [publicKey] - The public key for a Paddle account used to verify webhooks, only required for `verifyWebhookData`
      * @param {object} [options]
+     * @param {string} [options.sandbox=false] - Whether to use the sandbox server URL
      * @param {string} [options.server=vendors.paddle.com/api/2.0] - The server URL prefix for all requests
      *
      * @example
@@ -14,6 +15,7 @@ declare class PaddleSDK {
      * const client = new PaddleSDK('your-vendor-id', 'your-unique-api-key', 'your-public-key');
      */
     constructor(vendorID: string, apiKey: string, publicKey?: string, options?: {
+        sandbox?: string;
         server?: string;
     });
     vendorID: string;
@@ -129,49 +131,57 @@ declare class PaddleSDK {
      *
      * @method
      * @param {number} userID
+     * @param {number} [page]
      * @returns {Promise}
      * @fulfil {object} - The transations list
      *
      * @example
      * const userTransactions = await client.getUserTransactions(123);
+     * const userTransactionsNext = await client.getUserTransactions(123, 2);
      */
-    getUserTransactions(userID: number): Promise<any>;
+    getUserTransactions(userID: number, page?: number): Promise<any>;
     /**
      * Get the list of transations for a subscription
      *
      * @method
      * @param {number} subscriptionID
+     * @param {number} [page]
      * @returns {Promise}
      * @fulfil {object} - The transations list
      *
      * @example
      * const subscriptionTransactions = await client.getSubscriptionTransactions(123);
+     * const subscriptionTransactionsNext = await client.getSubscriptionTransactions(123, 2);
      */
-    getSubscriptionTransactions(subscriptionID: number): Promise<any>;
+    getSubscriptionTransactions(subscriptionID: number, page?: number): Promise<any>;
     /**
      * Get the list of transations for an order
      *
      * @method
      * @param {number} orderID
+     * @param {number} [page]
      * @returns {Promise}
      * @fulfil {object} - The transations list
      *
      * @example
      * const orderTransactions = await client.getOrderTransactions(123);
+     * const orderTransactionsNext = await client.getOrderTransactions(123, 2);
      */
-    getOrderTransactions(orderID: number): Promise<any>;
+    getOrderTransactions(orderID: number, page?: number): Promise<any>;
     /**
      * Get the list of transations for a checkout
      *
      * @method
      * @param {number} checkoutID
+     * @param {number} [page]
      * @returns {Promise}
      * @fulfil {object} - The transations list
      *
      * @example
      * const checkoutTransactions = await client.getCheckoutTransactions(123);
+     * const checkoutTransactionsNext = await client.getCheckoutTransactions(123, 2);
      */
-    getCheckoutTransactions(checkoutID: number): Promise<any>;
+    getCheckoutTransactions(checkoutID: number, page?: number): Promise<any>;
     /**
      * Verify a webhook alert data using signature and a public key to validate that
      * it was indeed sent from Paddle.

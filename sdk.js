@@ -4,6 +4,7 @@ const got = require('got');
 const pkg = require('./package.json');
 const serialize = require('./lib/serialize');
 
+const SANDBOX_URL = 'https://sandbox-vendors.paddle.com/api/2.0';
 const SERVER_URL = 'https://vendors.paddle.com/api/2.0';
 
 class PaddleSDK {
@@ -14,6 +15,7 @@ class PaddleSDK {
 	 * @param {string} apiKey - The API key for a Paddle account
 	 * @param {string} [publicKey] - The public key for a Paddle account used to verify webhooks, only required for `verifyWebhookData`
 	 * @param {object} [options]
+	 * @param {string} [options.sandbox=false] - Whether to use the sandbox server URL
 	 * @param {string} [options.server=vendors.paddle.com/api/2.0] - The server URL prefix for all requests
 	 *
 	 * @example
@@ -24,7 +26,9 @@ class PaddleSDK {
 		this.vendorID = vendorID || 'MISSING';
 		this.apiKey = apiKey || 'MISSING';
 		this.publicKey = publicKey || 'MISSING';
-		this.server = (options && options.server) || SERVER_URL;
+		this.server =
+			(options && options.server) ||
+			(options && options.sandbox ? SANDBOX_URL : SERVER_URL);
 	}
 
 	/**
@@ -199,8 +203,11 @@ class PaddleSDK {
 	 * @returns {Promise}
 	 * @fulfil {object} - The transations list
 	 */
-	_getTransactions(type, id) {
-		return this._request(`/${type}/${id}/transactions`);
+	_getTransactions(type, id, page) {
+		return this._request(
+			`/${type}/${id}/transactions`,
+			page ? { body: { page } } : undefined
+		);
 	}
 
 	/**
@@ -208,14 +215,16 @@ class PaddleSDK {
 	 *
 	 * @method
 	 * @param {number} userID
+	 * @param {number} [page]
 	 * @returns {Promise}
 	 * @fulfil {object} - The transations list
 	 *
 	 * @example
 	 * const userTransactions = await client.getUserTransactions(123);
+	 * const userTransactionsNext = await client.getUserTransactions(123, 2);
 	 */
-	getUserTransactions(userID) {
-		return this._getTransactions('users', userID);
+	getUserTransactions(userID, page) {
+		return this._getTransactions('user', userID, page);
 	}
 
 	/**
@@ -223,28 +232,32 @@ class PaddleSDK {
 	 *
 	 * @method
 	 * @param {number} subscriptionID
+	 * @param {number} [page]
 	 * @returns {Promise}
 	 * @fulfil {object} - The transations list
 	 *
 	 * @example
 	 * const subscriptionTransactions = await client.getSubscriptionTransactions(123);
+	 * const subscriptionTransactionsNext = await client.getSubscriptionTransactions(123, 2);
 	 */
-	getSubscriptionTransactions(subscriptionID) {
-		return this._getTransactions('subscription', subscriptionID);
+	getSubscriptionTransactions(subscriptionID, page) {
+		return this._getTransactions('subscription', subscriptionID, page);
 	}
 	/**
 	 * Get the list of transations for an order
 	 *
 	 * @method
 	 * @param {number} orderID
+	 * @param {number} [page]
 	 * @returns {Promise}
 	 * @fulfil {object} - The transations list
 	 *
 	 * @example
 	 * const orderTransactions = await client.getOrderTransactions(123);
+	 * const orderTransactionsNext = await client.getOrderTransactions(123, 2);
 	 */
-	getOrderTransactions(orderID) {
-		return this._getTransactions('order', orderID);
+	getOrderTransactions(orderID, page) {
+		return this._getTransactions('order', orderID, page);
 	}
 
 	/**
@@ -252,14 +265,16 @@ class PaddleSDK {
 	 *
 	 * @method
 	 * @param {number} checkoutID
+	 * @param {number} [page]
 	 * @returns {Promise}
 	 * @fulfil {object} - The transations list
 	 *
 	 * @example
 	 * const checkoutTransactions = await client.getCheckoutTransactions(123);
+	 * const checkoutTransactionsNext = await client.getCheckoutTransactions(123, 2);
 	 */
-	getCheckoutTransactions(checkoutID) {
-		return this._getTransactions('checkout', checkoutID);
+	getCheckoutTransactions(checkoutID, page) {
+		return this._getTransactions('checkout', checkoutID, page);
 	}
 
 	/**
