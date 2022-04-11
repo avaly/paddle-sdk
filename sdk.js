@@ -15,7 +15,7 @@ class PaddleSDK {
 	 * @param {string} apiKey - The API key for a Paddle account
 	 * @param {string} [publicKey] - The public key for a Paddle account used to verify webhooks, only required for `verifyWebhookData`
 	 * @param {object} [options]
-	 * @param {string} [options.sandbox=false] - Whether to use the sandbox server URL
+	 * @param {boolean} [options.sandbox=false] - Whether to use the sandbox server URL
 	 * @param {string} [options.server=vendors.paddle.com/api/2.0] - The server URL prefix for all requests
 	 *
 	 * @example
