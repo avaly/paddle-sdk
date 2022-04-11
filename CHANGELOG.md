@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.5.1](https://github.com/avaly/paddle-sdk/compare/v2.5.0...v2.5.1) (2022-04-11)
+
+
+### Bug Fixes
+
+* Sandbox argument type ([b9abe9f](https://github.com/avaly/paddle-sdk/commit/b9abe9f0a637338ec16e08228bd479abb2890b13))
+
 ## [2.5.0](https://github.com/avaly/paddle-sdk/compare/v2.4.0...v2.5.0) (2022-02-08)
 
 

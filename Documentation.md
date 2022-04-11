@@ -35,7 +35,7 @@ Welcome to the [Paddle.com](http://www.paddle.com/) Node.js SDK documentation.
 | apiKey | <code>string</code> |  | The API key for a Paddle account |
 | [publicKey] | <code>string</code> |  | The public key for a Paddle account used to verify webhooks, only required for `verifyWebhookData` |
 | [options] | <code>object</code> |  |  |
-| [options.sandbox] | <code>string</code> | <code>false</code> | Whether to use the sandbox server URL |
+| [options.sandbox] | <code>boolean</code> | <code>false</code> | Whether to use the sandbox server URL |
 | [options.server] | <code>string</code> | <code>&quot;vendors.paddle.com/api/2.0&quot;</code> | The server URL prefix for all requests |
 
 **Example**  
@@ -301,4 +301,4 @@ const custom = await client.generatePayLink({
 ```
 ---
 
-Documentation generated on **Tue, 08 Feb 2022 15:52:07 GMT**
+Documentation generated on **Mon, 11 Apr 2022 18:18:29 GMT**
