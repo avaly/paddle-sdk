@@ -4,8 +4,11 @@ const got = require('got');
 const pkg = require('./package.json');
 const serialize = require('./lib/serialize');
 
-const SANDBOX_URL = 'https://sandbox-vendors.paddle.com/api/2.0';
-const SERVER_URL = 'https://vendors.paddle.com/api/2.0';
+const VENDOR_SANDBOX_URL = 'https://sandbox-vendors.paddle.com/api/2.0';
+const VENDOR_SERVER_URL = 'https://vendors.paddle.com/api/2.0';
+
+const CHECKOUT_SANDBOX_URL = 'https://sandbox-checkout.paddle.com/api/1.0';
+const CHECKOUT_SERVER_URL = 'https://checkout.paddle.com/api/1.0';
 
 class PaddleSDK {
 	/**
@@ -26,9 +29,7 @@ class PaddleSDK {
 		this.vendorID = vendorID || 'MISSING';
 		this.apiKey = apiKey || 'MISSING';
 		this.publicKey = publicKey || 'MISSING';
-		this.server =
-			(options && options.server) ||
-			(options && options.sandbox ? SANDBOX_URL : SERVER_URL);
+		this.options = options;
 	}
 
 	/**
@@ -42,19 +43,33 @@ class PaddleSDK {
 	 * @param {boolean} [options.form] - form parameter (ref: got package)
 	 * @param {boolean} [options.json] - json parameter (ref: got package)
 	 */
-	_request(path, { body = {}, headers = {}, form = true, json = false } = {}) {
-		const url = this.server + path;
+	_request(
+		path,
+		{
+			body = {},
+			headers = {},
+			form = true,
+			json = false,
+			returnFirstItem = false,
+			checkoutAPI = false,
+		} = {}
+	) {
+		const url = this._serverURL(checkoutAPI) + path;
+		// Requests to Checkout API are using only GET,
+		const method = checkoutAPI ? 'GET' : 'POST';
 		const fullBody = Object.assign(body, this._getDefaultBody());
 
 		const options = {
 			headers: this._getDefaultHeaders(headers),
-			method: 'POST',
+			method,
 		};
-		if (form) {
-			options.form = fullBody;
-		}
-		if (json) {
-			options.json = fullBody;
+		if (method !== 'GET') {
+			if (form) {
+				options.form = fullBody;
+			}
+			if (json) {
+				options.json = fullBody;
+			}
 		}
 		// console.log('options', options);
 
@@ -63,7 +78,11 @@ class PaddleSDK {
 			.then(body => {
 				if (typeof body.success === 'boolean') {
 					if (body.success) {
-						return body.response || body;
+						const response = body.response || body;
+						if (returnFirstItem && Array.isArray(response)) {
+							return response[0];
+						}
+						return response;
 					}
 
 					throw new Error(
@@ -80,6 +99,22 @@ class PaddleSDK {
 			vendor_id: this.vendorID,
 			vendor_auth_code: this.apiKey,
 		};
+	}
+
+	/**
+	 * Get the used server URL. Some of the requests go to Checkout server, while most will go to Vendor server.
+	 */
+	_serverURL(checkoutAPI = false) {
+		return (
+			(this.options && this.options.server) ||
+			(checkoutAPI &&
+				(this.options && this.options.sandbox
+					? CHECKOUT_SANDBOX_URL
+					: CHECKOUT_SERVER_URL)) ||
+			(this.options && this.options.sandbox
+				? VENDOR_SANDBOX_URL
+				: VENDOR_SERVER_URL)
+		);
 	}
 
 	/**
@@ -143,6 +178,24 @@ class PaddleSDK {
 	getProductPlans(productID) {
 		return this._request('/subscription/plans', {
 			body: { product_id: productID },
+		});
+	}
+
+	/**
+	 * Get the plan based on its ID
+	 *
+	 * @method
+	 * @param {number} [planId]
+	 * @returns {Promise}
+	 * @fulfil {object} - The requested plan
+	 *
+	 * @example
+	 * const plan = await client.getProductPlan(123);
+	 */
+	getProductPlan(planId) {
+		return this._request('/subscription/plans', {
+			body: { plan: planId },
+			returnFirstItem: true,
 		});
 	}
 
@@ -320,6 +373,26 @@ class PaddleSDK {
 	}
 
 	/**
+	 * Get subscription details
+	 *
+	 * @method
+	 * @param {number} subscriptionID
+	 * @returns {Promise}
+	 * @fulfill {object} - Details of a single subscription
+	 *
+	 * @example
+	 * const result = await client.getSubscriptionPlan(123);
+	 */
+	getSubscriptionPlan(subscriptionID) {
+		return this._request('/subscription/users', {
+			body: {
+				subscription_id: subscriptionID,
+			},
+			returnFirstItem: true,
+		});
+	}
+
+	/**
 	 * Update (upgrade/downgrade) the plan of a subscription
 	 *
 	 * @method
@@ -355,7 +428,15 @@ class PaddleSDK {
 	 * const result = await client.updateSubscriptionPlan(123, { quantity: 2 });
 	 */
 	updateSubscription(subscriptionID, postData) {
-		const { quantity, price, planID, currency } = postData;
+		const {
+			quantity,
+			price,
+			planID,
+			currency,
+			prorate,
+			keepModifiers,
+			billImmediately,
+		} = postData;
 		const body = {
 			subscription_id: subscriptionID,
 		};
@@ -370,6 +451,15 @@ class PaddleSDK {
 		}
 		if (currency) {
 			body.currency = currency;
+		}
+		if (keepModifiers) {
+			body.keep_modifiers = keepModifiers;
+		}
+		if (billImmediately) {
+			body.bill_immediately = billImmediately;
+		}
+		if (prorate) {
+			body.prorate = prorate;
 		}
 
 		return this._request('/subscription/users/update', {
@@ -395,6 +485,43 @@ class PaddleSDK {
 	}
 
 	/**
+	 * Get the list of all users
+	 *
+	 * @method
+	 * @param {Object} options { page, resultsPerPage, state, planId }
+	 * @returns {Promise}
+	 * @fulfil {object} - The users list
+	 *
+	 * @example
+	 * const users = await client.getUsers();
+	 * const users = await client.getUsers({ state: 'active' });
+	 *
+	 * @note
+	 * If you have a large amount of active users, you will need to create paginated calls to this function.
+	 */
+	getUsers(options = {}) {
+		const {
+			page = 1,
+			resultsPerPage = 200,
+			state = null,
+			planId = null,
+		} = options;
+
+		const body = {
+			page,
+			results_per_page: resultsPerPage,
+		};
+		if (state) {
+			body.state = state;
+		}
+		if (planId) {
+			body.plan_id = planId;
+		}
+
+		return this._request('/subscription/users', { body });
+	}
+
+	/**
 	 * Generate a custom pay link
 	 *
 	 * @method
@@ -417,6 +544,23 @@ class PaddleSDK {
 			body,
 			form: false,
 			json: true,
+		});
+	}
+
+	/**
+	 * Get details of Checkout Order
+	 *
+	 * @method
+	 * @param {string} ID of the Checkout order
+	 * @returns {Promise}
+	 * @fulfil {object} - Details of the Checkout order
+	 *
+	 * @example
+	 * const result = await client.getOrderDetails('219233-chre53d41f940e0-58aqh94971');
+	 */
+	getOrderDetails(checkoutId) {
+		return this._request(`/order?checkout_id=${checkoutId}`, {
+			checkoutAPI: true,
 		});
 	}
 }

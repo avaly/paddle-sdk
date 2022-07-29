@@ -7,7 +7,7 @@ describe('attributes', () => {
 		expect(instance.vendorID).toBe('foo');
 		expect(instance.apiKey).toBe('bar');
 		expect(instance.publicKey).toBe('MISSING');
-		expect(instance.server).toBe('https://vendors.paddle.com/api/2.0');
+		expect(instance._serverURL()).toBe('https://vendors.paddle.com/api/2.0');
 	});
 
 	test('with public key', () => {
@@ -16,7 +16,7 @@ describe('attributes', () => {
 		expect(instance.vendorID).toBe('foo');
 		expect(instance.apiKey).toBe('bar');
 		expect(instance.publicKey).toBe('ham');
-		expect(instance.server).toBe('https://vendors.paddle.com/api/2.0');
+		expect(instance._serverURL()).toBe('https://vendors.paddle.com/api/2.0');
 	});
 
 	test('with sandbox server URL', () => {
@@ -25,7 +25,9 @@ describe('attributes', () => {
 		expect(instance.vendorID).toBe('foo');
 		expect(instance.apiKey).toBe('bar');
 		expect(instance.publicKey).toBe('ham');
-		expect(instance.server).toBe('https://sandbox-vendors.paddle.com/api/2.0');
+		expect(instance._serverURL()).toBe(
+			'https://sandbox-vendors.paddle.com/api/2.0'
+		);
 	});
 
 	test('with custom server URL', () => {
@@ -36,6 +38,6 @@ describe('attributes', () => {
 		expect(instance.vendorID).toBe('foo');
 		expect(instance.apiKey).toBe('bar');
 		expect(instance.publicKey).toBe('ham');
-		expect(instance.server).toBe('https://custom.paddle.net');
+		expect(instance._serverURL()).toBe('https://custom.paddle.net');
 	});
 });
