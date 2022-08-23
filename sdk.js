@@ -420,7 +420,7 @@ class PaddleSDK {
 	 *
 	 * @method
 	 * @param {number} subscriptionID
-	 * @param {Object} postData { quantity, price, planID, currency }
+	 * @param {Object} postData { quantity, price, planID, currency, prorate, keepModifiers, billImmediately }
 	 * @returns {Promise}
 	 * @fulfill {object} - The result of the operation
 	 *
