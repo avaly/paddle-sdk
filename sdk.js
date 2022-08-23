@@ -213,7 +213,7 @@ class PaddleSDK {
 	 */
 	getPlanUsers(planID) {
 		return this._request('/subscription/users', {
-			body: { plan: planID },
+			body: planID ? { plan: planID } : {},
 		});
 	}
 
