@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/avaly/paddle-sdk/compare/v2.5.1...v3.0.0) (2022-09-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* Requires node v14+
+
+### Features
+
+* Add support for Checkout API, new endpoints, more parameters ([#47](https://github.com/avaly/paddle-sdk/issues/47)) ([efc98b1](https://github.com/avaly/paddle-sdk/commit/efc98b1db2fd0eb5e990c1d86fe1ca9bee98093f))
+
+
+* Update node version ([c7f3bb8](https://github.com/avaly/paddle-sdk/commit/c7f3bb8abb54bebadd78141961316054bad6c110))
+
 ### [2.5.1](https://github.com/avaly/paddle-sdk/compare/v2.5.0...v2.5.1) (2022-04-11)
 
 

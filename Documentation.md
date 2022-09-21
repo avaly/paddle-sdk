@@ -12,6 +12,7 @@ Welcome to the [Paddle.com](http://www.paddle.com/) Node.js SDK documentation.
     * [.getProducts()](#PaddleSDK+getProducts) ⇒ <code>Promise</code>
     * [.getProductCoupons(productID)](#PaddleSDK+getProductCoupons) ⇒ <code>Promise</code>
     * [.getProductPlans([productID])](#PaddleSDK+getProductPlans) ⇒ <code>Promise</code>
+    * [.getProductPlan([planId])](#PaddleSDK+getProductPlan) ⇒ <code>Promise</code>
     * [.getPlanUsers([planID])](#PaddleSDK+getPlanUsers) ⇒ <code>Promise</code>
     * [.getPlanPayments([planID])](#PaddleSDK+getPlanPayments) ⇒ <code>Promise</code>
     * [.getWebhooksHistory()](#PaddleSDK+getWebhooksHistory) ⇒ <code>Promise</code>
@@ -20,10 +21,13 @@ Welcome to the [Paddle.com](http://www.paddle.com/) Node.js SDK documentation.
     * [.getOrderTransactions(orderID, [page])](#PaddleSDK+getOrderTransactions) ⇒ <code>Promise</code>
     * [.getCheckoutTransactions(checkoutID, [page])](#PaddleSDK+getCheckoutTransactions) ⇒ <code>Promise</code>
     * [.verifyWebhookData(postData)](#PaddleSDK+verifyWebhookData) ⇒ <code>boolean</code>
+    * [.getSubscriptionPlan(subscriptionID)](#PaddleSDK+getSubscriptionPlan) ⇒ <code>Promise</code>
     * [.updateSubscriptionPlan(subscriptionID, planID, prorate)](#PaddleSDK+updateSubscriptionPlan) ⇒ <code>Promise</code>
     * [.updateSubscription(subscriptionID, postData)](#PaddleSDK+updateSubscription) ⇒ <code>Promise</code>
     * [.cancelSubscription(subscriptionID)](#PaddleSDK+cancelSubscription) ⇒ <code>Promise</code>
+    * [.getUsers(options)](#PaddleSDK+getUsers) ⇒ <code>Promise</code>
     * [.generatePayLink(body)](#PaddleSDK+generatePayLink) ⇒ <code>Promise</code>
+    * [.getOrderDetails(ID)](#PaddleSDK+getOrderDetails) ⇒ <code>Promise</code>
 
 <a name="new_PaddleSDK_new"></a>
 
@@ -86,6 +90,22 @@ Get the current list of all plans or plans for a subscription
 ```js
 const plans = await client.getProductPlans();
 const plans = await client.getProductPlans(123);
+```
+<a name="PaddleSDK+getProductPlan"></a>
+
+### client.getProductPlan([planId]) ⇒ <code>Promise</code>
+Get the plan based on its ID
+
+**Kind**: instance method of [<code>PaddleSDK</code>](#PaddleSDK)  
+**Fulfil**: <code>object</code> - The requested plan  
+
+| Param | Type |
+| --- | --- |
+| [planId] | <code>number</code> | 
+
+**Example**  
+```js
+const plan = await client.getProductPlan(123);
 ```
 <a name="PaddleSDK+getPlanUsers"></a>
 
@@ -225,6 +245,22 @@ const client = new PaddleSDK('your-vendor-id', 'your-unique-api-key', 'your-publ
 // inside an Express handler which uses express.bodyParser middleware
 const isVerified = client.verifyWebhookData(req.body);
 ```
+<a name="PaddleSDK+getSubscriptionPlan"></a>
+
+### client.getSubscriptionPlan(subscriptionID) ⇒ <code>Promise</code>
+Get subscription details
+
+**Kind**: instance method of [<code>PaddleSDK</code>](#PaddleSDK)  
+**Fulfill**: <code>object</code> - Details of a single subscription  
+
+| Param | Type |
+| --- | --- |
+| subscriptionID | <code>number</code> | 
+
+**Example**  
+```js
+const result = await client.getSubscriptionPlan(123);
+```
 <a name="PaddleSDK+updateSubscriptionPlan"></a>
 
 ### client.updateSubscriptionPlan(subscriptionID, planID, prorate) ⇒ <code>Promise</code>
@@ -254,7 +290,7 @@ Update subscription details, quantity, price and or currency
 | Param | Type | Description |
 | --- | --- | --- |
 | subscriptionID | <code>number</code> |  |
-| postData | <code>Object</code> | { quantity, price, planID, currency } |
+| postData | <code>Object</code> | { quantity, price, planID, currency, prorate, keepModifiers, billImmediately } |
 
 **Example**  
 ```js
@@ -275,6 +311,24 @@ Cancels an active subscription
 **Example**  
 ```js
 const result = await client.cancelSubscription(123);
+```
+<a name="PaddleSDK+getUsers"></a>
+
+### client.getUsers(options) ⇒ <code>Promise</code>
+Get the list of all users
+
+**Kind**: instance method of [<code>PaddleSDK</code>](#PaddleSDK)  
+**Fulfil**: <code>object</code> - The users list  
+**Note**: If you have a large amount of active users, you will need to create paginated calls to this function.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | <code>Object</code> | { page, resultsPerPage, state, planId } |
+
+**Example**  
+```js
+const users = await client.getUsers();
+const users = await client.getUsers({ state: 'active' });
 ```
 <a name="PaddleSDK+generatePayLink"></a>
 
@@ -299,6 +353,22 @@ const custom = await client.generatePayLink({
 	 ]
 	});
 ```
+<a name="PaddleSDK+getOrderDetails"></a>
+
+### client.getOrderDetails(ID) ⇒ <code>Promise</code>
+Get details of Checkout Order
+
+**Kind**: instance method of [<code>PaddleSDK</code>](#PaddleSDK)  
+**Fulfil**: <code>object</code> - Details of the Checkout order  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| ID | <code>string</code> | of the Checkout order |
+
+**Example**  
+```js
+const result = await client.getOrderDetails('219233-chre53d41f940e0-58aqh94971');
+```
 ---
 
-Documentation generated on **Mon, 11 Apr 2022 18:18:29 GMT**
+Documentation generated on **Wed, 21 Sep 2022 07:06:44 GMT**
