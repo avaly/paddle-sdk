@@ -21,7 +21,10 @@ declare class PaddleSDK {
     vendorID: string;
     apiKey: string;
     publicKey: string;
-    server: string;
+    options: {
+        sandbox?: boolean;
+        server?: string;
+    };
     /**
      * Execute a HTTP request
      *
@@ -38,6 +41,10 @@ declare class PaddleSDK {
         vendor_id: string;
         vendor_auth_code: string;
     };
+    /**
+     * Get the used server URL. Some of the requests go to Checkout server, while most will go to Vendor server.
+     */
+    _serverURL(checkoutAPI?: boolean): string;
     /**
      * Get the list of required headers for an API request
      *
@@ -81,6 +88,18 @@ declare class PaddleSDK {
      * const plans = await client.getProductPlans(123);
      */
     getProductPlans(productID?: number): Promise<any>;
+    /**
+     * Get the plan based on its ID
+     *
+     * @method
+     * @param {number} [planId]
+     * @returns {Promise}
+     * @fulfil {object} - The requested plan
+     *
+     * @example
+     * const plan = await client.getProductPlan(123);
+     */
+    getProductPlan(planId?: number): Promise<any>;
     /**
      * Get the current list of all users or users for a subscription plan
      *
@@ -200,6 +219,18 @@ declare class PaddleSDK {
      */
     verifyWebhookData(postData: any): boolean;
     /**
+     * Get subscription details
+     *
+     * @method
+     * @param {number} subscriptionID
+     * @returns {Promise}
+     * @fulfill {object} - Details of a single subscription
+     *
+     * @example
+     * const result = await client.getSubscriptionPlan(123);
+     */
+    getSubscriptionPlan(subscriptionID: number): Promise<any>;
+    /**
      * Update (upgrade/downgrade) the plan of a subscription
      *
      * @method
@@ -218,7 +249,7 @@ declare class PaddleSDK {
      *
      * @method
      * @param {number} subscriptionID
-     * @param {Object} postData { quantity, price, planID, currency }
+     * @param {Object} postData { quantity, price, planID, currency, prorate, keepModifiers, billImmediately }
      * @returns {Promise}
      * @fulfill {object} - The result of the operation
      *
@@ -239,6 +270,22 @@ declare class PaddleSDK {
      */
     cancelSubscription(subscriptionID: number): Promise<any>;
     /**
+     * Get the list of all users
+     *
+     * @method
+     * @param {Object} options { page, resultsPerPage, state, planId }
+     * @returns {Promise}
+     * @fulfil {object} - The users list
+     *
+     * @example
+     * const users = await client.getUsers();
+     * const users = await client.getUsers({ state: 'active' });
+     *
+     * @note
+     * If you have a large amount of active users, you will need to create paginated calls to this function.
+     */
+    getUsers(options?: any): Promise<any>;
+    /**
      * Generate a custom pay link
      *
      * @method
@@ -257,4 +304,16 @@ declare class PaddleSDK {
      *	});
      */
     generatePayLink(body: any): Promise<any>;
+    /**
+     * Get details of Checkout Order
+     *
+     * @method
+     * @param {string} ID of the Checkout order
+     * @returns {Promise}
+     * @fulfil {object} - Details of the Checkout order
+     *
+     * @example
+     * const result = await client.getOrderDetails('219233-chre53d41f940e0-58aqh94971');
+     */
+    getOrderDetails(checkoutId: any): Promise<any>;
 }
