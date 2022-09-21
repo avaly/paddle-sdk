@@ -103,6 +103,8 @@ class PaddleSDK {
 
 	/**
 	 * Get the used server URL. Some of the requests go to Checkout server, while most will go to Vendor server.
+	 *
+	 * @private
 	 */
 	_serverURL(checkoutAPI = false) {
 		return (

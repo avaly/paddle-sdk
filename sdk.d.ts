@@ -43,8 +43,10 @@ declare class PaddleSDK {
     };
     /**
      * Get the used server URL. Some of the requests go to Checkout server, while most will go to Vendor server.
+     *
+     * @private
      */
-    _serverURL(checkoutAPI?: boolean): string;
+    private _serverURL;
     /**
      * Get the list of required headers for an API request
      *
