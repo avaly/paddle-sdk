@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-        node: [10, 12, 14, 16]
+        node: [14, 16, 18]
 
     name: Node.js ${{ matrix.node }}
 
