@@ -288,6 +288,19 @@ declare class PaddleSDK {
      */
     getUsers(options?: any): Promise<any>;
     /**
+     * Change the due date of an upcoming subscription payment
+     *
+     * @method
+     * @param {number} paymentID
+     * @param {string} date
+     * @returns {Promise}
+     * @fulfill {object} - The result of the operation
+     *
+     * @example
+     * const result = await client.reschedulePayment(123, '2022-12-04');
+     */
+    reschedulePayment(paymentID: number, date: string): Promise<any>;
+    /**
      * Generate a custom pay link
      *
      * @method
