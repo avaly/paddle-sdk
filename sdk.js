@@ -464,7 +464,7 @@ class PaddleSDK {
 		if (prorate) {
 			body.prorate = prorate;
 		}
-		if (pause) {
+		if (typeof pause === 'boolean') {
 			body.pause = pause;
 		}
 
