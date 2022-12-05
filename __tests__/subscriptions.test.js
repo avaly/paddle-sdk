@@ -310,6 +310,60 @@ describe('subscription methods', () => {
 				});
 		});
 
+		it('resolves on successful pause subscription', () => {
+			const expectedBody = Object.assign(
+				{
+					subscription_id: SUBSCRIPTION_ID,
+					pause: true,
+				},
+				EXPECTED_BODY
+			);
+			// https://developer.paddle.com/api-reference/subscription-api/subscription-users/updateuser
+			const body = {
+				success: true,
+			};
+
+			const scope = nock()
+				.post(path, expectedBody)
+				.reply(200, body);
+
+			return instance
+				.updateSubscription(SUBSCRIPTION_ID, {
+					pause: true,
+				})
+				.then(response => {
+					expect(response).toEqual(body);
+					expect(scope.isDone()).toBeTruthy();
+				});
+		});
+
+		it('resolves on successful renew subscription', () => {
+			const expectedBody = Object.assign(
+				{
+					subscription_id: SUBSCRIPTION_ID,
+					pause: false,
+				},
+				EXPECTED_BODY
+			);
+			// https://developer.paddle.com/api-reference/subscription-api/subscription-users/updateuser
+			const body = {
+				success: true,
+			};
+
+			const scope = nock()
+				.post(path, expectedBody)
+				.reply(200, body);
+
+			return instance
+				.updateSubscription(SUBSCRIPTION_ID, {
+					pause: false,
+				})
+				.then(response => {
+					expect(response).toEqual(body);
+					expect(scope.isDone()).toBeTruthy();
+				});
+		});
+
 		it('rejects on error request', () => {
 			const scope = nock()
 				.post(path, expectedBody)
