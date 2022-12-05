@@ -422,7 +422,7 @@ class PaddleSDK {
 	 *
 	 * @method
 	 * @param {number} subscriptionID
-	 * @param {Object} postData { quantity, price, planID, currency, prorate, keepModifiers, billImmediately }
+	 * @param {Object} postData { quantity, price, planID, currency, prorate, keepModifiers, billImmediately, pause }
 	 * @returns {Promise}
 	 * @fulfill {object} - The result of the operation
 	 *
@@ -438,6 +438,7 @@ class PaddleSDK {
 			prorate,
 			keepModifiers,
 			billImmediately,
+			pause,
 		} = postData;
 		const body = {
 			subscription_id: subscriptionID,
@@ -462,6 +463,9 @@ class PaddleSDK {
 		}
 		if (prorate) {
 			body.prorate = prorate;
+		}
+		if (pause) {
+			body.pause = pause;
 		}
 
 		return this._request('/subscription/users/update', {
