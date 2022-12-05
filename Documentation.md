@@ -290,7 +290,7 @@ Update subscription details, quantity, price and or currency
 | Param | Type | Description |
 | --- | --- | --- |
 | subscriptionID | <code>number</code> |  |
-| postData | <code>Object</code> | { quantity, price, planID, currency, prorate, keepModifiers, billImmediately } |
+| postData | <code>Object</code> | { quantity, price, planID, currency, prorate, keepModifiers, billImmediately, pause } |
 
 **Example**  
 ```js
@@ -371,4 +371,4 @@ const result = await client.getOrderDetails('219233-chre53d41f940e0-58aqh94971')
 ```
 ---
 
-Documentation generated on **Wed, 21 Sep 2022 07:06:44 GMT**
+Documentation generated on **Mon, 05 Dec 2022 11:44:15 GMT**
