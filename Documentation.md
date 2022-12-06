@@ -28,6 +28,7 @@ Welcome to the [Paddle.com](http://www.paddle.com/) Node.js SDK documentation.
     * [.getUsers(options)](#PaddleSDK+getUsers) ⇒ <code>Promise</code>
     * [.generatePayLink(body)](#PaddleSDK+generatePayLink) ⇒ <code>Promise</code>
     * [.getOrderDetails(ID)](#PaddleSDK+getOrderDetails) ⇒ <code>Promise</code>
+    * [.createSubscriptionModifier(subscriptionID, modifierAmount, options)](#PaddleSDK+createSubscriptionModifier) ⇒ <code>Promise</code>
 
 <a name="new_PaddleSDK_new"></a>
 
@@ -369,6 +370,25 @@ Get details of Checkout Order
 ```js
 const result = await client.getOrderDetails('219233-chre53d41f940e0-58aqh94971');
 ```
+<a name="PaddleSDK+createSubscriptionModifier"></a>
+
+### client.createSubscriptionModifier(subscriptionID, modifierAmount, options) ⇒ <code>Promise</code>
+Create a subscription modifier to dynamically change the subscription payment amount
+
+**Kind**: instance method of [<code>PaddleSDK</code>](#PaddleSDK)  
+**Fulfil**: <code>object</code> - The result of the operation  
+
+| Param |
+| --- |
+| subscriptionID | 
+| modifierAmount | 
+| options | 
+
+**Example**  
+```js
+const result = await client.createSubscriptionModifier(123, 10);
+const result = await client.createSubscriptionModifier(123, 10, { modifier_recurring: false, modifier_description: 'description' });
+```
 ---
 
-Documentation generated on **Mon, 05 Dec 2022 11:44:15 GMT**
+Documentation generated on **Tue, 06 Dec 2022 10:34:59 GMT**
