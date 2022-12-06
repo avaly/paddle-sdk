@@ -298,6 +298,7 @@ class PaddleSDK {
 	getSubscriptionTransactions(subscriptionID, page) {
 		return this._getTransactions('subscription', subscriptionID, page);
 	}
+
 	/**
 	 * Get the list of transations for an order
 	 *
@@ -567,6 +568,38 @@ class PaddleSDK {
 	getOrderDetails(checkoutId) {
 		return this._request(`/order?checkout_id=${checkoutId}`, {
 			checkoutAPI: true,
+		});
+	}
+
+	/**
+	 * Create a subscription modifier to dynamically change the subscription payment amount
+	 *
+	 * @method
+	 * @param subscriptionID
+	 * @param modifierAmount
+	 * @param options
+	 * @returns {Promise}
+	 * @fulfil {object} - The result of the operation
+	 *
+	 * @example
+	 * const result = await client.createSubscriptionModifier(123, 10);
+	 * const result = await client.createSubscriptionModifier(123, 10, { modifier_recurring: false, modifier_description: 'description' });
+	 */
+	createSubscriptionModifier(subscriptionID, modifierAmount, options = {}) {
+		const { modifier_recurring, modifier_description } = options;
+		const body = {
+			subscription_id: subscriptionID,
+			modifier_amount: modifierAmount,
+		};
+		if (typeof modifier_recurring === 'boolean') {
+			body.modifier_recurring = modifier_recurring;
+		}
+		if (modifier_description) {
+			body.modifier_description = modifier_description;
+		}
+
+		return this._request('/subscription/modifiers/create', {
+			body: body,
 		});
 	}
 }
