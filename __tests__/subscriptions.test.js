@@ -18,7 +18,6 @@ describe('subscription methods', () => {
 	const SUBSCRIPTION_ID = '34567';
 	const PAYMENT_ID = '512345';
 	const NEW_PAYMENT_DATE = '2023-01-01';
-	const NEW_PAYMENT_DATE_INVALID = '22/10/2022';
 
 	beforeEach(() => {
 		instance = new PaddleSDK(VENDOR_ID, VENDOR_API_KEY, null, {
@@ -241,6 +240,8 @@ describe('subscription methods', () => {
 		});
 
 		it('rejects on invalid date format', () => {
+			const NEW_PAYMENT_DATE_INVALID = '22/10/2022';
+
 			expect(() =>
 				instance.reschedulePayment(PAYMENT_ID, NEW_PAYMENT_DATE_INVALID)
 			).toThrow('Invalid date format, must match \\d{4}-\\d{2}-\\d{2}');
