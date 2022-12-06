@@ -251,7 +251,7 @@ declare class PaddleSDK {
      *
      * @method
      * @param {number} subscriptionID
-     * @param {Object} postData { quantity, price, planID, currency, prorate, keepModifiers, billImmediately }
+     * @param {Object} postData { quantity, price, planID, currency, prorate, keepModifiers, billImmediately, pause }
      * @returns {Promise}
      * @fulfill {object} - The result of the operation
      *
@@ -318,4 +318,19 @@ declare class PaddleSDK {
      * const result = await client.getOrderDetails('219233-chre53d41f940e0-58aqh94971');
      */
     getOrderDetails(checkoutId: any): Promise<any>;
+    /**
+     * Create a subscription modifier to dynamically change the subscription payment amount
+     *
+     * @method
+     * @param subscriptionID
+     * @param modifierAmount
+     * @param options
+     * @returns {Promise}
+     * @fulfil {object} - The result of the operation
+     *
+     * @example
+     * const result = await client.createSubscriptionModifier(123, 10);
+     * const result = await client.createSubscriptionModifier(123, 10, { modifier_recurring: false, modifier_description: 'description' });
+     */
+    createSubscriptionModifier(subscriptionID: any, modifierAmount: any, options?: {}): Promise<any>;
 }
