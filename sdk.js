@@ -528,21 +528,18 @@ class PaddleSDK {
 	 *
 	 * @method
 	 * @param {number} paymentID
-	 * @param {string} date
+	 * @param {Date} date - Only the date portion of the date value is used
 	 * @returns {Promise}
 	 * @fulfill {object} - The result of the operation
 	 *
 	 * @example
-	 * const result = await client.reschedulePayment(123, '2022-12-04');
+	 * const result = await client.reschedulePayment(123, new Date('2022-12-04'));
 	 */
 	reschedulePayment(paymentID, date) {
-		if (!/\d{4}-\d{2}-\d{2}/.test(date)) {
-			throw new Error('Invalid date format, must match \\d{4}-\\d{2}-\\d{2}');
-		}
 		return this._request('/subscription/payments_reschedule', {
 			body: {
 				payment_id: paymentID,
-				date,
+				date: `${date.toISOString().substring(0, 10)}`,
 			},
 		});
 	}

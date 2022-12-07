@@ -292,14 +292,14 @@ declare class PaddleSDK {
      *
      * @method
      * @param {number} paymentID
-     * @param {string} date
+     * @param {Date} date - Only the date portion of the date value is used
      * @returns {Promise}
      * @fulfill {object} - The result of the operation
      *
      * @example
-     * const result = await client.reschedulePayment(123, '2022-12-04');
+     * const result = await client.reschedulePayment(123, new Date('2022-12-04'));
      */
-    reschedulePayment(paymentID: number, date: string): Promise<any>;
+    reschedulePayment(paymentID: number, date: Date): Promise<any>;
     /**
      * Generate a custom pay link
      *
