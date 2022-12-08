@@ -539,7 +539,7 @@ class PaddleSDK {
 		return this._request('/subscription/payments_reschedule', {
 			body: {
 				payment_id: paymentID,
-				date: `${date.toISOString().substring(0, 10)}`,
+				date: date.toISOString().substring(0, 10),
 			},
 		});
 	}
