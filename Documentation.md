@@ -347,7 +347,7 @@ Generate a custom pay link
 ```js
 const custom = await client.generatePayLink({
  "title" : "my custom checkout",
- "custom_message" : "some custom message"
+ "custom_message" : "some custom message",
 	"prices": [
 		"USD:19.99",
 		"EUR:15.99"
