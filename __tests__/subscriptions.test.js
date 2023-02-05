@@ -359,6 +359,60 @@ describe('subscription methods', () => {
 				});
 		});
 
+		it('resolves on successful pause subscription', () => {
+			const expectedBody = Object.assign(
+				{
+					subscription_id: SUBSCRIPTION_ID,
+					pause: true,
+				},
+				EXPECTED_BODY
+			);
+			// https://developer.paddle.com/api-reference/subscription-api/subscription-users/updateuser
+			const body = {
+				success: true,
+			};
+
+			const scope = nock()
+				.post(path, expectedBody)
+				.reply(200, body);
+
+			return instance
+				.updateSubscription(SUBSCRIPTION_ID, {
+					pause: true,
+				})
+				.then(response => {
+					expect(response).toEqual(body);
+					expect(scope.isDone()).toBeTruthy();
+				});
+		});
+
+		it('resolves on successful renew subscription', () => {
+			const expectedBody = Object.assign(
+				{
+					subscription_id: SUBSCRIPTION_ID,
+					pause: false,
+				},
+				EXPECTED_BODY
+			);
+			// https://developer.paddle.com/api-reference/subscription-api/subscription-users/updateuser
+			const body = {
+				success: true,
+			};
+
+			const scope = nock()
+				.post(path, expectedBody)
+				.reply(200, body);
+
+			return instance
+				.updateSubscription(SUBSCRIPTION_ID, {
+					pause: false,
+				})
+				.then(response => {
+					expect(response).toEqual(body);
+					expect(scope.isDone()).toBeTruthy();
+				});
+		});
+
 		it('rejects on error request', () => {
 			const scope = nock()
 				.post(path, expectedBody)
@@ -412,6 +466,78 @@ describe('subscription methods', () => {
 				expect(err.response.statusCode).toBe(400);
 				expect(scope.isDone()).toBeTruthy();
 			});
+		});
+	});
+
+	describe('createSubscriptionModifier', () => {
+		const path = '/subscription/modifiers/create';
+		const expectedBody = Object.assign(
+			{
+				subscription_id: SUBSCRIPTION_ID,
+				modifier_amount: 10,
+			},
+			EXPECTED_BODY
+		);
+
+		it('resolves on successful request', () => {
+			// https://developer.paddle.com/api-reference/dc2b0c06f0481-create-modifier
+			const body = {
+				success: true,
+			};
+
+			const scope = nock()
+				.post(path, expectedBody)
+				.reply(200, body);
+
+			return instance
+				.createSubscriptionModifier(SUBSCRIPTION_ID, 10)
+				.then(response => {
+					expect(response).toEqual(body);
+					expect(scope.isDone()).toBeTruthy();
+				});
+		});
+
+		it('resolves on successful request all params', () => {
+			const expectedBody = Object.assign(
+				{
+					subscription_id: SUBSCRIPTION_ID,
+					modifier_amount: 10,
+					modifier_recurring: false,
+					modifier_description: 'description',
+				},
+				EXPECTED_BODY
+			);
+			// https://developer.paddle.com/api-reference/dc2b0c06f0481-create-modifier
+			const body = {
+				success: true,
+			};
+
+			const scope = nock()
+				.post(path, expectedBody)
+				.reply(200, body);
+
+			return instance
+				.createSubscriptionModifier(SUBSCRIPTION_ID, 10, {
+					modifier_recurring: false,
+					modifier_description: 'description',
+				})
+				.then(response => {
+					expect(response).toEqual(body);
+					expect(scope.isDone()).toBeTruthy();
+				});
+		});
+
+		it('rejects on error request', () => {
+			const scope = nock()
+				.post(path, expectedBody)
+				.reply(400, DEFAULT_ERROR);
+
+			return instance
+				.createSubscriptionModifier(SUBSCRIPTION_ID, 10)
+				.catch(err => {
+					expect(err.response.statusCode).toBe(400);
+					expect(scope.isDone()).toBeTruthy();
+				});
 		});
 	});
 });

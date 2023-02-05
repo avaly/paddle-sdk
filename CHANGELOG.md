@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0](https://github.com/avaly/paddle-sdk/compare/v3.1.0...v3.2.0) (2022-12-06)
+
+
+### Features
+
+* Create subscription modifier ([#56](https://github.com/avaly/paddle-sdk/issues/56)) ([de71c3c](https://github.com/avaly/paddle-sdk/commit/de71c3c64ef8d035d74d4ea0f6c557fdb164447c))
+
+## [3.1.0](https://github.com/avaly/paddle-sdk/compare/v3.0.0...v3.1.0) (2022-12-05)
+
+
+### Features
+
+* pause / renew subscription ([#54](https://github.com/avaly/paddle-sdk/issues/54)) ([9595d6e](https://github.com/avaly/paddle-sdk/commit/9595d6e0b0ec172198c9ca3ff20396e0dd474b2d))
+
 ## [3.0.0](https://github.com/avaly/paddle-sdk/compare/v2.5.1...v3.0.0) (2022-09-21)
 
 
