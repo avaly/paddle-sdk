@@ -1,16 +1,17 @@
-const PaddleSDK = require('../sdk');
-const DEFAULT_ERROR = require('../utils/error');
-const nock = require('../utils/nock');
+import { PaddleSDK } from '../sdk';
+import {
+	DEFAULT_ERROR,
+	VENDOR_API_KEY,
+	VENDOR_ID,
+} from '../../utils/constants';
+import nock, { SERVER } from '../../utils/nock';
 
 describe('orders methods', () => {
-	let instance;
-
-	const VENDOR_ID = 'foo';
-	const VENDOR_API_KEY = 'bar';
+	let instance: PaddleSDK;
 
 	beforeEach(() => {
-		instance = new PaddleSDK(VENDOR_ID, VENDOR_API_KEY, null, {
-			server: nock.SERVER,
+		instance = new PaddleSDK(VENDOR_ID, VENDOR_API_KEY, '', {
+			server: SERVER,
 		});
 	});
 
@@ -18,7 +19,7 @@ describe('orders methods', () => {
 		const checkoutId = '219233-chre53d41f940e0-58aqh94971';
 		const path = `/order?checkout_id=${checkoutId}`;
 
-		it('resolves on successful request', () => {
+		test('resolves on successful request', async () => {
 			// https://developer.paddle.com/api-reference/fea392d1e2f4f-get-order-details
 			const body = {
 				success: true,
@@ -71,30 +72,22 @@ describe('orders methods', () => {
 				},
 			};
 
-			const scope = nock()
-				.get(path)
-				.reply(200, body);
+			const scope = nock().get(path).reply(200, body);
 
-			return instance.getOrderDetails(checkoutId).then(response => {
-				expect(response).toEqual(body.response);
-				expect(scope.isDone()).toBeTruthy();
-			});
+			const response = await instance.getOrderDetails(checkoutId);
+
+			expect(response).toEqual(body.response);
+			expect(scope.isDone()).toBeTruthy();
 		});
 
-		it('rejects on error response', () => {
-			const scope = nock()
-				.get(path)
-				.reply(400, DEFAULT_ERROR);
+		test('rejects on error response', async () => {
+			const scope = nock().get(path).reply(400, DEFAULT_ERROR);
 
-			return instance.getOrderDetails(checkoutId).then(
-				() => {
-					expect('This promise should fail').toBeFalsy();
-				},
-				err => {
-					expect(err.response.statusCode).toBe(400);
-					expect(scope.isDone()).toBeTruthy();
-				}
+			await expect(instance.getOrderDetails(checkoutId)).rejects.toThrow(
+				'Response code 400'
 			);
+
+			expect(scope.isDone()).toBeTruthy();
 		});
 	});
 });

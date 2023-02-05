@@ -58,7 +58,7 @@ run();
 
 ## Documentation
 
-See the JSDoc markdown documentation in [Documentation.md](Documentation.md).
+Read the [documentation](https://avaly.github.io/paddle-sdk/).
 
 ## Change log
 

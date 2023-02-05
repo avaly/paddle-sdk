@@ -1,0 +1,15 @@
+{
+	"$schema": "https://typedoc.org/schema.json",
+	"darkHighlightTheme": "dark-plus",
+	"includeVersion": true,
+	"includes": "./CHANGELOG.md",
+	"entryPoints": ["src/"],
+	"name": "Paddle SDK",
+	"navigationLinks": {
+		"Github": "https://github.com/avaly/paddle-sdk",
+		"Changelog": "https://github.com/avaly/paddle-sdk/blob/main/CHANGELOG.md"
+	},
+	"out": "./docs",
+	"readme": "none",
+	"theme": "default"
+}
