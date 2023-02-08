@@ -16,6 +16,8 @@ describe('subscription methods', () => {
 	const PRODUCT_ID = '12345';
 	const PLAN_ID = '23456';
 	const SUBSCRIPTION_ID = '34567';
+	const PAYMENT_ID = '512345';
+	const NEW_PAYMENT_DATE = new Date('2023-01-01');
 
 	beforeEach(() => {
 		instance = new PaddleSDK(VENDOR_ID, VENDOR_API_KEY, null, {
@@ -201,6 +203,53 @@ describe('subscription methods', () => {
 				expect(err.response.statusCode).toBe(400);
 				expect(scope.isDone()).toBeTruthy();
 			});
+		});
+	});
+
+	describe('reschedulePayment', () => {
+		const path = '/subscription/payments_reschedule';
+		const expectedBody = Object.assign(
+			{
+				payment_id: PAYMENT_ID,
+				date: NEW_PAYMENT_DATE.toISOString().substring(0, 10),
+			},
+			EXPECTED_BODY
+		);
+
+		it('resolves on successful request', () => {
+			// https://developer.paddle.com/api-reference/fe93f28aa7f7e-reschedule-payment
+			const body = {
+				success: true,
+				response: [
+					{
+						success: true,
+					},
+				],
+			};
+
+			const scope = nock()
+				.post(path, expectedBody)
+				.reply(200, body);
+
+			return instance
+				.reschedulePayment(PAYMENT_ID, NEW_PAYMENT_DATE)
+				.then(response => {
+					expect(response).toEqual(body.response);
+					expect(scope.isDone()).toBeTruthy();
+				});
+		});
+
+		it('rejects on error request', () => {
+			const scope = nock()
+				.post(path, expectedBody)
+				.reply(400, DEFAULT_ERROR);
+
+			return instance
+				.reschedulePayment(PAYMENT_ID, NEW_PAYMENT_DATE)
+				.catch(err => {
+					expect(err.response.statusCode).toBe(400);
+					expect(scope.isDone()).toBeTruthy();
+				});
 		});
 	});
 

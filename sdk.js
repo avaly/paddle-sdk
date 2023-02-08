@@ -529,6 +529,27 @@ class PaddleSDK {
 	}
 
 	/**
+	 * Change the due date of an upcoming subscription payment
+	 *
+	 * @method
+	 * @param {number} paymentID
+	 * @param {Date} date - Only the date portion of the date value is used
+	 * @returns {Promise}
+	 * @fulfill {object} - The result of the operation
+	 *
+	 * @example
+	 * const result = await client.reschedulePayment(123, new Date('2022-12-04'));
+	 */
+	reschedulePayment(paymentID, date) {
+		return this._request('/subscription/payments_reschedule', {
+			body: {
+				payment_id: paymentID,
+				date: date.toISOString().substring(0, 10),
+			},
+		});
+	}
+
+	/**
 	 * Generate a custom pay link
 	 *
 	 * @method
