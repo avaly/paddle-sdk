@@ -39,7 +39,7 @@
     "declaration:build": "tsc --allowJs --declaration --emitDeclarationOnly sdk.js"
   },
   "dependencies": {
-    "got": "^10.2.0"
+    "got": "^11.0.0"
   },
   "devDependencies": {
     "eslint": "^8.0.0",
