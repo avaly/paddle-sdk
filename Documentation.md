@@ -26,6 +26,7 @@ Welcome to the [Paddle.com](http://www.paddle.com/) Node.js SDK documentation.
     * [.updateSubscription(subscriptionID, postData)](#PaddleSDK+updateSubscription) ⇒ <code>Promise</code>
     * [.cancelSubscription(subscriptionID)](#PaddleSDK+cancelSubscription) ⇒ <code>Promise</code>
     * [.getUsers(options)](#PaddleSDK+getUsers) ⇒ <code>Promise</code>
+    * [.reschedulePayment(paymentID, date)](#PaddleSDK+reschedulePayment) ⇒ <code>Promise</code>
     * [.generatePayLink(body)](#PaddleSDK+generatePayLink) ⇒ <code>Promise</code>
     * [.getOrderDetails(ID)](#PaddleSDK+getOrderDetails) ⇒ <code>Promise</code>
     * [.createSubscriptionModifier(subscriptionID, modifierAmount, options)](#PaddleSDK+createSubscriptionModifier) ⇒ <code>Promise</code>
@@ -331,6 +332,23 @@ Get the list of all users
 const users = await client.getUsers();
 const users = await client.getUsers({ state: 'active' });
 ```
+<a name="PaddleSDK+reschedulePayment"></a>
+
+### client.reschedulePayment(paymentID, date) ⇒ <code>Promise</code>
+Change the due date of an upcoming subscription payment
+
+**Kind**: instance method of [<code>PaddleSDK</code>](#PaddleSDK)  
+**Fulfill**: <code>object</code> - The result of the operation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| paymentID | <code>number</code> |  |
+| date | <code>Date</code> | Only the date portion of the date value is used |
+
+**Example**  
+```js
+const result = await client.reschedulePayment(123, new Date('2022-12-04'));
+```
 <a name="PaddleSDK+generatePayLink"></a>
 
 ### client.generatePayLink(body) ⇒ <code>Promise</code>
@@ -391,4 +409,4 @@ const result = await client.createSubscriptionModifier(123, 10, { modifier_recur
 ```
 ---
 
-Documentation generated on **Tue, 06 Dec 2022 10:34:59 GMT**
+Documentation generated on **Wed, 08 Feb 2023 10:02:53 GMT**

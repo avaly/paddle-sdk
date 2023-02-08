@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.3.0](https://github.com/avaly/paddle-sdk/compare/v3.2.0...v3.3.0) (2023-02-08)
+
+
+### Features
+
+* Add reschedule payment API endpoint ([#52](https://github.com/avaly/paddle-sdk/issues/52)) ([7d2c92b](https://github.com/avaly/paddle-sdk/commit/7d2c92be76558706858176de99dd7b87e9db4cdc))
+
 ## [3.2.0](https://github.com/avaly/paddle-sdk/compare/v3.1.0...v3.2.0) (2022-12-06)
 
 
