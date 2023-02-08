@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "eslint": "^8.0.0",
-    "husky": "^3.1.0",
+    "husky": "^8.0.0",
     "jest": "^29.0.0",
     "jsdoc-to-markdown": "^5.0.3",
     "lint-staged": "^9.5.0",
