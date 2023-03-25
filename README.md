@@ -1,6 +1,6 @@
 # Paddle.com Node.js SDK
 
-[![Github Actions](https://github.com/avaly/paddle-sdk/actions/workflows/ci.yaml/badge.svg)](https://github.com/avaly/paddle-sdk/actions)
+[![Github Actions](https://github.com/avaly/paddle-sdk/actions/workflows/tests.yaml/badge.svg)](https://github.com/avaly/paddle-sdk/actions)
 [![NPM version](https://img.shields.io/npm/v/paddle-sdk.svg?style=flat-square)](https://www.npmjs.com/package/paddle-sdk)
 
 Welcome to the [Paddle.com](https://www.paddle.com/) Node.js SDK documentation.
@@ -21,24 +21,8 @@ $ yarn add paddle-sdk
 
 ## Usage
 
-Using `Promise`:
-
-```js
-const PaddleSDK = require('paddle-sdk');
-
-const client = new PaddleSDK('your-vendor-id-here', 'your-unique-api-key-here');
-
-client
-	.getProducts()
-	.then(console.log)
-	.then(() => client.getProductPlans(123))
-	.then(console.log);
-```
-
-Using `async`/`await`:
-
-```js
-const PaddleSDK = require('paddle-sdk');
+```ts
+import { PaddleSDK } from 'paddle-sdk';
 
 async function run() {
 	const client = new PaddleSDK(
@@ -54,6 +38,12 @@ async function run() {
 }
 
 run();
+```
+
+For CommonJS:
+
+```js
+const { PaddleSDK } = require('paddle-sdk');
 ```
 
 ## Documentation
