@@ -2,8 +2,10 @@
   "name": "paddle-sdk",
   "description": "The Paddle.com Node.js SDK",
   "version": "3.3.0",
-  "main": "sdk.js",
-  "types": "sdk.d.ts",
+  "type": "module",
+  "main": "./cjs/sdk.js",
+  "exports": "./esm/sdk.js",
+  "types": "./esm/sdk.d.ts",
   "author": "Valentin Agachi <github-com@agachi.name>",
   "repository": {
     "type": "git",
@@ -21,37 +23,43 @@
     "node": ">=14.0.0"
   },
   "files": [
-    "sdk.js",
-    "sdk.d.ts",
-    "lib/"
+    "cjs/",
+    "esm/"
   ],
   "scripts": {
-    "docs": "jsdoc2md --partial docs/main.hbs --helper docs/helpers.js --files sdk.js > Documentation.md",
-    "lint": "eslint . --cache --fix --ignore-pattern '!.eslintrc.js'",
-    "pretty": "prettier --write --list-different \"**/*.js\"",
-    "release": "yarn docs && git add Documentation.md && standard-version -a",
-    "test:jest": "jest",
-    "test:pretty": "prettier --check \"**/*.js\"",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
+    "build": "./build.sh",
+    "docs": "typedoc",
+    "lint": "eslint . --cache --fix --ignore-pattern '!.eslintrc.cjs'",
+    "prepack": "yarn build",
+    "pretty": "prettier --write --list-different \"**/*.ts\"",
+    "release": "standard-version -a",
     "test": "yarn test:jest",
-    "pretest": "yarn lint",
-    "declaration:build": "tsc --allowJs --declaration --emitDeclarationOnly sdk.js"
+    "test:coverage": "jest --coverage",
+    "test:jest": "jest",
+    "test:pretty": "prettier --check \"**/*.ts\"",
+    "test:types": "tsc --noEmit",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "got": "^10.2.0"
   },
   "devDependencies": {
-    "eslint": "^8.0.0",
-    "husky": "^3.1.0",
-    "jest": "^29.0.0",
-    "jsdoc-to-markdown": "^5.0.3",
-    "lint-staged": "^9.5.0",
-    "nock": "^11.7.0",
-    "prettier": "^1.19.1",
-    "standard-version": "^8.0.0",
-    "typescript": "^3.8.3",
-    "validate-commit-msg": "^2.14.0"
+    "@types/jest": "29.5.0",
+    "@types/node": "14.18.36",
+    "@typescript-eslint/eslint-plugin": "5.56.0",
+    "@typescript-eslint/parser": "5.56.0",
+    "eslint": "8.36.0",
+    "husky": "3.1.0",
+    "jest": "29.5.0",
+    "lint-staged": "9.5.0",
+    "nock": "11.7.0",
+    "prettier": "2.8.7",
+    "standard-version": "8.0.0",
+    "ts-jest": "29.0.5",
+    "ts-node": "10.9.1",
+    "typedoc": "0.23.28",
+    "typescript": "5.0.2",
+    "validate-commit-msg": "2.14.0"
   },
   "husky": {
     "hooks": {

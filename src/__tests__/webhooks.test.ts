@@ -1,32 +1,30 @@
-const PaddleSDK = require('../sdk');
-const DEFAULT_ERROR = require('../utils/error');
-const nock = require('../utils/nock');
+import { PaddleSDK } from '../sdk';
+import {
+	DEFAULT_ERROR,
+	EXPECTED_BODY,
+	VENDOR_API_KEY,
+	VENDOR_ID,
+} from '../../utils/constants';
+import nock, { SERVER } from '../../utils/nock';
 
 describe('webhooks methods', () => {
-	let instance;
+	let instance: PaddleSDK;
 
-	const VENDOR_ID = 'foo';
-	const VENDOR_API_KEY = 'bar';
 	const VENDOR_PUBLIC_KEY = Buffer.from(
 		'LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQ0lqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FnOEFNSUlDQ2dLQ0FnRUF5Q05KajlQSk95NWhVMW1zS21DawovS2lNN09Ua0hQUVYyNTkwS2FUYzVGTW8waG9CeHAyWGlBRC91dktMOHpYejBlRFhjRjBDU2tLQUVVdWpQRjVwCmlBSndLdUtNYU12Vyt6VFd6SWRiS1J0Tjl0d3JZYlFGK3MzcUtGNTFHNk56NnlBeE91dTRwclVEMDhUZ1VFQlUKSENuSlN1anJZSXMyeHJCNkF5MXk2VTR5LyticFpnNXpkVkpUaGNCakxEVVJPU25NVVFGb1YzUU5nUE5Fck45VwpybnVoNktFQS93SDM1ZHNBVzNrcmswU1Q0ekIrWlRqK2duTHVwNWtzYzBGak9rQllDSEFmUmpCeklkV09LZHkvCjBmZzJpVGZLaHBteXZ6TUoyS2gzcnkwcW1wVTlJNXAwUVpjMVFHWFRmV2gvaXJPV2ZXaXhQZlhvbi9ESHRnRTQKbmhHNVlXVlY4d3lrZ0tjUHd4UDFENGZnQzF2S2RoVnJ3VWd6Z09oY2V3VlFucDhkSDNnRDlvNmQwZGpPQk45Zwoxak1ZZzd6alRGcVMwbVgvd3dQSUdzM2lKcXdvSlZ3ZExaWWh2Wm13a21XQU1YREs0L2k3N1dQVWpxV0prWnRnCk8rY1puWW9FNjJDRENZN1RWS2xsRWRJRUtZUFgrdCtFenBZT3hjZSt3cjcwNUo4NkVKY1NsOTQyb1RTL08vTjgKQzdIOERLSGQwT2xBRjEwOCtjUlo1Tjc2cGxNcmxrNlFxMUdZWVdwbkxzMVlJcXpBTnIrckRNK1BBUzRxVlJEbApHWmE4RU5WYkJjSUhtUUVJZW5TbUZrSDJZc3F4Q2dZYXIyZlh5Zzh3M0NEcFNqaEJ5OVJwT0tMU1BUVWVBUk1vCkdwMWZlc1RXSytLdXBIM3FoOVZxRVJNQ0F3RUFBUT09Ci0tLS0tRU5EIFBVQkxJQyBLRVktLS0tLQo=',
 		'base64'
 	).toString();
 
-	const EXPECTED_BODY = {
-		vendor_id: VENDOR_ID,
-		vendor_auth_code: VENDOR_API_KEY,
-	};
-
 	beforeEach(() => {
 		instance = new PaddleSDK(VENDOR_ID, VENDOR_API_KEY, VENDOR_PUBLIC_KEY, {
-			server: nock.SERVER,
+			server: SERVER,
 		});
 	});
 
 	describe('getWebhooksHistory', () => {
 		const path = '/alert/webhooks';
 
-		it('resolves on successfull request', () => {
+		test('resolves on successful request', async () => {
 			// https://paddle.com/docs/api-webhook-history
 			const body = {
 				success: true,
@@ -87,30 +85,27 @@ describe('webhooks methods', () => {
 				},
 			};
 
-			const scope = nock()
-				.post(path, EXPECTED_BODY)
-				.reply(200, body);
+			const scope = nock().post(path, EXPECTED_BODY).reply(200, body);
 
-			return instance.getWebhooksHistory().then(response => {
-				expect(response).toEqual(body.response);
-				expect(scope.isDone()).toBeTruthy();
-			});
+			const response = await instance.getWebhooksHistory();
+
+			expect(response).toEqual(body.response);
+			expect(scope.isDone()).toBeTruthy();
 		});
 
-		it('rejects on error request', () => {
-			const scope = nock()
-				.post(path, EXPECTED_BODY)
-				.reply(400, DEFAULT_ERROR);
+		test('rejects on error request', async () => {
+			const scope = nock().post(path, EXPECTED_BODY).reply(400, DEFAULT_ERROR);
 
-			return instance.getWebhooksHistory().catch(err => {
-				expect(err.response.statusCode).toBe(400);
-				expect(scope.isDone()).toBeTruthy();
-			});
+			await expect(instance.getWebhooksHistory()).rejects.toThrow(
+				'Response code 400'
+			);
+
+			expect(scope.isDone()).toBeTruthy();
 		});
 	});
 
 	describe('verifyWebhookData', () => {
-		let data;
+		let data: { p_signature: string } & Record<string, unknown>;
 
 		beforeEach(() => {
 			data = {
@@ -128,23 +123,23 @@ describe('webhooks methods', () => {
 			};
 		});
 
-		it('validates a valid data set', () => {
+		test('validates a valid data set', async () => {
 			expect(instance.verifyWebhookData(data)).toBe(true);
 		});
 
-		it('does not validate an invalid data set', () => {
+		test('does not validate an invalid data set', async () => {
 			data.source = 'tampered field';
 
 			expect(instance.verifyWebhookData(data)).toBe(false);
 		});
 
-		it('does not validate a valid data set with an invalid public key', () => {
+		test('does not validate a valid data set with an invalid public key', async () => {
 			const invalidKeyClient = new PaddleSDK(
 				VENDOR_ID,
 				VENDOR_API_KEY,
 				'invalid key',
 				{
-					server: nock.SERVER,
+					server: SERVER,
 				}
 			);
 

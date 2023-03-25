@@ -1,7 +1,8 @@
-/* eslint no-prototype-builtins: 0 */
+/* eslint @typescript-eslint/ban-ts-comment: 0, no-prototype-builtins: 0 */
+// @ts-nocheck
 
 // Source: https://github.com/kvz/locutus/blob/master/src/php/var/serialize.js
-function serialize(mixedValue) {
+export default function serialize(mixedValue: unknown): string {
 	//  discuss at: http://locutus.io/php/serialize/
 	// original by: Arpad Ray (mailto:arpad@php.net)
 	// improved by: Dino
@@ -24,16 +25,16 @@ function serialize(mixedValue) {
 	//   example 2: serialize({firstName: 'Kevin', midName: 'van'})
 	//   returns 2: 'a:2:{s:9:"firstName";s:5:"Kevin";s:7:"midName";s:3:"van";}'
 
-	var val, key, okey;
-	var ktype = '';
-	var vals = '';
-	var count = 0;
+	let val, key, okey;
+	let ktype = '';
+	let vals = '';
+	let count = 0;
 
-	var _utf8Size = function(str) {
-		var size = 0;
-		var i = 0;
-		var l = str.length;
-		var code = '';
+	const _utf8Size = function(str) {
+		let size = 0;
+		let i = 0;
+		const l = str.length;
+		let code = '';
 		for (i = 0; i < l; i++) {
 			code = str.charCodeAt(i);
 			if (code < 0x0080) {
@@ -47,12 +48,12 @@ function serialize(mixedValue) {
 		return size;
 	};
 
-	var _getType = function(inp) {
-		var match;
-		var key;
-		var cons;
-		var types;
-		var type = typeof inp;
+	const _getType = function(inp) {
+		let match;
+		let key;
+		let cons;
+		let types;
+		let type = typeof inp;
 
 		if (type === 'object' && !inp) {
 			return 'null';
@@ -78,7 +79,7 @@ function serialize(mixedValue) {
 		return type;
 	};
 
-	var type = _getType(mixedValue);
+	const type = _getType(mixedValue);
 
 	switch (type) {
 	case 'function':
@@ -136,5 +137,3 @@ function serialize(mixedValue) {
 
 	return val;
 }
-
-module.exports = serialize;

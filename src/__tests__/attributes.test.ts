@@ -1,4 +1,4 @@
-const PaddleSDK = require('../sdk');
+import { PaddleSDK } from '../sdk';
 
 describe('attributes', () => {
 	test('default', () => {
@@ -7,7 +7,7 @@ describe('attributes', () => {
 		expect(instance.vendorID).toBe('foo');
 		expect(instance.apiKey).toBe('bar');
 		expect(instance.publicKey).toBe('MISSING');
-		expect(instance._serverURL()).toBe('https://vendors.paddle.com/api/2.0');
+		expect(instance.serverURL()).toBe('https://vendors.paddle.com/api/2.0');
 	});
 
 	test('with public key', () => {
@@ -16,7 +16,7 @@ describe('attributes', () => {
 		expect(instance.vendorID).toBe('foo');
 		expect(instance.apiKey).toBe('bar');
 		expect(instance.publicKey).toBe('ham');
-		expect(instance._serverURL()).toBe('https://vendors.paddle.com/api/2.0');
+		expect(instance.serverURL()).toBe('https://vendors.paddle.com/api/2.0');
 	});
 
 	test('with sandbox server URL', () => {
@@ -25,7 +25,7 @@ describe('attributes', () => {
 		expect(instance.vendorID).toBe('foo');
 		expect(instance.apiKey).toBe('bar');
 		expect(instance.publicKey).toBe('ham');
-		expect(instance._serverURL()).toBe(
+		expect(instance.serverURL()).toBe(
 			'https://sandbox-vendors.paddle.com/api/2.0'
 		);
 	});
@@ -36,7 +36,7 @@ describe('attributes', () => {
 		expect(instance.vendorID).toBe('foo');
 		expect(instance.apiKey).toBe('bar');
 		expect(instance.publicKey).toBe('ham');
-		expect(instance._serverURL(true)).toBe(
+		expect(instance.serverURL(true)).toBe(
 			'https://checkout.paddle.com/api/1.0'
 		);
 	});
@@ -47,7 +47,7 @@ describe('attributes', () => {
 		expect(instance.vendorID).toBe('foo');
 		expect(instance.apiKey).toBe('bar');
 		expect(instance.publicKey).toBe('ham');
-		expect(instance._serverURL(true)).toBe(
+		expect(instance.serverURL(true)).toBe(
 			'https://sandbox-checkout.paddle.com/api/1.0'
 		);
 	});
@@ -60,6 +60,6 @@ describe('attributes', () => {
 		expect(instance.vendorID).toBe('foo');
 		expect(instance.apiKey).toBe('bar');
 		expect(instance.publicKey).toBe('ham');
-		expect(instance._serverURL()).toBe('https://custom.paddle.net');
+		expect(instance.serverURL()).toBe('https://custom.paddle.net');
 	});
 });
