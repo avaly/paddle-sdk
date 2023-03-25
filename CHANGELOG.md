@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0](https://github.com/avaly/paddle-sdk/compare/v3.3.0...v4.0.0) (2023-03-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* The package source is now written in TypeScript. It ships with native TypeScript types in both CommonJS and ESM syntax.
+
+* Rewrite in TypeScript ([#69](https://github.com/avaly/paddle-sdk/issues/69)) ([bac3c5e](https://github.com/avaly/paddle-sdk/commit/bac3c5e0e1cdd9b9575a11d84080e0516c55d00f))
+
 ## [3.3.0](https://github.com/avaly/paddle-sdk/compare/v3.2.0...v3.3.0) (2023-02-08)
 
 
