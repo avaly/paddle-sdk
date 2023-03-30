@@ -35,3 +35,4 @@ jobs:
       - run: yarn test:pretty
       - run: yarn test
       - run: yarn test:types
+      - run: yarn test:build
