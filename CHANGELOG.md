@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.1](https://github.com/avaly/paddle-sdk/compare/v4.0.0...v4.0.1) (2023-03-30)
+
+
+### Bug Fixes
+
+* Fix CommonJS and ESM exports ([#72](https://github.com/avaly/paddle-sdk/issues/72)) ([bfc723c](https://github.com/avaly/paddle-sdk/commit/bfc723ca415779109b6216d6ee034fd14744568b))
+
 ## [4.0.0](https://github.com/avaly/paddle-sdk/compare/v3.3.0...v4.0.0) (2023-03-25)
 
 
