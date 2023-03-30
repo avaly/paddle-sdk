@@ -35,7 +35,7 @@
     "lint": "eslint . --cache --fix --ignore-pattern '!.eslintrc.cjs'",
     "prepack": "yarn build",
     "pretty": "prettier --write --list-different \"**/*.ts\"",
-    "release": "yarn build && git add ./src/version.ts && standard-version -a",
+    "release": "standard-version -a",
     "test": "yarn test:jest",
     "test:coverage": "jest --coverage",
     "test:build": "./tests/build.sh",
@@ -69,6 +69,11 @@
     "hooks": {
       "commit-msg": "validate-commit-msg",
       "pre-commit": "lint-staged"
+    }
+  },
+  "standard-version": {
+    "scripts": {
+      "postbump": "yarn build && git add ./src/version.ts"
     }
   }
 }
