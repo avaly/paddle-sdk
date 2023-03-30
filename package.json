@@ -34,6 +34,7 @@
     "docs": "typedoc",
     "lint": "eslint . --cache --fix --ignore-pattern '!.eslintrc.cjs'",
     "prepack": "yarn build",
+    "prepare": "husky install",
     "pretty": "prettier --write --list-different \"**/*.ts\"",
     "release": "standard-version -a",
     "test": "yarn test:jest",
@@ -53,7 +54,7 @@
     "@typescript-eslint/eslint-plugin": "5.56.0",
     "@typescript-eslint/parser": "5.56.0",
     "eslint": "8.36.0",
-    "husky": "3.1.0",
+    "husky": "8.0.3",
     "jest": "29.5.0",
     "lint-staged": "9.5.0",
     "nock": "11.7.0",
@@ -64,12 +65,6 @@
     "typedoc": "0.23.28",
     "typescript": "5.0.2",
     "validate-commit-msg": "2.14.0"
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "validate-commit-msg",
-      "pre-commit": "lint-staged"
-    }
   },
   "standard-version": {
     "scripts": {
