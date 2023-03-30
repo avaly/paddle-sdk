@@ -1,6 +1,5 @@
 import crypto from 'crypto';
 import got from 'got';
-import fs from 'fs';
 
 import serialize from './serialize';
 import { OptionsOfDefaultResponseBody } from 'got/dist/source/create';
@@ -25,8 +24,7 @@ import {
 	UpdateSubscriptionUserBody,
 	UpdateSubscriptionUserResponse,
 } from './types';
-
-const PACKAGE = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
+import { VERSION } from './version';
 
 const VENDOR_SANDBOX_URL = 'https://sandbox-vendors.paddle.com/api/2.0';
 const VENDOR_SERVER_URL = 'https://vendors.paddle.com/api/2.0';
@@ -528,7 +526,7 @@ s	 * @example
 
 		const options: OptionsOfDefaultResponseBody = {
 			headers: {
-				'User-Agent': `paddle-sdk/${PACKAGE.version} (${PACKAGE.repository.url})`,
+				'User-Agent': `paddle-sdk/${VERSION} (https://github.com/avaly/paddle-sdk)`,
 				...(headers || {}),
 			},
 			method,

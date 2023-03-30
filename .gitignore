@@ -7,8 +7,10 @@ Thumbs.db
 *.sublime-workspace
 *.log
 .eslintcache
-cjs/
-coverage/
-docs/
-esm/
-tmp/
+/build
+/cjs
+/coverage
+/docs
+/esm
+/tests/*/yarn.lock
+/tmp

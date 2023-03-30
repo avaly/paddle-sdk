@@ -3,8 +3,11 @@
   "description": "The Paddle.com Node.js SDK",
   "version": "4.0.0",
   "type": "module",
-  "main": "./cjs/sdk.js",
-  "exports": "./esm/sdk.js",
+  "main": "./cjs/index.js",
+  "exports": {
+    "import": "./esm/index.js",
+    "require": "./cjs/index.js"
+  },
   "types": "./esm/sdk.d.ts",
   "author": "Valentin Agachi <github-com@agachi.name>",
   "repository": {
@@ -32,9 +35,10 @@
     "lint": "eslint . --cache --fix --ignore-pattern '!.eslintrc.cjs'",
     "prepack": "yarn build",
     "pretty": "prettier --write --list-different \"**/*.ts\"",
-    "release": "standard-version -a",
+    "release": "yarn build && git add ./src/version.ts && standard-version -a",
     "test": "yarn test:jest",
     "test:coverage": "jest --coverage",
+    "test:build": "./tests/build.sh",
     "test:jest": "jest",
     "test:pretty": "prettier --check \"**/*.ts\"",
     "test:types": "tsc --noEmit",
