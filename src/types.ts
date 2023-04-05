@@ -181,6 +181,7 @@ export interface RescheduleSubscriptionPaymentBody {
 export interface GeneratePaylinkBody {
 	custom_message?: string;
 	customer_country?: string;
+	customer_email?: string;
 	customer_postcode?: string;
 	discountable?: number;
 	expires?: string;
