@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.1.0](https://github.com/avaly/paddle-sdk/compare/v4.0.1...v4.1.0) (2023-04-06)
+
+
+### Features
+
+* Use axios for HTTP requests ([#78](https://github.com/avaly/paddle-sdk/issues/78)) ([13b8351](https://github.com/avaly/paddle-sdk/commit/13b8351f2580a2f084897379ff52b4c3301d6478))
+
+
+### Bug Fixes
+
+* Add customer_email to GeneratePaylinkBody ([#77](https://github.com/avaly/paddle-sdk/issues/77)) ([2e0bedd](https://github.com/avaly/paddle-sdk/commit/2e0beddf328fa9569d4c1bd4df8c525e2c7a1964))
+
 ### [4.0.1](https://github.com/avaly/paddle-sdk/compare/v4.0.0...v4.0.1) (2023-03-30)
 
 
