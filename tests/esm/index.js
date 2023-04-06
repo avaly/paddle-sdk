@@ -2,7 +2,7 @@ import assert from 'assert';
 import nock from 'nock';
 import { PaddleSDK } from 'paddle-sdk';
 
-const SERVER = 'http://test.paddle.com';
+const SERVER = 'https://test.paddle.com';
 
 async function run() {
 	// https://paddle.com/docs/api-list-products

@@ -97,7 +97,7 @@ describe('webhooks methods', () => {
 			const scope = nock().post(path, EXPECTED_BODY).reply(400, DEFAULT_ERROR);
 
 			await expect(instance.getWebhooksHistory()).rejects.toThrow(
-				'Response code 400'
+				'Request failed with status code 400'
 			);
 
 			expect(scope.isDone()).toBeTruthy();

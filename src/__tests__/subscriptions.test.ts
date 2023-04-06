@@ -79,7 +79,7 @@ describe('subscription methods', () => {
 			const scope = nock().post(path, EXPECTED_BODY).reply(400, DEFAULT_ERROR);
 
 			await expect(instance.getSubscriptionPlans()).rejects.toThrow(
-				'Response code 400'
+				'Request failed with status code 400'
 			);
 
 			expect(scope.isDone()).toBeTruthy();
@@ -136,7 +136,7 @@ describe('subscription methods', () => {
 			const scope = nock().post(path, expectedBody).reply(400, DEFAULT_ERROR);
 
 			await expect(instance.getSubscriptionPlan(PLAN_ID)).rejects.toThrow(
-				'Response code 400'
+				'Request failed with status code 400'
 			);
 
 			expect(scope.isDone()).toBeTruthy();
@@ -190,7 +190,7 @@ describe('subscription methods', () => {
 			const scope = nock().post(path, expectedBody).reply(400, DEFAULT_ERROR);
 
 			await expect(instance.getUsers({ planID: PLAN_ID })).rejects.toThrow(
-				'Response code 400'
+				'Request failed with status code 400'
 			);
 
 			expect(scope.isDone()).toBeTruthy();
@@ -234,7 +234,7 @@ describe('subscription methods', () => {
 			const scope = nock().post(path, expectedBody).reply(400, DEFAULT_ERROR);
 
 			await expect(instance.getSubscriptionPayments(PLAN_ID)).rejects.toThrow(
-				'Response code 400'
+				'Request failed with status code 400'
 			);
 
 			expect(scope.isDone()).toBeTruthy();
@@ -276,7 +276,7 @@ describe('subscription methods', () => {
 
 			await expect(
 				instance.reschedulePayment(PAYMENT_ID, NEW_PAYMENT_DATE)
-			).rejects.toThrow('Response code 400');
+			).rejects.toThrow('Request failed with status code 400');
 
 			expect(scope.isDone()).toBeTruthy();
 		});
@@ -382,7 +382,7 @@ describe('subscription methods', () => {
 
 			await expect(
 				instance.updateSubscription(SUBSCRIPTION_ID, { planID: PLAN_ID })
-			).rejects.toThrow('Response code 400');
+			).rejects.toThrow('Request failed with status code 400');
 
 			expect(scope.isDone()).toBeTruthy();
 		});
@@ -414,7 +414,7 @@ describe('subscription methods', () => {
 
 			await expect(
 				instance.cancelSubscription(SUBSCRIPTION_ID)
-			).rejects.toThrow('Response code 400');
+			).rejects.toThrow('Request failed with status code 400');
 
 			expect(scope.isDone()).toBeTruthy();
 		});
@@ -479,7 +479,7 @@ describe('subscription methods', () => {
 
 			await expect(
 				instance.createSubscriptionModifier(SUBSCRIPTION_ID, 10)
-			).rejects.toThrow('Response code 400');
+			).rejects.toThrow('Request failed with status code 400');
 
 			expect(scope.isDone()).toBeTruthy();
 		});
