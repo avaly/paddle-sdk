@@ -60,7 +60,9 @@ describe('products methods', () => {
 		test('rejects on error response', async () => {
 			const scope = nock().post(path, EXPECTED_BODY).reply(400, DEFAULT_ERROR);
 
-			await expect(instance.getProducts()).rejects.toThrow('Response code 400');
+			await expect(instance.getProducts()).rejects.toThrow(
+				'Request failed with status code 400'
+			);
 
 			expect(scope.isDone()).toBeTruthy();
 		});
@@ -69,7 +71,7 @@ describe('products methods', () => {
 			const scope = nock().post(path, EXPECTED_BODY).reply(200, DEFAULT_ERROR);
 
 			await expect(instance.getProducts()).rejects.toThrow(
-				'Request http://test.paddle.com/product/get_products returned an error!'
+				'Request https://test.paddle.com/product/get_products returned an error!'
 			);
 
 			expect(scope.isDone()).toBeTruthy();

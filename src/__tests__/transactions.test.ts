@@ -96,7 +96,7 @@ describe('transactions methods', () => {
 			const scope = nock().post(path, EXPECTED_BODY).reply(400, DEFAULT_ERROR);
 
 			await expect(instance.getUserTransactions(123)).rejects.toThrow(
-				'Response code 400'
+				'Request failed with status code 400'
 			);
 
 			expect(scope.isDone()).toBeTruthy();
@@ -106,7 +106,7 @@ describe('transactions methods', () => {
 			const scope = nock().post(path, EXPECTED_BODY).reply(200, DEFAULT_ERROR);
 
 			await expect(instance.getUserTransactions(123)).rejects.toThrow(
-				'Request http://test.paddle.com/user/123/transactions returned an error!'
+				'Request https://test.paddle.com/user/123/transactions returned an error!'
 			);
 
 			expect(scope.isDone()).toBeTruthy();

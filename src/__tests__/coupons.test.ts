@@ -59,7 +59,7 @@ describe('coupons methods', () => {
 			const scope = nock().post(path, expectedBody).reply(400, DEFAULT_ERROR);
 
 			await expect(instance.getProductCoupons(productID)).rejects.toThrow(
-				'Response code 400'
+				'Request failed with status code 400'
 			);
 
 			expect(scope.isDone()).toBeTruthy();

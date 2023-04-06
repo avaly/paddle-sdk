@@ -73,7 +73,9 @@ describe('users methods', () => {
 		test('rejects on error response', async () => {
 			const scope = nock().post(path, expectedBody).reply(400, DEFAULT_ERROR);
 
-			await expect(instance.getUsers()).rejects.toThrow('Response code 400');
+			await expect(instance.getUsers()).rejects.toThrow(
+				'Request failed with status code 400'
+			);
 
 			expect(scope.isDone()).toBeTruthy();
 		});
@@ -82,7 +84,7 @@ describe('users methods', () => {
 			const scope = nock().post(path, expectedBody).reply(200, DEFAULT_ERROR);
 
 			await expect(instance.getUsers()).rejects.toThrow(
-				'Request http://test.paddle.com/subscription/users returned an error!'
+				'Request https://test.paddle.com/subscription/users returned an error!'
 			);
 
 			expect(scope.isDone()).toBeTruthy();

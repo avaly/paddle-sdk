@@ -2,7 +2,7 @@ const assert = require('assert');
 const nock = require('nock');
 const { PaddleSDK } = require('paddle-sdk');
 
-const SERVER = 'http://test.paddle.com';
+const SERVER = 'https://test.paddle.com';
 
 async function run() {
 	// https://paddle.com/docs/api-list-products

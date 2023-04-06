@@ -84,7 +84,7 @@ describe('orders methods', () => {
 			const scope = nock().get(path).reply(400, DEFAULT_ERROR);
 
 			await expect(instance.getOrderDetails(checkoutId)).rejects.toThrow(
-				'Response code 400'
+				'Request failed with status code 400'
 			);
 
 			expect(scope.isDone()).toBeTruthy();

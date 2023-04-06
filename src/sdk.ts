@@ -1,8 +1,7 @@
 import crypto from 'crypto';
-import got from 'got';
+import axios, { AxiosRequestConfig } from 'axios';
 
 import serialize from './serialize';
-import { OptionsOfDefaultResponseBody } from 'got/dist/source/create';
 import {
 	CreateSubscriptionModifierBody,
 	CreateSubscriptionModifierResponse,
@@ -495,16 +494,14 @@ s	 * @example
 	 * @param {object} options
 	 * @param {object} [options.body] - body parameters / object
 	 * @param {object} [options.headers] - header parameters
-	 * @param {boolean} [options.form] - form parameter (ref: got package)
-	 * @param {boolean} [options.json] - json parameter (ref: got package)
+	 * @param {boolean} [options.form] - serialize the data object to urlencoded format
 	 */
 	private async _request<TResponse, TBody extends object = object>(
 		path: string,
 		{
-			body,
+			body: requestBody,
 			headers,
 			form = true,
-			json = false,
 			checkoutAPI = false,
 		}: {
 			body?: TBody;
@@ -518,29 +515,25 @@ s	 * @example
 		// Requests to Checkout API are using only GET,
 		const method = checkoutAPI ? 'GET' : 'POST';
 
-		const fullBody = {
+		const fullRequestBody = {
 			vendor_id: this.vendorID,
 			vendor_auth_code: this.apiKey,
-			...body,
+			...requestBody,
 		};
 
-		const options: OptionsOfDefaultResponseBody = {
+		const options: AxiosRequestConfig = {
 			headers: {
 				'User-Agent': `paddle-sdk/${VERSION} (https://github.com/avaly/paddle-sdk)`,
+				...(form && { 'Content-Type': 'application/x-www-form-urlencoded' }),
 				...(headers || {}),
 			},
 			method,
 		};
 		if (method !== 'GET') {
-			if (form) {
-				options.form = fullBody;
-			}
-			if (json) {
-				options.json = fullBody;
-			}
+			options.data = fullRequestBody;
 		}
 
-		const data = await got(url, options).json<PaddleResponseWrap<TResponse>>();
+		const { data } = await axios<PaddleResponseWrap<TResponse>>(url, options);
 
 		if ('success' in data && typeof data.success === 'boolean') {
 			if (data.success) {
