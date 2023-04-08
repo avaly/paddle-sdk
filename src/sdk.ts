@@ -353,12 +353,14 @@ s	 * @example
 		resultsPerPage?: number;
 		planID?: string | number;
 		state?: GetSubscriptionUsersBody['state'];
+		subscriptionID?: number;
 	}) {
 		const {
 			page = 1,
 			resultsPerPage = 200,
 			state = null,
 			planID = null,
+			subscriptionID = null
 		} = options || {};
 
 		const body = {
@@ -366,6 +368,7 @@ s	 * @example
 			...(planID && { plan_id: String(planID) }),
 			results_per_page: resultsPerPage,
 			...(state && { state }),
+			...(subscriptionID && { subscription_id: subscriptionID }),
 		};
 
 		return this._request<
