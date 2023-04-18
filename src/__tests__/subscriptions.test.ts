@@ -195,6 +195,49 @@ describe('subscription methods', () => {
 
 			expect(scope.isDone()).toBeTruthy();
 		});
+
+		test('filters for subscriptionID', async () => {
+			const expectedBody = {
+				...EXPECTED_BODY,
+				page: 1,
+				subscription_id: SUBSCRIPTION_ID,
+				results_per_page: 200,
+			};
+
+			// https://paddle.com/docs/api-list-users
+			const body = {
+				success: true,
+				response: [
+					{
+						subscription_id: SUBSCRIPTION_ID,
+						plan_id: 496199,
+						user_id: 285846,
+						user_email: 'christian@paddle.com',
+						state: 'active',
+						signup_date: '2015-10-06 09:44:23',
+						last_payment: {
+							amount: 5,
+							currency: 'USD',
+							date: '2015-10-06',
+						},
+						next_payment: {
+							amount: 10,
+							currency: 'USD',
+							date: '2015-11-06',
+						},
+					},
+				],
+			};
+
+			const scope = nock().post(path, expectedBody).reply(200, body);
+
+			const response = await instance.getUsers({
+				subscriptionID: SUBSCRIPTION_ID,
+			});
+
+			expect(response).toEqual(body.response);
+			expect(scope.isDone()).toBeTruthy();
+		});
 	});
 
 	describe('getSubscriptionPayments', () => {

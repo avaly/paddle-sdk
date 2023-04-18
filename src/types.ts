@@ -60,11 +60,19 @@ export interface Payment {
 	date: string;
 }
 
+export type SubscriptionUserState =
+	| 'active'
+	| 'past_due'
+	| 'trialing'
+	| 'paused'
+	| 'deleted';
+
 export interface GetSubscriptionUsersBody {
 	page?: number;
 	plan_id?: string;
 	results_per_page?: number;
-	state?: 'active' | 'past_due' | 'trialing' | 'paused' | 'deleted';
+	state?: SubscriptionUserState;
+	subscription_id?: number;
 }
 
 export interface SubscriptionUser {
@@ -75,7 +83,7 @@ export interface SubscriptionUser {
 	marketing_consent: boolean;
 	update_url: string;
 	cancel_url: string;
-	state: string;
+	state: SubscriptionUserState;
 	signup_date: string;
 	last_payment: Payment;
 	payment_information: {
