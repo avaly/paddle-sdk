@@ -344,6 +344,7 @@ s	 * @example
 	 * const users = await client.getUsers();
 	 * const users = await client.getUsers({ planID: 123 });
 	 * const users = await client.getUsers({ state: 'active' });
+	 * const users = await client.getUsers({ subscriptionID: 456 });
 	 *
 	 * @note
 	 * If you have a large amount of active users, you will need to create paginated calls to this function.
@@ -353,12 +354,14 @@ s	 * @example
 		resultsPerPage?: number;
 		planID?: string | number;
 		state?: GetSubscriptionUsersBody['state'];
+		subscriptionID?: number;
 	}) {
 		const {
 			page = 1,
 			resultsPerPage = 200,
 			state = null,
 			planID = null,
+			subscriptionID = null,
 		} = options || {};
 
 		const body = {
@@ -366,6 +369,7 @@ s	 * @example
 			...(planID && { plan_id: String(planID) }),
 			results_per_page: resultsPerPage,
 			...(state && { state }),
+			...(subscriptionID && { subscription_id: subscriptionID }),
 		};
 
 		return this._request<
