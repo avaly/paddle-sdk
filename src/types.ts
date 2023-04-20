@@ -63,6 +63,7 @@ export interface Payment {
 export interface GetSubscriptionUsersBody {
 	page?: number;
 	plan_id?: string;
+	subscription_id?: string;
 	results_per_page?: number;
 	state?: 'active' | 'past_due' | 'trialing' | 'paused' | 'deleted';
 }
