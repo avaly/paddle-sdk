@@ -1,7 +1,7 @@
 {
   "name": "paddle-sdk",
   "description": "The Paddle.com Node.js SDK",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "type": "module",
   "main": "./cjs/index.js",
   "exports": {
