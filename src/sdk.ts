@@ -343,6 +343,7 @@ s	 * @example
 	 * @example
 	 * const users = await client.getUsers();
 	 * const users = await client.getUsers({ planID: 123 });
+	 * const users = await client.getUsers({ subscriptionId: 123 });
 	 * const users = await client.getUsers({ state: 'active' });
 	 *
 	 * @note
@@ -352,6 +353,7 @@ s	 * @example
 		page?: number;
 		resultsPerPage?: number;
 		planID?: string | number;
+		subscriptionId?: string | number;
 		state?: GetSubscriptionUsersBody['state'];
 	}) {
 		const {
@@ -359,11 +361,13 @@ s	 * @example
 			resultsPerPage = 200,
 			state = null,
 			planID = null,
+			subscriptionId = null,
 		} = options || {};
 
 		const body = {
 			page,
 			...(planID && { plan_id: String(planID) }),
+			...(subscriptionId && { subscription_id: String(subscriptionId) }),
 			results_per_page: resultsPerPage,
 			...(state && { state }),
 		};
