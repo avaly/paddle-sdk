@@ -247,7 +247,7 @@ describe('subscription methods', () => {
 			plan: PLAN_ID,
 		};
 
-		test('resolves on successful request', async () => {
+		test('resolves on successful request using only planID', async () => {
 			// https://paddle.com/docs/api-list-payments
 			const body = {
 				success: true,
@@ -268,6 +268,38 @@ describe('subscription methods', () => {
 			const scope = nock().post(path, expectedBody).reply(200, body);
 
 			const response = await instance.getSubscriptionPayments(PLAN_ID);
+
+			expect(response).toEqual(body.response);
+			expect(scope.isDone()).toBeTruthy();
+		});
+
+		test('resolves on successful request using options', async () => {
+			const expectedBodyOptions = {
+				...expectedBody,
+				subscription_id: SUBSCRIPTION_ID
+			}
+			const body = {
+				success: true,
+				response: [
+					{
+						id: 8936,
+						subscription_id: 2746,
+						amount: 1,
+						currency: 'USD',
+						payout_date: '2015-10-15',
+						is_paid: 0,
+						receipt_url:
+							'https://www.paddle.com/receipt/469214-8936/1940881-chrea0eb34164b5-f0d6553bdf',
+					},
+				],
+			};
+
+			const scope = nock().post(path, expectedBodyOptions).reply(200, body);
+
+			const response = await instance.getSubscriptionPayments({
+				planID: PLAN_ID,
+				subscriptionID: SUBSCRIPTION_ID,
+			});
 
 			expect(response).toEqual(body.response);
 			expect(scope.isDone()).toBeTruthy();

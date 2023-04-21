@@ -94,12 +94,20 @@ export interface SubscriptionUser {
 	};
 	quantity: number;
 	next_payment: Payment;
+	paused_at?: string
+	paused_from?: string
+	paused_reason?: string
 }
 
 export type GetSubscriptionUsersResponse = Array<SubscriptionUser>;
 
 export interface GetSubscriptionPaymentsBody {
 	plan?: number;
+	subscription_id?: number
+	is_paid?: number
+	from?: string
+	to?: string
+	isOneOffCharge?: number
 }
 
 export interface SubscriptionPayment {
