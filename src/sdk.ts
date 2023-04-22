@@ -5,6 +5,8 @@ import serialize from './serialize';
 import {
 	CreateSubscriptionModifierBody,
 	CreateSubscriptionModifierResponse,
+	CreateOneOffChargeBody,
+	CreateOneOffChargeResponse,
 	GeneratePaylinkBody,
 	GeneratePaylinkResponse,
 	GetProductCouponsBody,
@@ -470,6 +472,27 @@ s	 * @example
 			CreateSubscriptionModifierResponse,
 			CreateSubscriptionModifierBody
 		>('/subscription/modifiers/create', {
+			body,
+		});
+	}
+
+	/**
+	 * Make an immediate one-off charge on top of an existing user subscription
+	 * 
+	 * API documentation: https://developer.paddle.com/api-reference/23cf86225523f-create-one-off-charge
+	 * 
+	 * @example
+	 * const result = await client.createOneOffCharge(123, 10, 'description');
+	 */
+	createOneOffCharge(subscriptionID: number, amount: number, chargeName: string) {
+		const body = {
+			amount,
+			charge_name: chargeName.substring(0, 50),
+		}
+		return this._request<
+			CreateOneOffChargeResponse,
+			CreateOneOffChargeBody
+		>(`/subscription/${subscriptionID}/charge`, {
 			body,
 		});
 	}
