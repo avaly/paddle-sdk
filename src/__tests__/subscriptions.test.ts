@@ -544,7 +544,8 @@ describe('subscription methods', () => {
 				amount: '10.00',
 				currency: 'USD',
 				payment_date: '2018-09-21',
-				receipt_url: 'https://my.paddle.com/receipt/1-1/3-chre8a53a2724c6-42781cb91a',
+				receipt_url:
+					'https://my.paddle.com/receipt/1-1/3-chre8a53a2724c6-42781cb91a',
 				status: 'success',
 			},
 		};
@@ -555,7 +556,7 @@ describe('subscription methods', () => {
 			const response = await instance.createOneOffCharge(
 				SUBSCRIPTION_ID,
 				10,
-				'Charge 1',
+				'Charge 1'
 			);
 
 			expect(response).toEqual(responseBody.response);
