@@ -181,6 +181,22 @@ export interface CreateSubscriptionModifierResponse {
 	modifier_id: number;
 }
 
+export interface CreateOneOffChargeBody {
+	amount: number;
+	charge_name: string;
+}
+
+export interface CreateOneOffChargeResponse {
+	subscription_id: number;
+	invoice_id: number;
+	amount: string;
+	currency: string;
+	payment_date: string;
+	receipt_url: string;
+	order_id: string;
+	status: 'success' | 'pending';
+}
+
 export interface RescheduleSubscriptionPaymentBody {
 	date: string;
 	payment_id: number;

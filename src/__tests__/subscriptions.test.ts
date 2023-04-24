@@ -527,4 +527,50 @@ describe('subscription methods', () => {
 			expect(scope.isDone()).toBeTruthy();
 		});
 	});
+
+	describe('createOneOffCharge', () => {
+		const path = `/subscription/${SUBSCRIPTION_ID}/charge`;
+		const expectedBody = {
+			...EXPECTED_BODY,
+			amount: 10,
+			charge_name: 'Charge 1',
+		};
+		// https://developer.paddle.com/api-reference/23cf86225523f-create-one-off-charge
+		const responseBody = {
+			success: true,
+			response: {
+				invoice_id: 1,
+				subscription_id: SUBSCRIPTION_ID,
+				amount: '10.00',
+				currency: 'USD',
+				payment_date: '2018-09-21',
+				receipt_url:
+					'https://my.paddle.com/receipt/1-1/3-chre8a53a2724c6-42781cb91a',
+				status: 'success',
+			},
+		};
+
+		test('resolves on successful request', async () => {
+			const scope = nock().post(path, expectedBody).reply(200, responseBody);
+
+			const response = await instance.createOneOffCharge(
+				SUBSCRIPTION_ID,
+				10,
+				'Charge 1'
+			);
+
+			expect(response).toEqual(responseBody.response);
+			expect(scope.isDone()).toBeTruthy();
+		});
+
+		test('rejects on error request', async () => {
+			const scope = nock().post(path, expectedBody).reply(400, DEFAULT_ERROR);
+
+			await expect(
+				instance.createOneOffCharge(SUBSCRIPTION_ID, 10, 'Charge 1')
+			).rejects.toThrow('Request failed with status code 400');
+
+			expect(scope.isDone()).toBeTruthy();
+		});
+	});
 });
