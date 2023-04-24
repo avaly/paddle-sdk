@@ -276,8 +276,8 @@ describe('subscription methods', () => {
 		test('resolves on successful request using options', async () => {
 			const expectedBodyOptions = {
 				...expectedBody,
-				subscription_id: SUBSCRIPTION_ID
-			}
+				subscription_id: SUBSCRIPTION_ID,
+			};
 			const body = {
 				success: true,
 				response: [

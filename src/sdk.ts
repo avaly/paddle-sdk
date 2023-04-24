@@ -141,15 +141,24 @@ s	 * @example
 	 * Legacy usage for backwards compatibility: pass planID as a number instead of options object
 	 * const payments = await client.getSubscriptionPayments(123);
 	 */
-	getSubscriptionPayments(options?: number | {
-		planID?: number;
-		subscriptionID?: number;
-		isPaid?: boolean;
-		from?: Date;
-		to?: Date;
-		isOneOffCharge?: boolean;
-	}) {
-		const opts = (typeof options === 'number') ? { planID: options } : options;
+	getSubscriptionPayments(
+		options?:
+			| number
+			| {
+					planID?: number;
+					subscriptionID?: number;
+					isPaid?: boolean;
+					from?: Date;
+					to?: Date;
+					isOneOffCharge?: boolean;
+			  }
+	) {
+		if (typeof options === 'number') {
+			console.warn(
+				'Passing planID as a number is deprecated, please use an options object instead'
+			);
+		}
+		const opts = typeof options === 'number' ? { planID: options } : options;
 		const {
 			planID = null,
 			subscriptionID = null,
@@ -159,20 +168,20 @@ s	 * @example
 			isOneOffCharge = null,
 		} = opts || {};
 
-		const body = {
-			...(planID && { plan: planID }),
-			...(subscriptionID && { subscription_id: subscriptionID }),
-			...(typeof isPaid === 'boolean' && { is_paid: Number(isPaid) }),
-			...(from && { from: from.toISOString().substring(0, 10) }),
-			...(to && { to: to.toISOString().substring(0, 10) }),
-			...(typeof isOneOffCharge === 'boolean' && { is_one_off_charge: Number(isOneOffCharge) }),
-		};
-
 		return this._request<
 			GetSubscriptionPaymentsResponse,
 			GetSubscriptionPaymentsBody
 		>('/subscription/payments', {
-			body,
+			body: {
+				...(planID && { plan: planID }),
+				...(subscriptionID && { subscription_id: subscriptionID }),
+				...(typeof isPaid === 'boolean' && { is_paid: Number(isPaid) }),
+				...(from && { from: from.toISOString().substring(0, 10) }),
+				...(to && { to: to.toISOString().substring(0, 10) }),
+				...(typeof isOneOffCharge === 'boolean' && {
+					is_one_off_charge: Number(isOneOffCharge),
+				}),
+			},
 		});
 	}
 
