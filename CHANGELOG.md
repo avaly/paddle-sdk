@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.3.0](https://github.com/avaly/paddle-sdk/compare/v4.2.0...v4.3.0) (2023-04-26)
+
+
+### Features
+
+* Support all options for `getSubscriptionPayments` ([#82](https://github.com/avaly/paddle-sdk/issues/82)) ([7ec2c6d](https://github.com/avaly/paddle-sdk/commit/7ec2c6d283a3eb250a0d7742fd58cd60889cbe20))
+* Support the One-off Charge API ([#83](https://github.com/avaly/paddle-sdk/issues/83)) ([9b28977](https://github.com/avaly/paddle-sdk/commit/9b289770e810a7bfb5724bbdc6b21efeab8d826a))
+
 ## [4.2.0](https://github.com/avaly/paddle-sdk/compare/v4.1.0...v4.2.0) (2023-04-20)
 
 
