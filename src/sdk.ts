@@ -24,6 +24,7 @@ import {
 	RescheduleSubscriptionPaymentBody,
 	UpdateSubscriptionUserBody,
 	UpdateSubscriptionUserResponse,
+	PaddleResponseError,
 } from './types';
 import { VERSION } from './version';
 
@@ -610,8 +611,9 @@ s	 * @example
 				return response || data.success;
 			}
 
-			throw new Error(
-				`Request ${url} returned an error! response=${JSON.stringify(data)}`
+			throw new PaddleRequestError(
+				`Request ${url} returned an error! response=${JSON.stringify(data)}`,
+				data.error
 			);
 		}
 
@@ -644,5 +646,17 @@ s	 * @example
 			`/${type}/${id}/transactions`,
 			page ? { body: { page } } : undefined
 		);
+	}
+}
+
+export class PaddleRequestError extends Error {
+	paddleCode: number;
+	paddleMessage: string;
+
+	constructor(message: string, error: PaddleResponseError) {
+		super(message);
+		this.name = 'PaddleRequestError';
+		this.paddleCode = error.code;
+		this.paddleMessage = error.message;
 	}
 }
