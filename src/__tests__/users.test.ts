@@ -89,5 +89,16 @@ describe('users methods', () => {
 
 			expect(scope.isDone()).toBeTruthy();
 		});
+
+		test('200 error response includes error information', async () => {
+			const scope = nock().post(path, expectedBody).reply(200, DEFAULT_ERROR);
+
+			await expect(instance.getUsers()).rejects.toMatchObject({
+				paddleCode: DEFAULT_ERROR.error.code,
+				paddleMessage: DEFAULT_ERROR.error.message,
+			});
+
+			expect(scope.isDone()).toBeTruthy();
+		});
 	});
 });
