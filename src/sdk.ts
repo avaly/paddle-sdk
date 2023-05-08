@@ -612,7 +612,7 @@ s	 * @example
 	}
 }
 
-class PaddleRequestError extends Error {
+export class PaddleRequestError extends Error {
 	paddleCode: number;
 	paddleMessage: string;
 
