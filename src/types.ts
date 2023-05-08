@@ -9,10 +9,20 @@ export interface Product {
 	screenshots: object[];
 }
 
-export interface PaddleResponseWrap<TResponse> {
-	success: boolean;
-	response: TResponse;
+export interface PaddleResponseError {
+	code: number;
+	message: string;
 }
+
+export type PaddleResponseWrap<TResponse> =
+	| {
+			success: true;
+			response: TResponse;
+	  }
+	| {
+			success: false;
+			error: PaddleResponseError;
+	  };
 
 export interface GetProductsResponse {
 	count: number;
