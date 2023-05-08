@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.4.0](https://github.com/avaly/paddle-sdk/compare/v4.3.0...v4.4.0) (2023-05-08)
+
+
+### Features
+
+* Custom error class with Paddle API code and message ([#85](https://github.com/avaly/paddle-sdk/issues/85)) ([8b015b7](https://github.com/avaly/paddle-sdk/commit/8b015b744c357272453527cde28a8dbb1f0f908d))
+
 ## [4.3.0](https://github.com/avaly/paddle-sdk/compare/v4.2.0...v4.3.0) (2023-04-26)
 
 
