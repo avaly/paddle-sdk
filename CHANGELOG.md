@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.5.0](https://github.com/avaly/paddle-sdk/compare/v4.4.0...v4.5.0) (2023-06-12)
+
+
+### Features
+
+* Add `passthrough` when updating a subscription ([#87](https://github.com/avaly/paddle-sdk/issues/87)) ([5503641](https://github.com/avaly/paddle-sdk/commit/5503641acde1934228d2a0b0135939d5dd4ff4b7))
+
 ## [4.4.0](https://github.com/avaly/paddle-sdk/compare/v4.3.0...v4.4.0) (2023-05-08)
 
 
