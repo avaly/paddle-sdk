@@ -174,6 +174,7 @@ export interface UpdateSubscriptionUserBody {
 	bill_immediately?: boolean;
 	currency?: string;
 	keep_modifiers?: boolean;
+	passthrough?: string;
 	plan_id?: number;
 	prorate?: boolean;
 	recurring_price?: number;

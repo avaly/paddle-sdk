@@ -366,6 +366,7 @@ describe('subscription methods', () => {
 			quantity: 2,
 			recurring_price: 25.5,
 			currency: 'GBP',
+			passthrough: '12345',
 		};
 		// https://developer.paddle.com/api-reference/subscription-api/subscription-users/updateuser
 		const responseBody = {
@@ -385,6 +386,7 @@ describe('subscription methods', () => {
 				quantity: 2,
 				price: 25.5,
 				currency: 'GBP',
+				passthrough: '12345',
 			});
 
 			expect(response).toEqual(responseBody.response);

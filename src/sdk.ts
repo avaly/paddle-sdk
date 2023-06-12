@@ -319,6 +319,7 @@ s	 * @example
 			billImmediately?: boolean;
 			currency?: string;
 			keepModifiers?: boolean;
+			passthrough?: string;
 			pause?: boolean;
 			planID?: number;
 			prorate?: boolean;
@@ -334,12 +335,14 @@ s	 * @example
 			prorate,
 			keepModifiers,
 			billImmediately,
+			passthrough,
 			pause,
 		} = postData;
 
 		const body = {
 			subscription_id: subscriptionID,
 			...(currency && { currency }),
+			...(passthrough && { passthrough }),
 			...(typeof keepModifiers === 'boolean' && {
 				keep_modifiers: keepModifiers,
 			}),
