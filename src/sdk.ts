@@ -493,14 +493,14 @@ s	 * @example
 	 * const result = await client.getSubscriptionModifiers({ subscriptionID: 123 });
 	 */
 	getSubscriptionModifiers(options?: {
-		subscriptionID?: string;
-		planID?: string;
+		subscriptionID?: number;
+		planID?: number;
 	}) {
 		const { subscriptionID, planID } = options || {};
 
 		const body = {
-			...(subscriptionID && { subscription_id: subscriptionID }),
-			...(planID && { plan_id: planID }),
+			...(subscriptionID && { subscription_id: subscriptionID + '' }),
+			...(planID && { plan_id: planID + '' }),
 		};
 
 		return this._request<

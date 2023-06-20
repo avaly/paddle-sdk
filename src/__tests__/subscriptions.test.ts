@@ -536,8 +536,8 @@ describe('subscription methods', () => {
 			const scope = nock().post(path, expectedBody).reply(200, responseBody);
 
 			const response = await instance.getSubscriptionModifiers({
-				subscriptionID: SUBSCRIPTION_ID + '',
-				planID: PLAN_ID + '',
+				subscriptionID: SUBSCRIPTION_ID,
+				planID: PLAN_ID,
 			});
 
 			expect(response).toEqual(responseBody.response);
