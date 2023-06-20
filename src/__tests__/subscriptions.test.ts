@@ -1,4 +1,3 @@
-import { PaddleSDK } from '../sdk';
 import {
 	DEFAULT_ERROR,
 	EXPECTED_BODY,
@@ -6,6 +5,7 @@ import {
 	VENDOR_ID,
 } from '../../utils/constants';
 import nock, { SERVER } from '../../utils/nock';
+import { PaddleSDK } from '../sdk';
 
 describe('subscription methods', () => {
 	let instance: PaddleSDK;
@@ -492,6 +492,64 @@ describe('subscription methods', () => {
 			await expect(
 				instance.cancelSubscription(SUBSCRIPTION_ID)
 			).rejects.toThrow('Request failed with status code 400');
+
+			expect(scope.isDone()).toBeTruthy();
+		});
+	});
+
+	describe('getSubscriptionModifiers', () => {
+		const path = '/subscription/modifiers';
+		const expectedBody = {
+			...EXPECTED_BODY,
+		};
+		// https://developer.paddle.com/api-reference/f575ab89eb18c-list-modifiers
+		const responseBody = {
+			success: true,
+			response: {
+				subscription_id: SUBSCRIPTION_ID,
+				modifier_id: 1,
+				amount: '100',
+				currency: 'GBP',
+				is_recurring: true,
+				description: 'Support',
+			},
+		};
+
+		test('resolves on successful request', async () => {
+			const scope = nock().post(path, expectedBody).reply(200, responseBody);
+
+			const response = await instance.getSubscriptionModifiers();
+
+			expect(response).toEqual(responseBody.response);
+			expect(scope.isDone()).toBeTruthy();
+		});
+
+		test('resolves on successful request all params', async () => {
+			const expectedBody = Object.assign(
+				{
+					subscription_id: SUBSCRIPTION_ID,
+					plan_id: PLAN_ID,
+				},
+				EXPECTED_BODY
+			);
+
+			const scope = nock().post(path, expectedBody).reply(200, responseBody);
+
+			const response = await instance.getSubscriptionModifiers({
+				subscriptionID: SUBSCRIPTION_ID + '',
+				planID: PLAN_ID + '',
+			});
+
+			expect(response).toEqual(responseBody.response);
+			expect(scope.isDone()).toBeTruthy();
+		});
+
+		test('rejects on error request', async () => {
+			const scope = nock().post(path, expectedBody).reply(400, DEFAULT_ERROR);
+
+			await expect(instance.getSubscriptionModifiers()).rejects.toThrow(
+				'Request failed with status code 400'
+			);
 
 			expect(scope.isDone()).toBeTruthy();
 		});

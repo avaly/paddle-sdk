@@ -1,17 +1,19 @@
-import crypto from 'crypto';
 import axios, { AxiosRequestConfig } from 'axios';
+import crypto from 'crypto';
 
 import serialize from './serialize';
 import {
-	CreateSubscriptionModifierBody,
-	CreateSubscriptionModifierResponse,
 	CreateOneOffChargeBody,
 	CreateOneOffChargeResponse,
+	CreateSubscriptionModifierBody,
+	CreateSubscriptionModifierResponse,
 	GeneratePaylinkBody,
 	GeneratePaylinkResponse,
 	GetProductCouponsBody,
 	GetProductCouponsResponse,
 	GetProductsResponse,
+	GetSubscriptionModifiersBody,
+	GetSubscriptionModifiersResponse,
 	GetSubscriptionPaymentsBody,
 	GetSubscriptionPaymentsResponse,
 	GetSubscriptionPlansBody,
@@ -20,11 +22,11 @@ import {
 	GetSubscriptionUsersResponse,
 	GetTransactionsResponse,
 	GetWebhookHistoryResponse,
+	PaddleResponseError,
 	PaddleResponseWrap,
 	RescheduleSubscriptionPaymentBody,
 	UpdateSubscriptionUserBody,
 	UpdateSubscriptionUserResponse,
-	PaddleResponseError,
 } from './types';
 import { VERSION } from './version';
 
@@ -478,6 +480,34 @@ s	 * @example
 	getOrderDetails(checkoutID: string) {
 		return this._request(`/order?checkout_id=${checkoutID}`, {
 			checkoutAPI: true,
+		});
+	}
+
+	/**
+	 * Get subscription modifiers.
+	 *
+	 * API documentation: https://developer.paddle.com/api-reference/f575ab89eb18c-list-modifiers
+	 *
+	 * @example
+	 * const result = await client.getSubscriptionModifiers();
+	 * const result = await client.getSubscriptionModifiers({ subscriptionID: 123 });
+	 */
+	getSubscriptionModifiers(options?: {
+		subscriptionID?: string;
+		planID?: string;
+	}) {
+		const { subscriptionID, planID } = options || {};
+
+		const body = {
+			...(subscriptionID && { subscription_id: subscriptionID }),
+			...(planID && { plan_id: planID }),
+		};
+
+		return this._request<
+			GetSubscriptionModifiersResponse,
+			GetSubscriptionModifiersBody
+		>('/subscription/modifiers', {
+			body,
 		});
 	}
 
