@@ -37,7 +37,7 @@ const CHECKOUT_SERVER_V1_URL = 'https://checkout.paddle.com/api/1.0';
 const CHECKOUT_SANDBOX_V2_URL = 'https://sandbox-checkout.paddle.com/api/2.0';
 const CHECKOUT_SERVER_V2_URL = 'https://checkout.paddle.com/api/2.0';
 
-export type CheckoutApiVersion = 'v1' | 'v2';
+type CheckoutApiVersion = 'v1' | 'v2';
 
 export interface Options {
 	/** Whether to use the sandbox server URL */
