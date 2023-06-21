@@ -499,8 +499,8 @@ s	 * @example
 		const { subscriptionID, planID } = options || {};
 
 		const body = {
-			...(subscriptionID && { subscription_id: subscriptionID + '' }),
-			...(planID && { plan_id: planID + '' }),
+			...(subscriptionID && { subscription_id: String(subscriptionID) }),
+			...(planID && { plan_id: String(planID) }),
 		};
 
 		return this._request<
