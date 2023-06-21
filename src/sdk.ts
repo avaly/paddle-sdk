@@ -33,8 +33,13 @@ import { VERSION } from './version';
 const VENDOR_SANDBOX_URL = 'https://sandbox-vendors.paddle.com/api/2.0';
 const VENDOR_SERVER_URL = 'https://vendors.paddle.com/api/2.0';
 
-const CHECKOUT_SANDBOX_URL = 'https://sandbox-checkout.paddle.com/api/1.0';
-const CHECKOUT_SERVER_URL = 'https://checkout.paddle.com/api/1.0';
+const CHECKOUT_SANDBOX_V1_URL = 'https://sandbox-checkout.paddle.com/api/1.0';
+const CHECKOUT_SERVER_V1_URL = 'https://checkout.paddle.com/api/1.0';
+
+const CHECKOUT_SANDBOX_V2_URL = 'https://sandbox-checkout.paddle.com/api/2.0';
+const CHECKOUT_SERVER_V2_URL = 'https://checkout.paddle.com/api/2.0';
+
+type CheckoutAPIVersion = 'v1' | 'v2';
 
 export interface Options {
 	/** Whether to use the sandbox server URL */
@@ -479,7 +484,38 @@ s	 * @example
 	 */
 	getOrderDetails(checkoutID: string) {
 		return this._request(`/order?checkout_id=${checkoutID}`, {
-			checkoutAPI: true,
+			checkoutAPIVersion: 'v1',
+		});
+	}
+
+	/**
+	 * Get prices
+	 *
+	 * API documentation: https://developer.paddle.com/api-reference/e268a91845971-get-prices
+	 *
+	 * @example
+	 * const result = await client.getPrices([123, 456]);
+	 * const result = await client.getPrices([123, 456], { coupons: ['EXAMPLE'], customerCountry: 'GB', customerIp: '127.0.0.1' });
+	 */
+	getPrices(
+		productIDs: number[],
+		options?: {
+			coupons?: string[];
+			customerCountry?: string;
+			customerIp?: string;
+		}
+	) {
+		const { coupons, customerCountry, customerIp } = options || {};
+
+		const params = new URLSearchParams({
+			product_ids: productIDs.join(','),
+			...(Array.isArray(coupons) && { coupons: coupons.join(',') }),
+			...(customerCountry && { customer_country: customerCountry }),
+			...(customerIp && { customer_ip: customerIp }),
+		});
+
+		return this._request(`/prices?${params.toString()}`, {
+			checkoutAPIVersion: 'v2',
 		});
 	}
 
@@ -575,17 +611,25 @@ s	 * @example
 	/**
 	 * Get the used server URL. Some of the requests go to Checkout server, while most will go to Vendor server.
 	 */
-	serverURL(checkoutAPI = false): string {
+	serverURL(checkoutAPIVersion?: CheckoutAPIVersion): string {
 		return (
 			(this.options && this.options.server) ||
-			(checkoutAPI &&
-				(this.options && this.options.sandbox
-					? CHECKOUT_SANDBOX_URL
-					: CHECKOUT_SERVER_URL)) ||
+			(checkoutAPIVersion && this.getCheckoutURL(checkoutAPIVersion)) ||
 			(this.options && this.options.sandbox
 				? VENDOR_SANDBOX_URL
 				: VENDOR_SERVER_URL)
 		);
+	}
+
+	private getCheckoutURL(checkoutAPIVersion: CheckoutAPIVersion): string {
+		if (this.options && this.options.sandbox) {
+			return checkoutAPIVersion === 'v1'
+				? CHECKOUT_SANDBOX_V1_URL
+				: CHECKOUT_SANDBOX_V2_URL;
+		}
+		return checkoutAPIVersion === 'v1'
+			? CHECKOUT_SERVER_V1_URL
+			: CHECKOUT_SERVER_V2_URL;
 	}
 
 	/**
@@ -604,18 +648,18 @@ s	 * @example
 			body: requestBody,
 			headers,
 			form = true,
-			checkoutAPI = false,
+			checkoutAPIVersion = undefined,
 		}: {
 			body?: TBody;
 			headers?: object;
 			form?: boolean;
 			json?: boolean;
-			checkoutAPI?: boolean;
+			checkoutAPIVersion?: CheckoutAPIVersion;
 		} = {}
 	): Promise<TResponse> {
-		const url = this.serverURL(checkoutAPI) + path;
+		const url = this.serverURL(checkoutAPIVersion) + path;
 		// Requests to Checkout API are using only GET,
-		const method = checkoutAPI ? 'GET' : 'POST';
+		const method = checkoutAPIVersion ? 'GET' : 'POST';
 
 		const fullRequestBody = {
 			vendor_id: this.vendorID,
