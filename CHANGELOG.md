@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.6.0](https://github.com/avaly/paddle-sdk/compare/v4.5.0...v4.6.0) (2023-06-21)
+
+
+### Features
+
+* Add `getPrices` ([#89](https://github.com/avaly/paddle-sdk/issues/89)) ([d949469](https://github.com/avaly/paddle-sdk/commit/d9494690d467f9cf5bef8b8ed65d96ed5b0da366))
+* Add `getSubscriptionModifiers` ([#88](https://github.com/avaly/paddle-sdk/issues/88)) ([ee831c5](https://github.com/avaly/paddle-sdk/commit/ee831c5d54862cf8c62d7c5b50422b24c2495ac1))
+
 ## [4.5.0](https://github.com/avaly/paddle-sdk/compare/v4.4.0...v4.5.0) (2023-06-12)
 
 
