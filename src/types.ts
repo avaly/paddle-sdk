@@ -188,6 +188,20 @@ export interface UpdateSubscriptionUserResponse {
 	next_payment: Payment;
 }
 
+export interface GetSubscriptionModifiersBody {
+	plan_id?: string;
+	subscription_id?: string;
+}
+
+export interface GetSubscriptionModifiersResponse {
+	modifier_id: number;
+	subscription_id: number;
+	amount: number;
+	currency: number;
+	is_recurring: boolean;
+	description: string;
+}
+
 export interface CreateSubscriptionModifierBody {
 	modifier_amount: number;
 	modifier_description?: string;
