@@ -37,7 +37,7 @@ const CHECKOUT_SERVER_V1_URL = 'https://checkout.paddle.com/api/1.0';
 const CHECKOUT_SANDBOX_V2_URL = 'https://sandbox-checkout.paddle.com/api/2.0';
 const CHECKOUT_SERVER_V2_URL = 'https://checkout.paddle.com/api/2.0';
 
-type CheckoutApiVersion = 'v1' | 'v2';
+type CheckoutAPIVersion = 'v1' | 'v2';
 
 export interface Options {
 	/** Whether to use the sandbox server URL */
@@ -581,17 +581,17 @@ s	 * @example
 	/**
 	 * Get the used server URL. Some of the requests go to Checkout server, while most will go to Vendor server.
 	 */
-	serverURL(checkoutAPIVersion?: CheckoutApiVersion): string {
+	serverURL(checkoutAPIVersion?: CheckoutAPIVersion): string {
 		return (
 			(this.options && this.options.server) ||
-			(checkoutAPIVersion && this.getCheckoutUrl(checkoutAPIVersion)) ||
+			(checkoutAPIVersion && this.getCheckoutURL(checkoutAPIVersion)) ||
 			(this.options && this.options.sandbox
 				? VENDOR_SANDBOX_URL
 				: VENDOR_SERVER_URL)
 		);
 	}
 
-	private getCheckoutUrl(checkoutAPIVersion: CheckoutApiVersion) {
+	private getCheckoutURL(checkoutAPIVersion: CheckoutAPIVersion): string {
 		if (this.options && this.options.sandbox) {
 			return checkoutAPIVersion === 'v1'
 				? CHECKOUT_SANDBOX_V1_URL
@@ -624,7 +624,7 @@ s	 * @example
 			headers?: object;
 			form?: boolean;
 			json?: boolean;
-			checkoutAPIVersion?: CheckoutApiVersion;
+			checkoutAPIVersion?: CheckoutAPIVersion;
 		} = {}
 	): Promise<TResponse> {
 		const url = this.serverURL(checkoutAPIVersion) + path;
