@@ -9,6 +9,7 @@ import {
 	CreateSubscriptionModifierResponse,
 	GeneratePaylinkBody,
 	GeneratePaylinkResponse,
+	GetPricesResponse,
 	GetProductCouponsBody,
 	GetProductCouponsResponse,
 	GetProductsResponse,
@@ -514,7 +515,7 @@ s	 * @example
 			...(customerIp && { customer_ip: customerIp }),
 		});
 
-		return this._request(`/prices?${params.toString()}`, {
+		return this._request<GetPricesResponse>(`/prices?${params.toString()}`, {
 			checkoutAPIVersion: 'v2',
 		});
 	}
