@@ -262,3 +262,27 @@ export interface GeneratePaylinkBody {
 export interface GeneratePaylinkResponse {
 	url: string;
 }
+
+export interface GetPricesResponse {
+	customer_country: string;
+	products: {
+		product_id: number;
+		product_title: string;
+		currency: string;
+		vendor_set_prices_included_tax: boolean;
+		price: {
+			gross: number;
+			net: number;
+			tax: number;
+		};
+		list_price: {
+			gross: number;
+			net: number;
+			tax: number;
+		};
+		applied_coupon: {
+			code: string;
+			discount: number;
+		};
+	}[];
+}
