@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.6.1](https://github.com/avaly/paddle-sdk/compare/v4.6.0...v4.6.1) (2023-06-22)
+
+
+### Bug Fixes
+
+* Add `getPrices` response type ([#90](https://github.com/avaly/paddle-sdk/issues/90)) ([3b4cfd2](https://github.com/avaly/paddle-sdk/commit/3b4cfd2ea8afb3191c431f35da0d24a72fabdb45))
+* Fix `getSubscriptionModifiers` response type ([#91](https://github.com/avaly/paddle-sdk/issues/91)) ([ffddc60](https://github.com/avaly/paddle-sdk/commit/ffddc608fc4932d464014da04cfaae09d37b5847))
+* Fix type of `recurring_prices` in `GeneratePaylinkBody` ([#92](https://github.com/avaly/paddle-sdk/issues/92)) ([45b3a1a](https://github.com/avaly/paddle-sdk/commit/45b3a1a0d8393e92901971eb61ff614d94566bb5))
+
 ## [4.6.0](https://github.com/avaly/paddle-sdk/compare/v4.5.0...v4.6.0) (2023-06-21)
 
 
