@@ -250,7 +250,7 @@ export interface GeneratePaylinkBody {
 	product_id?: number;
 	quantity_variable?: number;
 	quantity?: number;
-	recurring_prices?: string;
+	recurring_prices?: Array<string>;
 	return_url?: string;
 	title?: string;
 	trial_days?: number;
