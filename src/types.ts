@@ -193,7 +193,7 @@ export interface GetSubscriptionModifiersBody {
 	subscription_id?: string;
 }
 
-export interface GetSubscriptionModifiersResponse {
+export interface SubscriptionModifier {
 	modifier_id: number;
 	subscription_id: number;
 	amount: number;
@@ -201,6 +201,8 @@ export interface GetSubscriptionModifiersResponse {
 	is_recurring: boolean;
 	description: string;
 }
+
+export type GetSubscriptionModifiersResponse = Array<SubscriptionModifier>;
 
 export interface CreateSubscriptionModifierBody {
 	modifier_amount: number;
