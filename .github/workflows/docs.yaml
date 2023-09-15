@@ -37,7 +37,7 @@ jobs:
             ${{ runner.os }}-yarn-
       - run: yarn install --frozen-lockfile
       - run: yarn docs
-      - uses: actions/upload-pages-artifact@v1.0.8
+      - uses: actions/upload-pages-artifact@v1.0.10
         with:
           path: './docs'
       - uses: actions/deploy-pages@v2.0.0
