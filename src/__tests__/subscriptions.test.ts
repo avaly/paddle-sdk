@@ -12,6 +12,7 @@ describe('subscription methods', () => {
 
 	const PLAN_ID = 23456;
 	const SUBSCRIPTION_ID = 34567;
+	const MODIFIER_ID = 12345;
 	const PAYMENT_ID = 512345;
 	const NEW_PAYMENT_DATE = new Date('2023-01-01');
 
@@ -614,6 +615,39 @@ describe('subscription methods', () => {
 
 			await expect(
 				instance.createSubscriptionModifier(SUBSCRIPTION_ID, 10)
+			).rejects.toThrow('Request failed with status code 400');
+
+			expect(scope.isDone()).toBeTruthy();
+		});
+	});
+
+	describe('deleteSubscriptionModifier', () => {
+		const path = '/subscription/modifiers/delete';
+		const expectedBody = {
+			...EXPECTED_BODY,
+			modifier_id: MODIFIER_ID,
+		};
+
+		// https://developer.paddle.com/classic/api-reference/dcdd0db5b20a1-delete-modifier
+		const responseBody = {
+			success: true,
+			response: {},
+		};
+
+		test('resolves on successful request', async () => {
+			const scope = nock().post(path, expectedBody).reply(200, responseBody);
+
+			const response = await instance.deleteSubscriptionModifier(MODIFIER_ID);
+
+			expect(response).toEqual(responseBody.response);
+			expect(scope.isDone()).toBeTruthy();
+		});
+
+		test('rejects on error request', async () => {
+			const scope = nock().post(path, expectedBody).reply(400, DEFAULT_ERROR);
+
+			await expect(
+				instance.deleteSubscriptionModifier(MODIFIER_ID)
 			).rejects.toThrow('Request failed with status code 400');
 
 			expect(scope.isDone()).toBeTruthy();
