@@ -220,9 +220,7 @@ export interface DeleteSubscriptionModifierBody {
 	modifier_id: number;
 }
 
-export interface DeleteSubscriptionModifierResponse {
-	success: boolean;
-}
+export interface DeleteSubscriptionModifierResponse { }
 
 export interface CreateOneOffChargeBody {
 	amount: number;
