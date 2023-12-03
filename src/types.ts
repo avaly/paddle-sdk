@@ -216,6 +216,12 @@ export interface CreateSubscriptionModifierResponse {
 	modifier_id: number;
 }
 
+export interface DeleteSubscriptionModifierBody {
+	modifier_id: number;
+}
+
+export interface DeleteSubscriptionModifierResponse { }
+
 export interface CreateOneOffChargeBody {
 	amount: number;
 	charge_name: string;
