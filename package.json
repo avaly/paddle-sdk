@@ -46,7 +46,7 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
-    "axios": "1.6.0"
+    "axios": "1.6.8"
   },
   "devDependencies": {
     "@types/jest": "29.5.0",
