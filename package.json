@@ -62,7 +62,7 @@
     "prettier": "2.8.7",
     "standard-version": "9.5.0",
     "ts-jest": "29.0.5",
-    "ts-node": "10.9.1",
+    "ts-node": "10.9.2",
     "typedoc": "0.23.28",
     "typescript": "5.0.2",
     "validate-commit-msg": "2.14.0"
