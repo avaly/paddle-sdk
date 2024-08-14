@@ -7,6 +7,8 @@ import {
 	CreateOneOffChargeResponse,
 	CreateSubscriptionModifierBody,
 	CreateSubscriptionModifierResponse,
+	DeleteSubscriptionModifierBody,
+	DeleteSubscriptionModifierResponse,
 	GeneratePaylinkBody,
 	GeneratePaylinkResponse,
 	GetPricesResponse,
@@ -583,6 +585,31 @@ s	 * @example
 			body,
 		});
 	}
+
+	/**
+	 * Delete a subscription modifier to remove existing modifiers on the subscription payment amount.
+	 *
+	 * API documentation: https://developer.paddle.com/classic/api-reference/dcdd0db5b20a1-delete-modifier
+	 *
+	 * @example
+	 * const result = await client.createSubscriptionModifier(123, 10);
+	 * const result = await client.createSubscriptionModifier(123, 10, { recurring: false, description: 'description' });
+	 */
+		deleteSubscriptionModifier(
+			modifierID: number,
+		) {
+	
+			const body = {
+				modifier_id: modifierID,
+			};
+	
+			return this._request<
+				DeleteSubscriptionModifierResponse,
+				DeleteSubscriptionModifierBody
+			>('/subscription/modifiers/delete', {
+				body,
+			});
+		}
 
 	/**
 	 * Make an immediate one-off charge on top of an existing user subscription
