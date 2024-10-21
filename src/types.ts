@@ -211,6 +211,10 @@ export interface CreateSubscriptionModifierBody {
 	subscription_id: number;
 }
 
+export interface DeleteSubscriptionModifierBody {
+	modifier_id: number;
+}
+
 export interface CreateSubscriptionModifierResponse {
 	subscription_id: number;
 	modifier_id: number;

@@ -7,6 +7,7 @@ import {
 	CreateOneOffChargeResponse,
 	CreateSubscriptionModifierBody,
 	CreateSubscriptionModifierResponse,
+	DeleteSubscriptionModifierBody,
 	GeneratePaylinkBody,
 	GeneratePaylinkResponse,
 	GetPricesResponse,
@@ -582,6 +583,27 @@ s	 * @example
 		>('/subscription/modifiers/create', {
 			body,
 		});
+	}
+
+	/**
+	 * Delete an existing subscription modifier.
+	 *
+	 * API documentation: https://developer.paddle.com/classic/api-reference/dcdd0db5b20a1-delete-modifier
+	 *
+	 * @example
+	 * const result = await client.deleteSubscriptionModifier(123);
+	 */
+	deleteSubscriptionModifier(modifierId: number) {
+		const body = {
+			modifier_id: modifierId,
+		};
+
+		return this._request<true, DeleteSubscriptionModifierBody>(
+			'/subscription/modifiers/delete',
+			{
+				body,
+			}
+		);
 	}
 
 	/**
