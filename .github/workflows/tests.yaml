@@ -14,7 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-        node: [14, 16, 18]
+        node: [18, 20, 22]
 
     name: Node.js ${{ matrix.node }}
 
