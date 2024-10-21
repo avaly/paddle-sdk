@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.7.0](https://github.com/avaly/paddle-sdk/compare/v4.6.2...v4.7.0) (2024-10-21)
+
+
+### Features
+
+* Add `deleteSubscriptionModifier` ([#106](https://github.com/avaly/paddle-sdk/issues/106)) ([19b933b](https://github.com/avaly/paddle-sdk/commit/19b933b5a54d39c0b8c03afc94010a11249ce63c))
+
 ### [4.6.2](https://github.com/avaly/paddle-sdk/compare/v4.6.1...v4.6.2) (2023-11-11)
 
 ### [4.6.1](https://github.com/avaly/paddle-sdk/compare/v4.6.0...v4.6.1) (2023-06-22)
