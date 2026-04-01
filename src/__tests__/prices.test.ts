@@ -2,8 +2,10 @@ import {
 	DEFAULT_ERROR,
 	VENDOR_API_KEY,
 	VENDOR_ID,
+	SERVER,
 } from '../../utils/constants';
-import nock, { SERVER } from '../../utils/nock';
+import fetchMock from '@fetch-mock/jest';
+import { expectGetHeaders } from '../../utils/fetchMock';
 import { PaddleSDK } from '../sdk';
 
 describe('prices methods', () => {
@@ -22,7 +24,7 @@ describe('prices methods', () => {
 			coupon2 = 'EXAMPLE5',
 			customerCountry = 'GB',
 			customerIp = '127.0.0.1';
-		const path = `/prices?product_ids=${product1}%2C${product2}`;
+		const PATH = `${SERVER}/prices?product_ids=${product1}%2C${product2}`;
 
 		test('resolves on successful request', async () => {
 			// https://developer.paddle.com/api-reference/e268a91845971-get-prices
@@ -69,11 +71,8 @@ describe('prices methods', () => {
 				},
 			};
 
-			const scope = nock()
-				.get(
-					`${path}&coupons=${coupon1}%2C${coupon2}&customer_country=${customerCountry}&customer_ip=${customerIp}`
-				)
-				.reply(200, body);
+			const PATH_WITH_OPTIONS = `${PATH}&coupons=${coupon1}%2C${coupon2}&customer_country=${customerCountry}&customer_ip=${customerIp}`;
+			fetchMock.get(PATH_WITH_OPTIONS, { status: 200, body });
 
 			const response = await instance.getPrices([product1, product2], {
 				coupons: [coupon1, coupon2],
@@ -82,17 +81,24 @@ describe('prices methods', () => {
 			});
 
 			expect(response).toEqual(body.response);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHaveGot(PATH_WITH_OPTIONS);
+			expectGetHeaders(PATH_WITH_OPTIONS);
 		});
 
 		test('rejects on error response', async () => {
-			const scope = nock().get(path).reply(400, DEFAULT_ERROR);
+			fetchMock.get(PATH, {
+				status: 400,
+				body: DEFAULT_ERROR,
+			});
 
 			await expect(instance.getPrices([product1, product2])).rejects.toThrow(
 				'Request failed with status code 400'
 			);
 
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHaveGot(PATH);
+			expectGetHeaders(PATH);
 		});
 	});
 });

@@ -1,3 +1,12 @@
-import nock from 'nock';
+import fetchMock, { manageFetchMockGlobally } from '@fetch-mock/jest';
+import { jest } from '@jest/globals';
 
-nock.disableNetConnect();
+manageFetchMockGlobally(jest);
+
+beforeEach(() => {
+	fetchMock.mockGlobal();
+});
+
+afterEach(() => {
+	fetchMock.mockRestore();
+});

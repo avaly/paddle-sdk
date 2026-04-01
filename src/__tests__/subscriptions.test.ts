@@ -3,8 +3,10 @@ import {
 	EXPECTED_BODY,
 	VENDOR_API_KEY,
 	VENDOR_ID,
+	SERVER,
 } from '../../utils/constants';
-import nock, { SERVER } from '../../utils/nock';
+import fetchMock from '@fetch-mock/jest';
+import { expectFormPostBody } from '../../utils/fetchMock';
 import { PaddleSDK } from '../sdk';
 
 describe('subscription methods', () => {
@@ -23,7 +25,7 @@ describe('subscription methods', () => {
 	});
 
 	describe('getSubscriptionPlans', () => {
-		const path = '/subscription/plans';
+		const PATH = `${SERVER}/subscription/plans`;
 		// https://paddle.com/docs/api-list-plans
 		const responseBody = {
 			success: true,
@@ -68,27 +70,34 @@ describe('subscription methods', () => {
 		};
 
 		test('resolves on successful request', async () => {
-			const scope = nock().post(path, EXPECTED_BODY).reply(200, responseBody);
+			fetchMock.post(PATH, { status: 200, body: responseBody });
 
 			const response = await instance.getSubscriptionPlans();
 
 			expect(response).toEqual(responseBody.response);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, EXPECTED_BODY);
 		});
 
 		test('rejects on error request', async () => {
-			const scope = nock().post(path, EXPECTED_BODY).reply(400, DEFAULT_ERROR);
+			fetchMock.post(PATH, {
+				status: 400,
+				body: DEFAULT_ERROR,
+			});
 
 			await expect(instance.getSubscriptionPlans()).rejects.toThrow(
 				'Request failed with status code 400'
 			);
 
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, EXPECTED_BODY);
 		});
 	});
 
 	describe('getSubscriptionPlan', () => {
-		const path = '/subscription/plans';
+		const PATH = `${SERVER}/subscription/plans`;
 		const expectedBody = {
 			...EXPECTED_BODY,
 			plan: PLAN_ID,
@@ -125,27 +134,34 @@ describe('subscription methods', () => {
 		};
 
 		test('resolves on successful request', async () => {
-			const scope = nock().post(path, expectedBody).reply(200, responseBody);
+			fetchMock.post(PATH, { status: 200, body: responseBody });
 
 			const response = await instance.getSubscriptionPlan(PLAN_ID);
 
 			expect(response).toEqual(responseBody.response[0]);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBody);
 		});
 
 		test('rejects on error request', async () => {
-			const scope = nock().post(path, expectedBody).reply(400, DEFAULT_ERROR);
+			fetchMock.post(PATH, {
+				status: 400,
+				body: DEFAULT_ERROR,
+			});
 
 			await expect(instance.getSubscriptionPlan(PLAN_ID)).rejects.toThrow(
 				'Request failed with status code 400'
 			);
 
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBody);
 		});
 	});
 
 	describe('getUsers', () => {
-		const path = '/subscription/users';
+		const PATH = `${SERVER}/subscription/users`;
 		const expectedBody = {
 			...EXPECTED_BODY,
 			page: 1,
@@ -179,22 +195,29 @@ describe('subscription methods', () => {
 				],
 			};
 
-			const scope = nock().post(path, expectedBody).reply(200, body);
+			fetchMock.post(PATH, { status: 200, body });
 
 			const response = await instance.getUsers({ planID: PLAN_ID });
 
 			expect(response).toEqual(body.response);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBody);
 		});
 
 		test('rejects on error request', async () => {
-			const scope = nock().post(path, expectedBody).reply(400, DEFAULT_ERROR);
+			fetchMock.post(PATH, {
+				status: 400,
+				body: DEFAULT_ERROR,
+			});
 
 			await expect(instance.getUsers({ planID: PLAN_ID })).rejects.toThrow(
 				'Request failed with status code 400'
 			);
 
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBody);
 		});
 
 		test('filters for subscriptionID', async () => {
@@ -230,19 +253,21 @@ describe('subscription methods', () => {
 				],
 			};
 
-			const scope = nock().post(path, expectedBody).reply(200, body);
+			fetchMock.post(PATH, { status: 200, body });
 
 			const response = await instance.getUsers({
 				subscriptionID: SUBSCRIPTION_ID,
 			});
 
 			expect(response).toEqual(body.response);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBody);
 		});
 	});
 
 	describe('getSubscriptionPayments', () => {
-		const path = '/subscription/payments';
+		const PATH = `${SERVER}/subscription/payments`;
 		const expectedBody = {
 			...EXPECTED_BODY,
 			plan: PLAN_ID,
@@ -266,12 +291,14 @@ describe('subscription methods', () => {
 				],
 			};
 
-			const scope = nock().post(path, expectedBody).reply(200, body);
+			fetchMock.post(PATH, { status: 200, body });
 
 			const response = await instance.getSubscriptionPayments(PLAN_ID);
 
 			expect(response).toEqual(body.response);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBody);
 		});
 
 		test('resolves on successful request using options', async () => {
@@ -295,7 +322,7 @@ describe('subscription methods', () => {
 				],
 			};
 
-			const scope = nock().post(path, expectedBodyOptions).reply(200, body);
+			fetchMock.post(PATH, { status: 200, body });
 
 			const response = await instance.getSubscriptionPayments({
 				planID: PLAN_ID,
@@ -303,22 +330,29 @@ describe('subscription methods', () => {
 			});
 
 			expect(response).toEqual(body.response);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBodyOptions);
 		});
 
 		test('rejects on error request', async () => {
-			const scope = nock().post(path, expectedBody).reply(400, DEFAULT_ERROR);
+			fetchMock.post(PATH, {
+				status: 400,
+				body: DEFAULT_ERROR,
+			});
 
 			await expect(instance.getSubscriptionPayments(PLAN_ID)).rejects.toThrow(
 				'Request failed with status code 400'
 			);
 
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBody);
 		});
 	});
 
 	describe('reschedulePayment', () => {
-		const path = '/subscription/payments_reschedule';
+		const PATH = `${SERVER}/subscription/payments_reschedule`;
 		const expectedBody = {
 			...EXPECTED_BODY,
 			payment_id: PAYMENT_ID,
@@ -336,7 +370,7 @@ describe('subscription methods', () => {
 				],
 			};
 
-			const scope = nock().post(path, expectedBody).reply(200, body);
+			fetchMock.post(PATH, { status: 200, body });
 
 			const response = await instance.reschedulePayment(
 				PAYMENT_ID,
@@ -344,22 +378,29 @@ describe('subscription methods', () => {
 			);
 
 			expect(response).toEqual(body.response);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBody);
 		});
 
 		test('rejects on error request', async () => {
-			const scope = nock().post(path, expectedBody).reply(400, DEFAULT_ERROR);
+			fetchMock.post(PATH, {
+				status: 400,
+				body: DEFAULT_ERROR,
+			});
 
 			await expect(
 				instance.reschedulePayment(PAYMENT_ID, NEW_PAYMENT_DATE)
 			).rejects.toThrow('Request failed with status code 400');
 
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBody);
 		});
 	});
 
 	describe('updateSubscription', () => {
-		const path = '/subscription/users/update';
+		const PATH = `${SERVER}/subscription/users/update`;
 		const expectedBody = {
 			...EXPECTED_BODY,
 			subscription_id: SUBSCRIPTION_ID,
@@ -380,7 +421,7 @@ describe('subscription methods', () => {
 		};
 
 		test('resolves on successful request all params', async () => {
-			const scope = nock().post(path, expectedBody).reply(200, responseBody);
+			fetchMock.post(PATH, { status: 200, body: responseBody });
 
 			const response = await instance.updateSubscription(SUBSCRIPTION_ID, {
 				planID: PLAN_ID,
@@ -391,7 +432,9 @@ describe('subscription methods', () => {
 			});
 
 			expect(response).toEqual(responseBody.response);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBody);
 		});
 
 		test('resolves on successful request quantity', async () => {
@@ -401,16 +444,16 @@ describe('subscription methods', () => {
 				quantity: 2,
 			};
 
-			const scope = nock()
-				.post(path, expectedBodyQuantity)
-				.reply(200, responseBody);
+			fetchMock.post(PATH, { status: 200, body: responseBody });
 
 			const response = await instance.updateSubscription(SUBSCRIPTION_ID, {
 				quantity: 2,
 			});
 
 			expect(response).toEqual(responseBody.response);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBodyQuantity);
 		});
 
 		test('resolves on successful pause subscription', async () => {
@@ -422,14 +465,16 @@ describe('subscription methods', () => {
 				EXPECTED_BODY
 			);
 
-			const scope = nock().post(path, expectedBody).reply(200, responseBody);
+			fetchMock.post(PATH, { status: 200, body: responseBody });
 
 			const response = await instance.updateSubscription(SUBSCRIPTION_ID, {
 				pause: true,
 			});
 
 			expect(response).toEqual(responseBody.response);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBody);
 		});
 
 		test('resolves on successful renew subscription', async () => {
@@ -439,35 +484,41 @@ describe('subscription methods', () => {
 				pause: false,
 			};
 
-			const scope = nock().post(path, expectedBody).reply(200, responseBody);
+			fetchMock.post(PATH, { status: 200, body: responseBody });
 
 			const response = await instance.updateSubscription(SUBSCRIPTION_ID, {
 				pause: false,
 			});
 
 			expect(response).toEqual(responseBody.response);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBody);
 		});
 
 		test('rejects on error request', async () => {
-			const scope = nock()
-				.post(path, {
-					...EXPECTED_BODY,
-					subscription_id: SUBSCRIPTION_ID,
-					plan_id: PLAN_ID,
-				})
-				.reply(400, DEFAULT_ERROR);
+			const errorRequestBody = {
+				...EXPECTED_BODY,
+				subscription_id: SUBSCRIPTION_ID,
+				plan_id: PLAN_ID,
+			};
+			fetchMock.post(PATH, {
+				status: 400,
+				body: DEFAULT_ERROR,
+			});
 
 			await expect(
 				instance.updateSubscription(SUBSCRIPTION_ID, { planID: PLAN_ID })
 			).rejects.toThrow('Request failed with status code 400');
 
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, errorRequestBody);
 		});
 	});
 
 	describe('cancelSubscription', () => {
-		const path = '/subscription/users_cancel';
+		const PATH = `${SERVER}/subscription/users_cancel`;
 		const expectedBody = {
 			...EXPECTED_BODY,
 			subscription_id: SUBSCRIPTION_ID,
@@ -479,27 +530,34 @@ describe('subscription methods', () => {
 				success: true,
 			};
 
-			const scope = nock().post(path, expectedBody).reply(200, body);
+			fetchMock.post(PATH, { status: 200, body });
 
 			const response = await instance.cancelSubscription(SUBSCRIPTION_ID);
 
 			expect(response).toEqual(true);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBody);
 		});
 
 		test('rejects on error request', async () => {
-			const scope = nock().post(path, expectedBody).reply(400, DEFAULT_ERROR);
+			fetchMock.post(PATH, {
+				status: 400,
+				body: DEFAULT_ERROR,
+			});
 
 			await expect(
 				instance.cancelSubscription(SUBSCRIPTION_ID)
 			).rejects.toThrow('Request failed with status code 400');
 
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBody);
 		});
 	});
 
 	describe('getSubscriptionModifiers', () => {
-		const path = '/subscription/modifiers';
+		const PATH = `${SERVER}/subscription/modifiers`;
 		const expectedBody = {
 			...EXPECTED_BODY,
 		};
@@ -517,12 +575,14 @@ describe('subscription methods', () => {
 		};
 
 		test('resolves on successful request', async () => {
-			const scope = nock().post(path, expectedBody).reply(200, responseBody);
+			fetchMock.post(PATH, { status: 200, body: responseBody });
 
 			const response = await instance.getSubscriptionModifiers();
 
 			expect(response).toEqual(responseBody.response);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBody);
 		});
 
 		test('resolves on successful request all params', async () => {
@@ -534,7 +594,7 @@ describe('subscription methods', () => {
 				EXPECTED_BODY
 			);
 
-			const scope = nock().post(path, expectedBody).reply(200, responseBody);
+			fetchMock.post(PATH, { status: 200, body: responseBody });
 
 			const response = await instance.getSubscriptionModifiers({
 				subscriptionID: SUBSCRIPTION_ID,
@@ -542,22 +602,29 @@ describe('subscription methods', () => {
 			});
 
 			expect(response).toEqual(responseBody.response);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBody);
 		});
 
 		test('rejects on error request', async () => {
-			const scope = nock().post(path, expectedBody).reply(400, DEFAULT_ERROR);
+			fetchMock.post(PATH, {
+				status: 400,
+				body: DEFAULT_ERROR,
+			});
 
 			await expect(instance.getSubscriptionModifiers()).rejects.toThrow(
 				'Request failed with status code 400'
 			);
 
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBody);
 		});
 	});
 
 	describe('createSubscriptionModifier', () => {
-		const path = '/subscription/modifiers/create';
+		const PATH = `${SERVER}/subscription/modifiers/create`;
 		const expectedBody = {
 			...EXPECTED_BODY,
 			subscription_id: SUBSCRIPTION_ID,
@@ -573,7 +640,7 @@ describe('subscription methods', () => {
 		};
 
 		test('resolves on successful request', async () => {
-			const scope = nock().post(path, expectedBody).reply(200, responseBody);
+			fetchMock.post(PATH, { status: 200, body: responseBody });
 
 			const response = await instance.createSubscriptionModifier(
 				SUBSCRIPTION_ID,
@@ -581,7 +648,9 @@ describe('subscription methods', () => {
 			);
 
 			expect(response).toEqual(responseBody.response);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBody);
 		});
 
 		test('resolves on successful request all params', async () => {
@@ -595,7 +664,7 @@ describe('subscription methods', () => {
 				EXPECTED_BODY
 			);
 
-			const scope = nock().post(path, expectedBody).reply(200, responseBody);
+			fetchMock.post(PATH, { status: 200, body: responseBody });
 
 			const response = await instance.createSubscriptionModifier(
 				SUBSCRIPTION_ID,
@@ -607,22 +676,29 @@ describe('subscription methods', () => {
 			);
 
 			expect(response).toEqual(responseBody.response);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBody);
 		});
 
 		test('rejects on error request', async () => {
-			const scope = nock().post(path, expectedBody).reply(400, DEFAULT_ERROR);
+			fetchMock.post(PATH, {
+				status: 400,
+				body: DEFAULT_ERROR,
+			});
 
 			await expect(
 				instance.createSubscriptionModifier(SUBSCRIPTION_ID, 10)
 			).rejects.toThrow('Request failed with status code 400');
 
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBody);
 		});
 	});
 
 	describe('deleteSubscriptionModifier', () => {
-		const path = '/subscription/modifiers/delete';
+		const PATH = `${SERVER}/subscription/modifiers/delete`;
 		const expectedBody = {
 			...EXPECTED_BODY,
 			modifier_id: MODIFIER_ID,
@@ -633,27 +709,34 @@ describe('subscription methods', () => {
 		};
 
 		test('resolves on successful request', async () => {
-			const scope = nock().post(path, expectedBody).reply(200, responseBody);
+			fetchMock.post(PATH, { status: 200, body: responseBody });
 
 			const response = await instance.deleteSubscriptionModifier(MODIFIER_ID);
 
 			expect(response).toEqual(true);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBody);
 		});
 
 		test('rejects on error request', async () => {
-			const scope = nock().post(path, expectedBody).reply(400, DEFAULT_ERROR);
+			fetchMock.post(PATH, {
+				status: 400,
+				body: DEFAULT_ERROR,
+			});
 
 			await expect(
 				instance.deleteSubscriptionModifier(MODIFIER_ID)
 			).rejects.toThrow('Request failed with status code 400');
 
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBody);
 		});
 	});
 
 	describe('createOneOffCharge', () => {
-		const path = `/subscription/${SUBSCRIPTION_ID}/charge`;
+		const PATH = `${SERVER}/subscription/${SUBSCRIPTION_ID}/charge`;
 		const expectedBody = {
 			...EXPECTED_BODY,
 			amount: 10,
@@ -675,7 +758,7 @@ describe('subscription methods', () => {
 		};
 
 		test('resolves on successful request', async () => {
-			const scope = nock().post(path, expectedBody).reply(200, responseBody);
+			fetchMock.post(PATH, { status: 200, body: responseBody });
 
 			const response = await instance.createOneOffCharge(
 				SUBSCRIPTION_ID,
@@ -684,17 +767,24 @@ describe('subscription methods', () => {
 			);
 
 			expect(response).toEqual(responseBody.response);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBody);
 		});
 
 		test('rejects on error request', async () => {
-			const scope = nock().post(path, expectedBody).reply(400, DEFAULT_ERROR);
+			fetchMock.post(PATH, {
+				status: 400,
+				body: DEFAULT_ERROR,
+			});
 
 			await expect(
 				instance.createOneOffCharge(SUBSCRIPTION_ID, 10, 'Charge 1')
 			).rejects.toThrow('Request failed with status code 400');
 
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBody);
 		});
 	});
 });
