@@ -1,4 +1,3 @@
-import axios, { AxiosRequestConfig } from 'axios';
 import crypto from 'crypto';
 
 import serialize from './serialize';
@@ -681,28 +680,40 @@ s	 * @example
 		} = {}
 	): Promise<TResponse> {
 		const url = this.serverURL(checkoutAPIVersion) + path;
-		// Requests to Checkout API are using only GET,
 		const method = checkoutAPIVersion ? 'GET' : 'POST';
-
 		const fullRequestBody = {
 			vendor_id: this.vendorID,
 			vendor_auth_code: this.apiKey,
 			...requestBody,
 		};
 
-		const options: AxiosRequestConfig = {
-			headers: {
-				'User-Agent': `paddle-sdk/${VERSION} (https://github.com/avaly/paddle-sdk)`,
-				...(form && { 'Content-Type': 'application/x-www-form-urlencoded' }),
-				...(headers || {}),
-			},
-			method,
+		const requestHeaders: Record<string, string> = {
+			'User-Agent': `paddle-sdk/${VERSION} (https://github.com/avaly/paddle-sdk)`,
+			...(headers as Record<string, string> | undefined),
 		};
-		if (method !== 'GET') {
-			options.data = fullRequestBody;
+
+		const options: RequestInit = {
+			method,
+			headers: requestHeaders,
+		};
+
+		if (method === 'POST') {
+			if (form) {
+				requestHeaders['Content-Type'] = 'application/x-www-form-urlencoded';
+				options.body = this._serializeFormBody(fullRequestBody);
+			} else {
+				requestHeaders['Content-Type'] = 'application/json';
+				options.body = JSON.stringify(fullRequestBody);
+			}
 		}
 
-		const { data } = await axios<PaddleResponseWrap<TResponse>>(url, options);
+		const response = await fetch(url, options);
+
+		if (!response.ok) {
+			throw new Error(`Request failed with status code ${response.status}`);
+		}
+
+		const data = (await response.json()) as PaddleResponseWrap<TResponse>;
 
 		if ('success' in data && typeof data.success === 'boolean') {
 			if (data.success) {
@@ -718,6 +729,16 @@ s	 * @example
 		}
 
 		return data as TResponse;
+	}
+
+	private _serializeFormBody(body: Record<string, unknown>): string {
+		const params = new URLSearchParams();
+
+		Object.entries(body).forEach(([key, value]) => {
+			params.append(key, String(value));
+		});
+
+		return params.toString();
 	}
 
 	/**

@@ -4,8 +4,12 @@ import {
 	EXPECTED_BODY,
 	VENDOR_API_KEY,
 	VENDOR_ID,
+	SERVER,
 } from '../../utils/constants';
-import nock, { SERVER } from '../../utils/nock';
+import fetchMock from '@fetch-mock/jest';
+import { expectFormPostBody } from '../../utils/fetchMock';
+
+const PATH = `${SERVER}/product/list_coupons`;
 
 describe('coupons methods', () => {
 	let instance: PaddleSDK;
@@ -17,8 +21,6 @@ describe('coupons methods', () => {
 	});
 
 	describe('getProductCoupons', () => {
-		const path = '/product/list_coupons';
-
 		const productID = 12345;
 		const expectedBody = Object.assign(
 			{
@@ -47,22 +49,29 @@ describe('coupons methods', () => {
 				],
 			};
 
-			const scope = nock().post(path, expectedBody).reply(200, body);
+			fetchMock.post(PATH, { status: 200, body });
 
 			const response = await instance.getProductCoupons(productID);
 
 			expect(response).toEqual(body.response);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBody);
 		});
 
 		test('rejects on error request', async () => {
-			const scope = nock().post(path, expectedBody).reply(400, DEFAULT_ERROR);
+			fetchMock.post(PATH, {
+				status: 400,
+				body: DEFAULT_ERROR,
+			});
 
 			await expect(instance.getProductCoupons(productID)).rejects.toThrow(
 				'Request failed with status code 400'
 			);
 
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBody);
 		});
 	});
 });

@@ -5,7 +5,11 @@ import {
 	VENDOR_API_KEY,
 	VENDOR_ID,
 } from '../../utils/constants';
-import nock, { SERVER } from '../../utils/nock';
+import fetchMock from '@fetch-mock/jest';
+import { expectFormPostBody } from '../../utils/fetchMock';
+import { SERVER } from '../../utils/constants';
+
+const PATH = `${SERVER}/alert/webhooks`;
 
 describe('webhooks methods', () => {
 	let instance: PaddleSDK;
@@ -22,8 +26,6 @@ describe('webhooks methods', () => {
 	});
 
 	describe('getWebhooksHistory', () => {
-		const path = '/alert/webhooks';
-
 		test('resolves on successful request', async () => {
 			// https://paddle.com/docs/api-webhook-history
 			const body = {
@@ -85,22 +87,29 @@ describe('webhooks methods', () => {
 				},
 			};
 
-			const scope = nock().post(path, EXPECTED_BODY).reply(200, body);
+			fetchMock.post(PATH, { status: 200, body });
 
 			const response = await instance.getWebhooksHistory();
 
 			expect(response).toEqual(body.response);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, EXPECTED_BODY);
 		});
 
 		test('rejects on error request', async () => {
-			const scope = nock().post(path, EXPECTED_BODY).reply(400, DEFAULT_ERROR);
+			fetchMock.post(PATH, {
+				status: 400,
+				body: DEFAULT_ERROR,
+			});
 
 			await expect(instance.getWebhooksHistory()).rejects.toThrow(
 				'Request failed with status code 400'
 			);
 
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, EXPECTED_BODY);
 		});
 	});
 

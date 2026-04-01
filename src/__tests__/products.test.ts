@@ -4,8 +4,12 @@ import {
 	EXPECTED_BODY,
 	VENDOR_API_KEY,
 	VENDOR_ID,
+	SERVER,
 } from '../../utils/constants';
-import nock, { SERVER } from '../../utils/nock';
+import fetchMock from '@fetch-mock/jest';
+import { expectFormPostBody } from '../../utils/fetchMock';
+
+const PATH = `${SERVER}/product/get_products`;
 
 describe('products methods', () => {
 	let instance: PaddleSDK;
@@ -17,8 +21,6 @@ describe('products methods', () => {
 	});
 
 	describe('getProducts', () => {
-		const path = '/product/get_products';
-
 		test('resolves on successful request', async () => {
 			// https://paddle.com/docs/api-list-products
 			const body = {
@@ -49,43 +51,60 @@ describe('products methods', () => {
 				},
 			};
 
-			const scope = nock().post(path, EXPECTED_BODY).reply(200, body);
+			fetchMock.post(PATH, { status: 200, body });
 
 			const response = await instance.getProducts();
 
 			expect(response).toEqual(body.response);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, EXPECTED_BODY);
 		});
 
 		test('rejects on error response', async () => {
-			const scope = nock().post(path, EXPECTED_BODY).reply(400, DEFAULT_ERROR);
+			fetchMock.post(PATH, {
+				status: 400,
+				body: DEFAULT_ERROR,
+			});
 
 			await expect(instance.getProducts()).rejects.toThrow(
 				'Request failed with status code 400'
 			);
 
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, EXPECTED_BODY);
 		});
 
 		test('rejects on 200 response with error', async () => {
-			const scope = nock().post(path, EXPECTED_BODY).reply(200, DEFAULT_ERROR);
+			fetchMock.post(PATH, {
+				status: 200,
+				body: DEFAULT_ERROR,
+			});
 
 			await expect(instance.getProducts()).rejects.toThrow(
 				'Request https://test.paddle.com/product/get_products returned an error!'
 			);
 
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, EXPECTED_BODY);
 		});
 
 		test('200 error response includes error information', async () => {
-			const scope = nock().post(path, EXPECTED_BODY).reply(200, DEFAULT_ERROR);
+			fetchMock.post(PATH, {
+				status: 200,
+				body: DEFAULT_ERROR,
+			});
 
 			await expect(instance.getProducts()).rejects.toMatchObject({
 				paddleCode: DEFAULT_ERROR.error.code,
 				paddleMessage: DEFAULT_ERROR.error.message,
 			});
 
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, EXPECTED_BODY);
 		});
 	});
 });

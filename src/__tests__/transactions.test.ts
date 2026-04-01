@@ -4,8 +4,10 @@ import {
 	EXPECTED_BODY,
 	VENDOR_API_KEY,
 	VENDOR_ID,
+	SERVER,
 } from '../../utils/constants';
-import nock, { SERVER } from '../../utils/nock';
+import fetchMock from '@fetch-mock/jest';
+import { expectFormPostBody } from '../../utils/fetchMock';
 
 describe('transactions methods', () => {
 	let instance: PaddleSDK;
@@ -70,109 +72,135 @@ describe('transactions methods', () => {
 	});
 
 	describe('getUserTransactions', () => {
-		const path = '/user/123/transactions';
+		const PATH = `${SERVER}/user/123/transactions`;
 
 		test('resolves on successful request', async () => {
-			const scope = nock().post(path, EXPECTED_BODY).reply(200, RESPONSE);
+			fetchMock.post(PATH, { status: 200, body: RESPONSE });
 
 			const response = await instance.getUserTransactions(123);
 
 			expect(response).toEqual(RESPONSE.response);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, EXPECTED_BODY);
 		});
 
 		test('resolves on paged request', async () => {
-			const scope = nock()
-				.post(path, Object.assign({ page: 2 }, EXPECTED_BODY))
-				.reply(200, RESPONSE);
+			const expectedBody = Object.assign({ page: 2 }, EXPECTED_BODY);
+			fetchMock.post(PATH, { status: 200, body: RESPONSE });
 
 			const response = await instance.getUserTransactions(123, 2);
 
 			expect(response).toEqual(RESPONSE.response);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, expectedBody);
 		});
 
 		test('rejects on error response', async () => {
-			const scope = nock().post(path, EXPECTED_BODY).reply(400, DEFAULT_ERROR);
+			fetchMock.post(PATH, {
+				status: 400,
+				body: DEFAULT_ERROR,
+			});
 
 			await expect(instance.getUserTransactions(123)).rejects.toThrow(
 				'Request failed with status code 400'
 			);
 
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, EXPECTED_BODY);
 		});
 
 		test('rejects on 200 response with error', async () => {
-			const scope = nock().post(path, EXPECTED_BODY).reply(200, DEFAULT_ERROR);
+			fetchMock.post(PATH, {
+				status: 200,
+				body: DEFAULT_ERROR,
+			});
 
 			await expect(instance.getUserTransactions(123)).rejects.toThrow(
 				'Request https://test.paddle.com/user/123/transactions returned an error!'
 			);
 
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, EXPECTED_BODY);
 		});
 
 		test('200 error response includes error information', async () => {
-			const scope = nock().post(path, EXPECTED_BODY).reply(200, DEFAULT_ERROR);
+			fetchMock.post(PATH, {
+				status: 200,
+				body: DEFAULT_ERROR,
+			});
 
 			await expect(instance.getUserTransactions(123)).rejects.toMatchObject({
 				paddleCode: DEFAULT_ERROR.error.code,
 				paddleMessage: DEFAULT_ERROR.error.message,
 			});
 
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, EXPECTED_BODY);
 		});
 	});
 
 	describe('getSubscriptionTransactions', () => {
-		const path = '/subscription/123/transactions';
+		const PATH = `${SERVER}/subscription/123/transactions`;
 
 		test('resolves on successful request', async () => {
-			const scope = nock().post(path, EXPECTED_BODY).reply(200, RESPONSE);
+			fetchMock.post(PATH, { status: 200, body: RESPONSE });
 
 			const response = await instance.getSubscriptionTransactions(123);
 
 			expect(response).toEqual(RESPONSE.response);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, EXPECTED_BODY);
 		});
 	});
 
 	describe('getOrderTransactions', () => {
-		const path = '/order/123/transactions';
+		const PATH = `${SERVER}/order/123/transactions`;
 
 		test('resolves on successful request', async () => {
-			const scope = nock().post(path, EXPECTED_BODY).reply(200, RESPONSE);
+			fetchMock.post(PATH, { status: 200, body: RESPONSE });
 
 			const response = await instance.getOrderTransactions(123);
 
 			expect(response).toEqual(RESPONSE.response);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, EXPECTED_BODY);
 		});
 	});
 
 	describe('getCheckoutTransactions', () => {
-		const path = '/checkout/123/transactions';
+		const PATH = `${SERVER}/checkout/123/transactions`;
 
 		test('resolves on successful request', async () => {
-			const scope = nock().post(path, EXPECTED_BODY).reply(200, RESPONSE);
+			fetchMock.post(PATH, { status: 200, body: RESPONSE });
 
 			const response = await instance.getCheckoutTransactions('123');
 
 			expect(response).toEqual(RESPONSE.response);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, EXPECTED_BODY);
 		});
 	});
 
 	describe('getProductTransactions', () => {
-		const path = '/product/123/transactions';
+		const PATH = `${SERVER}/product/123/transactions`;
 
 		test('resolves on successful request', async () => {
-			const scope = nock().post(path, EXPECTED_BODY).reply(200, RESPONSE);
+			fetchMock.post(PATH, { status: 200, body: RESPONSE });
 
 			const response = await instance.getProductTransactions(123);
 
 			expect(response).toEqual(RESPONSE.response);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHavePosted(PATH);
+			expectFormPostBody(PATH, EXPECTED_BODY);
 		});
 	});
 });

@@ -3,8 +3,10 @@ import {
 	DEFAULT_ERROR,
 	VENDOR_API_KEY,
 	VENDOR_ID,
+	SERVER,
 } from '../../utils/constants';
-import nock, { SERVER } from '../../utils/nock';
+import fetchMock from '@fetch-mock/jest';
+import { expectGetHeaders } from '../../utils/fetchMock';
 
 describe('orders methods', () => {
 	let instance: PaddleSDK;
@@ -17,7 +19,7 @@ describe('orders methods', () => {
 
 	describe('getOrderDetails', () => {
 		const checkoutId = '219233-chre53d41f940e0-58aqh94971';
-		const path = `/order?checkout_id=${checkoutId}`;
+		const PATH = `${SERVER}/order?checkout_id=${checkoutId}`;
 
 		test('resolves on successful request', async () => {
 			// https://developer.paddle.com/api-reference/fea392d1e2f4f-get-order-details
@@ -72,22 +74,29 @@ describe('orders methods', () => {
 				},
 			};
 
-			const scope = nock().get(path).reply(200, body);
+			fetchMock.get(PATH, { status: 200, body });
 
 			const response = await instance.getOrderDetails(checkoutId);
 
 			expect(response).toEqual(body.response);
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHaveGot(PATH);
+			expectGetHeaders(PATH);
 		});
 
 		test('rejects on error response', async () => {
-			const scope = nock().get(path).reply(400, DEFAULT_ERROR);
+			fetchMock.get(PATH, {
+				status: 400,
+				body: DEFAULT_ERROR,
+			});
 
 			await expect(instance.getOrderDetails(checkoutId)).rejects.toThrow(
 				'Request failed with status code 400'
 			);
 
-			expect(scope.isDone()).toBeTruthy();
+			expect(fetchMock).toBeDone();
+			expect(fetchMock).toHaveGot(PATH);
+			expectGetHeaders(PATH);
 		});
 	});
 });

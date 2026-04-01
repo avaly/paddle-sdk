@@ -5,7 +5,7 @@
     "paddle-sdk": "file:../../build/package"
   },
   "volta": {
-    "node": "14.21.3",
+    "node": "22.0.0",
     "yarn": "1.22.10"
   }
 }

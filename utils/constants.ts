@@ -15,3 +15,5 @@ export const EXPECTED_BODY = {
 	vendor_id: VENDOR_ID,
 	vendor_auth_code: VENDOR_API_KEY,
 };
+
+export const SERVER = 'https://test.paddle.com';

@@ -14,22 +14,19 @@ jobs:
       fail-fast: false
       matrix:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-        node: [18, 20, 22]
+        node:
+          - 22
+          - 24
+          - 25
 
     name: Node.js ${{ matrix.node }}
 
     steps:
-      - uses: actions/checkout@v3.3.0
-      - uses: actions/setup-node@v3.6.0
+      - uses: actions/checkout@v6.0.2
+      - uses: actions/setup-node@v6.3.0
         with:
           node-version: ${{ matrix.node }}
           cache: 'yarn'
-      - uses: actions/cache@v3.2.4
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
       - run: yarn install --frozen-lockfile
       - run: yarn lint
       - run: yarn test:pretty
