@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.0.0](https://github.com/avaly/paddle-sdk/compare/v4.7.0...v5.0.0) (2026-04-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* Published as an ESM package. Requires node.js >=22.12.0.
+* Requires node.js v22+
+
+### Code Refactoring
+
+* Convert to ESM package ([#113](https://github.com/avaly/paddle-sdk/issues/113)) ([794d6f6](https://github.com/avaly/paddle-sdk/commit/794d6f6255f5cac5857d0ffd0a591658eb4b086a))
+* Replace axios with native fetch ([#110](https://github.com/avaly/paddle-sdk/issues/110)) ([a240339](https://github.com/avaly/paddle-sdk/commit/a240339b8bde93e8ba3ad1e5effbc65f363bd3e7))
+
 ## [4.7.0](https://github.com/avaly/paddle-sdk/compare/v4.6.2...v4.7.0) (2024-10-21)
 
 
