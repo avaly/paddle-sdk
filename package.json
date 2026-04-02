@@ -57,10 +57,5 @@
     "typedoc": "0.23.28",
     "typescript": "5.0.2",
     "validate-commit-msg": "2.14.0"
-  },
-  "standard-version": {
-    "scripts": {
-      "postbump": "yarn build && git add ./src/version.ts"
-    }
   }
 }
