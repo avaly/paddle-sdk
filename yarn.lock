@@ -339,12 +339,12 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.36.0.tgz#9837f768c03a1e4a30bd304a64fb8844f0e72efe"
   integrity sha512-lxJ9R5ygVm8ZWgYdUweoq5ownDlJ4upvoWmO4eLxBYHdMo+vZ/Rx0EN6MbKWDJOSUGrqJy2Gt+Dyv/VKml0fjg==
 
-"@fetch-mock/jest@0.2.17":
-  version "0.2.17"
-  resolved "https://registry.yarnpkg.com/@fetch-mock/jest/-/jest-0.2.17.tgz#f0a0db6eefd7863f78fc4aa3e48f1312f408b827"
-  integrity sha512-U33uUZQXNt1B8tusJHI6dbZ6j/9omyCe89JyrgCdUnFzL0gnnmZB8NwfgokLBQ/kwpYN0xPEpjsBCKPqQwpsbw==
+"@fetch-mock/jest@0.2.20":
+  version "0.2.20"
+  resolved "https://registry.yarnpkg.com/@fetch-mock/jest/-/jest-0.2.20.tgz#85dc2dd9afb9022a6e0eda1d9f3351f3a5fa70c5"
+  integrity sha512-DGX2bhBInodaWPMV3+UZ530aVM3wDj16sAPjFzkrwb0JwNWIQK07CNbYprQ3Tmd2ixDJeaNx2E0aNb+hRb8FFA==
   dependencies:
-    fetch-mock "^12.5.4"
+    fetch-mock "^12.6.0"
 
 "@humanwhocodes/config-array@^0.11.8":
   version "0.11.8"
@@ -1589,7 +1589,7 @@ fetch-mock@12.5.4:
     glob-to-regexp "^0.4.1"
     regexparam "^3.0.0"
 
-fetch-mock@^12.5.4:
+fetch-mock@^12.6.0:
   version "12.6.0"
   resolved "https://registry.yarnpkg.com/fetch-mock/-/fetch-mock-12.6.0.tgz#e5ed5d471eeeb29478260ce48385dca6773b105e"
   integrity sha512-oAy0OqAvjAvduqCeWveBix7LLuDbARPqZZ8ERYtBcCURA3gy7EALA3XWq0tCNxsSg+RmmJqyaeeZlOCV9abv6w==
