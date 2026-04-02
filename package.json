@@ -45,7 +45,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@fetch-mock/jest": "0.2.17",
+    "@fetch-mock/jest": "0.2.20",
     "@types/jest": "29.5.0",
     "@types/node": "22.19.15",
     "@typescript-eslint/eslint-plugin": "5.56.0",
