@@ -46,6 +46,8 @@ For CommonJS:
 const { PaddleSDK } = require('paddle-sdk');
 ```
 
+This package is published as ESM-only. CommonJS consumers can still use `require('paddle-sdk')` on Node.js 22.12.0 and newer.
+
 ## Documentation
 
 Read the [documentation](https://avaly.github.io/paddle-sdk/).

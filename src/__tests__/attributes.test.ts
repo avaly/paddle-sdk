@@ -1,4 +1,4 @@
-import { PaddleSDK } from '../sdk';
+import { PaddleSDK } from '../sdk.js';
 
 describe('attributes', () => {
 	test('default', () => {

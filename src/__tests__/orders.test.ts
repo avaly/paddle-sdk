@@ -1,12 +1,12 @@
-import { PaddleSDK } from '../sdk';
+import { PaddleSDK } from '../sdk.js';
 import {
 	DEFAULT_ERROR,
 	VENDOR_API_KEY,
 	VENDOR_ID,
 	SERVER,
-} from '../../utils/constants';
+} from '../../utils/constants.js';
 import fetchMock from '@fetch-mock/jest';
-import { expectGetHeaders } from '../../utils/fetchMock';
+import { expectGetHeaders } from '../../utils/fetchMock.js';
 
 describe('orders methods', () => {
 	let instance: PaddleSDK;

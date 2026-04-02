@@ -3,12 +3,8 @@
   "description": "The Paddle.com Node.js SDK",
   "version": "4.7.0",
   "type": "module",
-  "main": "./cjs/index.js",
-  "exports": {
-    "import": "./esm/index.js",
-    "require": "./cjs/index.js"
-  },
-  "types": "./esm/sdk.d.ts",
+  "exports": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "author": "Valentin Agachi <github-com@agachi.name>",
   "repository": {
     "type": "git",
@@ -23,11 +19,10 @@
     "subscriptions"
   ],
   "engines": {
-    "node": ">=22"
+    "node": ">=22.12.0"
   },
   "files": [
-    "cjs/",
-    "esm/"
+    "lib/"
   ],
   "scripts": {
     "build": "./build.sh",
@@ -36,12 +31,12 @@
     "prepack": "yarn build",
     "prepare": "husky install",
     "pretty": "prettier --write --list-different \"**/*.ts\"",
-    "test": "jest",
-    "test:coverage": "jest --coverage",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
+    "test:coverage": "NODE_OPTIONS=--experimental-vm-modules jest --coverage",
     "test:build": "./tests/build.sh",
     "test:pretty": "prettier --check \"**/*.ts\"",
     "test:types": "tsc --noEmit",
-    "test:watch": "jest --watch"
+    "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch"
   },
   "dependencies": {},
   "devDependencies": {

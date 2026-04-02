@@ -1,12 +1,12 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-Core source lives in `src/`. The main entry points are `src/sdk.ts`, `src/index.ts`, and shared helpers such as `src/types.ts`, `src/serialize.ts`, and `src/version.ts`. Unit tests sit beside the code in `src/__tests__/*.test.ts`. Packaging smoke tests live under `tests/esm` and `tests/cjs` and verify both module formats after packing. Generated output goes to `esm/`, `cjs/`, and `build/`; do not hand-edit those directories.
+Core source lives in `src/`. The main entry points are `src/sdk.ts`, `src/index.ts`, and shared helpers such as `src/types.ts`, `src/serialize.ts`, and `src/version.ts`. Unit tests sit beside the code in `src/__tests__/*.test.ts`. Packaging smoke tests live under `tests/esm` and `tests/cjs` and verify ESM import and CommonJS `require()` consumption after packing. Generated output goes to `lib/` and `build/`; do not hand-edit those directories.
 
 ## Build, Test, and Development Commands
-Use Yarn on Node.js 22+.
+Use Yarn on Node.js 22.12+.
 
-- `yarn build`: regenerates `src/version.ts` and compiles both published module targets.
+- `yarn build`: regenerates `src/version.ts` and compiles the published `lib/` output.
 - `yarn test`: runs the repository’s automated unit test suite.
 - `yarn test:coverage`: runs tests with coverage reporting.
 - `yarn test:types`: checks TypeScript types without emitting files.
@@ -15,7 +15,7 @@ Use Yarn on Node.js 22+.
 - `yarn pretty` / `yarn test:pretty`: format or verify TypeScript files.
 
 ## Coding Style & Naming Conventions
-This is a TypeScript codebase with source in `src/` and generated dual-module output for distribution. Prefer tabs for code indentation, LF line endings, single quotes, semicolons, and an 80-character print width. Formatting and linting rules are defined in `prettier.config.cjs`, `.eslintrc.cjs`, and `.editorconfig`. Keep source file names lowercase and descriptive. Name tests with the `*.test.ts` suffix.
+This is a TypeScript codebase with source in `src/` and generated ESM output in `lib/` for distribution. Prefer tabs for code indentation, LF line endings, single quotes, semicolons, and an 80-character print width. Formatting and linting rules are defined in `prettier.config.cjs`, `.eslintrc.cjs`, and `.editorconfig`. Keep source file names lowercase and descriptive. Name tests with the `*.test.ts` suffix.
 
 ## Testing Guidelines
 Add or update tests in `src/__tests__` whenever SDK behavior changes. Favor focused coverage around API methods, serialization, and edge-case handling. Run `yarn test` and `yarn test:types` for normal changes. Also run `yarn test:build` when touching exports, packaging, or generated output.

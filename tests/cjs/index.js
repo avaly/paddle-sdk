@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const assert = require('assert');
 const fetchMock = require('fetch-mock').default;
 const { PaddleSDK } = require('paddle-sdk');
@@ -49,12 +50,9 @@ async function run() {
 	assert.strictEqual(products.products[0].id, 10000);
 	assert.strictEqual(products.products[1].id, 20000);
 
-	const call = fetchMock.callHistory.lastCall(
-		PATH,
-		{
-			method: 'POST',
-		}
-	);
+	const call = fetchMock.callHistory.lastCall(PATH, {
+		method: 'POST',
+	});
 	const headers = new Headers(call.options.headers);
 
 	assert.match(headers.get('user-agent'), /paddle-sdk\/\d+/);
@@ -73,9 +71,11 @@ async function run() {
 	fetchMock.hardReset();
 }
 
-run().then(() => {
-	console.log('OK');
-}).catch((err) => {
-	console.error(err);
-	process.exit(1);
-});
+run()
+	.then(() => {
+		console.log('OK');
+	})
+	.catch((err) => {
+		console.error(err);
+		process.exit(1);
+	});

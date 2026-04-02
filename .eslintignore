@@ -1,6 +1,5 @@
-cjs/
 coverage/*
 docs/
-esm/
+lib/
 node_modules/
 tmp/

@@ -1,13 +1,13 @@
-import { PaddleSDK } from '../sdk';
+import { PaddleSDK } from '../sdk.js';
 import {
 	DEFAULT_ERROR,
 	EXPECTED_BODY,
 	VENDOR_API_KEY,
 	VENDOR_ID,
-} from '../../utils/constants';
+} from '../../utils/constants.js';
 import fetchMock from '@fetch-mock/jest';
-import { expectFormPostBody } from '../../utils/fetchMock';
-import { SERVER } from '../../utils/constants';
+import { expectFormPostBody } from '../../utils/fetchMock.js';
+import { SERVER } from '../../utils/constants.js';
 
 const PATH = `${SERVER}/alert/webhooks`;
 
