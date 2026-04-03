@@ -98,17 +98,6 @@ export default function serialize(mixedValue: unknown): string {
 	case 'array':
 	case 'object':
 		val = 'a';
-		/*
-      if (type === 'object') {
-        var objname = mixedValue.constructor.toString().match(/(\w+)\(\)/);
-        if (objname === undefined) {
-          return;
-        }
-        objname[1] = serialize(objname[1]);
-        val = 'O' + objname[1].substring(1, objname[1].length - 1);
-      }
-      */
-
 		for (key in mixedValue) {
 			if (mixedValue.hasOwnProperty(key)) {
 				ktype = _getType(mixedValue[key]);
