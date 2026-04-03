@@ -1,12 +1,12 @@
 {
-	"compilerOptions": {
-		"declaration": true,
-		"noEmit": false,
-		"outDir": "./lib",
-		"rootDir": "./src",
-		"target": "ESNext"
-	},
-	"extends": "./tsconfig.json",
-	"include": ["./src"],
-	"exclude": ["./src/__tests__"]
+  "compilerOptions": {
+    "declaration": true,
+    "noEmit": false,
+    "outDir": "./lib",
+    "rootDir": "./src",
+    "target": "ESNext"
+  },
+  "extends": "./tsconfig.json",
+  "include": ["./src"],
+  "exclude": ["./src/__tests__"]
 }

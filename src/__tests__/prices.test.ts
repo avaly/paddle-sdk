@@ -1,104 +1,99 @@
-import {
-	DEFAULT_ERROR,
-	VENDOR_API_KEY,
-	VENDOR_ID,
-	SERVER,
-} from '../../utils/constants.js';
+import { DEFAULT_ERROR, VENDOR_API_KEY, VENDOR_ID, SERVER } from '../../utils/constants.js';
 import fetchMock from '@fetch-mock/jest';
 import { expectGetHeaders } from '../../utils/fetchMock.js';
 import { PaddleSDK } from '../sdk.js';
 
 describe('prices methods', () => {
-	let instance: PaddleSDK;
+  let instance: PaddleSDK;
 
-	beforeEach(() => {
-		instance = new PaddleSDK(VENDOR_ID, VENDOR_API_KEY, '', {
-			server: SERVER,
-		});
-	});
+  beforeEach(() => {
+    instance = new PaddleSDK(VENDOR_ID, VENDOR_API_KEY, '', {
+      server: SERVER,
+    });
+  });
 
-	describe('getPrices', () => {
-		const product1 = 123456,
-			product2 = 23456,
-			coupon1 = 'EXAMPLE10',
-			coupon2 = 'EXAMPLE5',
-			customerCountry = 'GB',
-			customerIp = '127.0.0.1';
-		const PATH = `${SERVER}/prices?product_ids=${product1}%2C${product2}`;
+  describe('getPrices', () => {
+    const product1 = 123456,
+      product2 = 23456,
+      coupon1 = 'EXAMPLE10',
+      coupon2 = 'EXAMPLE5',
+      customerCountry = 'GB',
+      customerIp = '127.0.0.1';
+    const PATH = `${SERVER}/prices?product_ids=${product1}%2C${product2}`;
 
-		test('resolves on successful request', async () => {
-			// https://developer.paddle.com/api-reference/e268a91845971-get-prices
-			const body = {
-				success: true,
-				response: {
-					customer_country: customerCountry,
-					products: [
-						{
-							product_id: product1,
-							product_title: 'My Product 1',
-							currency: 'GBP',
-							vendor_set_prices_included_tax: true,
-							price: {
-								gross: 34.95,
-								net: 29.13,
-								tax: 5.83,
-							},
-							list_price: {
-								gross: 34.95,
-								net: 29.13,
-								tax: 5.83,
-							},
-							applied_coupon: [coupon1],
-						},
-						{
-							product_id: product2,
-							product_title: 'My Product 2',
-							currency: 'GBP',
-							vendor_set_prices_included_tax: true,
-							price: {
-								gross: 17.95,
-								net: 14.96,
-								tax: 2.99,
-							},
-							list_price: {
-								gross: 17.95,
-								net: 14.96,
-								tax: 2.99,
-							},
-							applied_coupon: [coupon2],
-						},
-					],
-				},
-			};
+    test('resolves on successful request', async () => {
+      // https://developer.paddle.com/api-reference/e268a91845971-get-prices
+      const body = {
+        success: true,
+        response: {
+          customer_country: customerCountry,
+          products: [
+            {
+              product_id: product1,
+              product_title: 'My Product 1',
+              currency: 'GBP',
+              vendor_set_prices_included_tax: true,
+              price: {
+                gross: 34.95,
+                net: 29.13,
+                tax: 5.83,
+              },
+              list_price: {
+                gross: 34.95,
+                net: 29.13,
+                tax: 5.83,
+              },
+              applied_coupon: [coupon1],
+            },
+            {
+              product_id: product2,
+              product_title: 'My Product 2',
+              currency: 'GBP',
+              vendor_set_prices_included_tax: true,
+              price: {
+                gross: 17.95,
+                net: 14.96,
+                tax: 2.99,
+              },
+              list_price: {
+                gross: 17.95,
+                net: 14.96,
+                tax: 2.99,
+              },
+              applied_coupon: [coupon2],
+            },
+          ],
+        },
+      };
 
-			const PATH_WITH_OPTIONS = `${PATH}&coupons=${coupon1}%2C${coupon2}&customer_country=${customerCountry}&customer_ip=${customerIp}`;
-			fetchMock.get(PATH_WITH_OPTIONS, { status: 200, body });
+      const PATH_WITH_OPTIONS = `${PATH}&coupons=${coupon1}%2C${coupon2}&customer_country=${customerCountry}&customer_ip=${customerIp}`;
+      fetchMock.get(PATH_WITH_OPTIONS, { status: 200, body });
 
-			const response = await instance.getPrices([product1, product2], {
-				coupons: [coupon1, coupon2],
-				customerCountry,
-				customerIp,
-			});
+      const response = await instance.getPrices([product1, product2], {
+        coupons: [coupon1, coupon2],
+        customerCountry,
+        customerIp,
+      });
 
-			expect(response).toEqual(body.response);
-			expect(fetchMock).toBeDone();
-			expect(fetchMock).toHaveGot(PATH_WITH_OPTIONS);
-			expectGetHeaders(PATH_WITH_OPTIONS);
-		});
+      expect(response).toEqual(body.response);
+      expect(fetchMock).toBeDone();
+      expect(fetchMock).toHaveGot(PATH_WITH_OPTIONS);
+      expectGetHeaders(PATH_WITH_OPTIONS);
+    });
 
-		test('rejects on error response', async () => {
-			fetchMock.get(PATH, {
-				status: 400,
-				body: DEFAULT_ERROR,
-			});
+    test('rejects on error response', async () => {
+      fetchMock.get(PATH, {
+        status: 400,
+        body: DEFAULT_ERROR,
+      });
 
-			await expect(instance.getPrices([product1, product2])).rejects.toThrow(
-				'Request failed with status code 400'
-			);
+      await expect(instance.getPrices([product1, product2])).rejects.toThrow(
+        'Request failed with status code 400',
+      );
 
-			expect(fetchMock).toBeDone();
-			expect(fetchMock).toHaveGot(PATH);
-			expectGetHeaders(PATH);
-		});
-	});
+      expect(fetchMock).toBeDone();
+      expect(fetchMock).toHaveGot(PATH);
+      expectGetHeaders(PATH);
+    });
+  });
 });

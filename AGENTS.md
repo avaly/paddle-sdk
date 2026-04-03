@@ -15,7 +15,7 @@ Use Yarn on Node.js 22.12+.
 - `yarn pretty` / `yarn test:pretty`: format or verify TypeScript files.
 
 ## Coding Style & Naming Conventions
-This is a TypeScript codebase with source in `src/` and generated ESM output in `lib/` for distribution. Prefer tabs for code indentation, LF line endings, single quotes, semicolons, and an 80-character print width. Formatting and linting rules are defined in `prettier.config.cjs`, `.eslintrc.cjs`, and `.editorconfig`. Keep source file names lowercase and descriptive. Name tests with the `*.test.ts` suffix.
+This is a TypeScript codebase with source in `src/` and generated ESM output in `lib/` for distribution. Prefer 2 spaces for code indentation, LF line endings, single quotes, semicolons, and a 100-character print width. Formatting and linting rules are defined in `prettier.config.cjs`, `.eslintrc.cjs`, and `.editorconfig`. Keep source file names lowercase and descriptive. Name tests with the `*.test.ts` suffix.
 
 ## Testing Guidelines
 Add or update tests in `src/__tests__` whenever SDK behavior changes. Favor focused coverage around API methods, serialization, and edge-case handling. Run `yarn test` and `yarn test:types` for normal changes. Also run `yarn test:build` when touching exports, packaging, or generated output.
