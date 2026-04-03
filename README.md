@@ -7,15 +7,11 @@ Welcome to the [Paddle.com](https://www.paddle.com/) Node.js SDK documentation.
 
 ## Installation
 
-Install the SDK module using `npm`:
+Install the SDK module using `npm` / `pnpm` / `yarn`:
 
 ```
 $ npm install paddle-sdk
-```
-
-or using `yarn`:
-
-```
+$ pnpm install paddle-sdk
 $ yarn add paddle-sdk
 ```
 
