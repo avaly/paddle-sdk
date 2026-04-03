@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const assert = require('assert');
 const fetchMock = require('fetch-mock').default;
 const { PaddleSDK } = require('paddle-sdk');
