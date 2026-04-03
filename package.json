@@ -30,11 +30,11 @@
     "lint": "eslint . --cache --fix --ignore-pattern '!.eslintrc.cjs'",
     "prepack": "yarn build",
     "prepare": "husky install",
-    "pretty": "prettier --write --list-different \"**/*.ts\"",
+    "pretty": "prettier --ignore-unknown --list-different --write \"**/*\"",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "test:coverage": "NODE_OPTIONS=--experimental-vm-modules jest --coverage",
     "test:build": "./tests/build.sh",
-    "test:pretty": "prettier --check \"**/*.ts\"",
+    "test:pretty": "prettier --check --ignore-unknown \"**/*\"",
     "test:types": "tsc --noEmit",
     "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch"
   },

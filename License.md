@@ -1,5 +1,4 @@
-The MIT License
-===============
+# The MIT License
 
 Copyright 2017 Valentin Agachi (http://agachi.name/), contributors
 

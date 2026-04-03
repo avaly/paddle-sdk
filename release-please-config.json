@@ -1,14 +1,14 @@
 {
-	"include-component-in-tag": false,
-	"packages": {
-		".": {
-			"release-type": "node",
-			"extra-files": [
-				{
-					"type": "generic",
-					"path": "src/version.ts"
-				}
-			]
-		}
-	}
+  "include-component-in-tag": false,
+  "packages": {
+    ".": {
+      "release-type": "node",
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "src/version.ts"
+        }
+      ]
+    }
+  }
 }

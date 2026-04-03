@@ -1,17 +1,17 @@
 {
-	"compilerOptions": {
-		"esModuleInterop": true,
-		"lib": ["ES2020", "DOM", "DOM.Iterable"],
-		"isolatedModules": true,
-		"module": "NodeNext",
-		"moduleResolution": "NodeNext",
-		"noEmit": true,
-		"noErrorTruncation": true,
-		"skipLibCheck": true,
-		"strict": true,
-		"strictFunctionTypes": false,
-		"target": "ESNext",
-		"types": ["node", "jest"]
-	},
-	"include": ["src", "utils"]
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "isolatedModules": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "noEmit": true,
+    "noErrorTruncation": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "strictFunctionTypes": false,
+    "target": "ESNext",
+    "types": ["node", "jest"]
+  },
+  "include": ["src", "utils"]
 }
