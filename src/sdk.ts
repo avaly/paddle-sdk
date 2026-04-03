@@ -301,7 +301,7 @@ export class PaddleSDK {
       verifier.end();
 
       return verifier.verify(this.publicKey, signature, 'base64');
-    } catch (err) {
+    } catch {
       return false;
     }
   }
