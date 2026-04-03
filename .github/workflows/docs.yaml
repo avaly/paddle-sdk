@@ -31,7 +31,7 @@ jobs:
           node-version: 24
           cache: 'pnpm'
       - run: pnpm install
-      - run: pnpm docs
+      - run: pnpm run docs
       - uses: actions/upload-pages-artifact@v4.0.0
         with:
           path: './docs'
