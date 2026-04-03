@@ -8,7 +8,7 @@
   "internalChecksAsSuccess": true,
   "labels": ["dependencies"],
   "minimumReleaseAge": "7 days",
-  "postUpdateOptions": ["yarnDedupeHighest"],
+  "postUpdateOptions": ["pnpmDedupe"],
   "prCreation": "not-pending",
   "prConcurrentLimit": 3,
   "prHourlyLimit": 1,

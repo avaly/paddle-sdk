@@ -3,13 +3,11 @@ node_modules/
 Thumbs.db
 .idea/
 .vscode/
-*.sublime-project
-*.sublime-workspace
 *.log
 .eslintcache
 /build
 /coverage
 /docs
 /lib
-/tests/*/yarn.lock
+/tests/*/pnpm-lock.yaml
 /tmp

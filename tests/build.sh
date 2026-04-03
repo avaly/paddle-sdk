@@ -9,11 +9,11 @@ mv -f paddle-sdk*.tgz ./build/paddle-sdk.tgz
 tar xf ./build/paddle-sdk.tgz --directory=./build/
 
 cd tests/esm/
-rm -f package-lock.json
-yarn
+rm -f pnpm-lock.yaml
+pnpm install
 node ./index.js
 
 cd ../cjs/
-rm -f package-lock.json
-yarn
+rm -f pnpm-lock.yaml
+pnpm install
 node ./index.js

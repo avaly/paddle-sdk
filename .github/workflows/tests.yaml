@@ -26,14 +26,14 @@ jobs:
       - uses: actions/setup-node@v6.3.0
         with:
           node-version: ${{ matrix.node }}
-          cache: 'yarn'
-      - run: yarn install --frozen-lockfile
-      - run: yarn lint
-      - run: yarn test:pretty
-      - run: yarn test
-      - run: yarn test:types
-      - run: yarn test:build
-      - run: yarn test:coverage
+          cache: 'pnpm'
+      - run: pnpm install
+      - run: pnpm lint
+      - run: pnpm test:pretty
+      - run: pnpm test
+      - run: pnpm test:types
+      - run: pnpm test:build
+      - run: pnpm test:coverage
         if: matrix.node == 24
       - name: Upload coverage to Codecov
         if: matrix.node == 24
