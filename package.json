@@ -31,12 +31,12 @@
     "prepack": "pnpm build",
     "prepare": "husky",
     "pretty": "prettier --ignore-unknown --list-different --write \"**/*\"",
-    "test": "node --test",
+    "test": "node --test --test-reporter=dot",
     "test:coverage": "rm -rf coverage && mkdir -p coverage && node --test --experimental-test-coverage --test-reporter=spec --test-reporter=lcov --test-reporter-destination=stdout --test-reporter-destination=coverage/lcov.info",
     "test:build": "./tests/build.sh",
     "test:pretty": "prettier --check --ignore-unknown \"**/*\"",
     "test:types": "tsc --noEmit",
-    "test:watch": "node --test --watch"
+    "test:watch": "node --test --test-reporter=dot --watch"
   },
   "dependencies": {},
   "devDependencies": {

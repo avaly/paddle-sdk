@@ -9,7 +9,7 @@ import {
   SERVER,
 } from '../../utils/constants.ts';
 import fetchMock from 'fetch-mock';
-import { expectFormPostBody, expectPosted } from '../../utils/fetchMock.ts';
+import { expectFormPostBody, expectPosted } from '../../utils/assertions.ts';
 import { PaddleSDK } from '../sdk.ts';
 
 describe('subscription methods', () => {

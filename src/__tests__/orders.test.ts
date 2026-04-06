@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, test } from 'node:test';
 import { PaddleSDK } from '../sdk.ts';
 import { DEFAULT_ERROR, VENDOR_API_KEY, VENDOR_ID, SERVER } from '../../utils/constants.ts';
 import fetchMock from 'fetch-mock';
-import { expectGetHeaders, expectGot } from '../../utils/fetchMock.ts';
+import { expectGetHeaders, expectGot } from '../../utils/assertions.ts';
 
 describe('orders methods', () => {
   let instance: PaddleSDK;

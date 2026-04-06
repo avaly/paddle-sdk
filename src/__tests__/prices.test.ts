@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, test } from 'node:test';
 
 import { DEFAULT_ERROR, VENDOR_API_KEY, VENDOR_ID, SERVER } from '../../utils/constants.ts';
 import fetchMock from 'fetch-mock';
-import { expectGetHeaders, expectGot } from '../../utils/fetchMock.ts';
+import { expectGetHeaders, expectGot } from '../../utils/assertions.ts';
 import { PaddleSDK } from '../sdk.ts';
 
 describe('prices methods', () => {
