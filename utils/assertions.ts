@@ -35,8 +35,8 @@ export function expectFormPostBody(path: string, expectedBody: Record<string, un
   expectUserAgent(headers);
   assert.strictEqual(headers.get('content-type'), 'application/x-www-form-urlencoded');
   assert.deepStrictEqual(
-    normalizeExpectedBody(expectedBody),
     Object.fromEntries(new URLSearchParams(String(call.options.body)).entries()),
+    normalizeExpectedBody(expectedBody),
   );
 }
 
