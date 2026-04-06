@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 
-import serialize from './serialize.js';
-import {
+import serialize from './serialize.ts';
+import type {
   CreateOneOffChargeBody,
   CreateOneOffChargeResponse,
   CreateSubscriptionModifierBody,
@@ -28,8 +28,8 @@ import {
   RescheduleSubscriptionPaymentBody,
   UpdateSubscriptionUserBody,
   UpdateSubscriptionUserResponse,
-} from './types.js';
-import { VERSION } from './version.js';
+} from './types.ts';
+import { VERSION } from './version.ts';
 
 const VENDOR_SANDBOX_URL = 'https://sandbox-vendors.paddle.com/api/2.0';
 const VENDOR_SERVER_URL = 'https://vendors.paddle.com/api/2.0';

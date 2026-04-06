@@ -1,2 +1,2 @@
-export * from './sdk.js';
-export * from './types.js';
+export * from './sdk.ts';
+export * from './types.ts';

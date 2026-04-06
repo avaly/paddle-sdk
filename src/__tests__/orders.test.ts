@@ -1,15 +1,23 @@
-import { PaddleSDK } from '../sdk.js';
-import { DEFAULT_ERROR, VENDOR_API_KEY, VENDOR_ID, SERVER } from '../../utils/constants.js';
-import fetchMock from '@fetch-mock/jest';
-import { expectGetHeaders } from '../../utils/fetchMock.js';
+import assert from 'node:assert/strict';
+import { afterEach, beforeEach, describe, test } from 'node:test';
+
+import { PaddleSDK } from '../sdk.ts';
+import { DEFAULT_ERROR, VENDOR_API_KEY, VENDOR_ID, SERVER } from '../../utils/constants.ts';
+import fetchMock from 'fetch-mock';
+import { expectGetHeaders } from '../../utils/assertions.ts';
 
 describe('orders methods', () => {
   let instance: PaddleSDK;
 
   beforeEach(() => {
+    fetchMock.mockGlobal();
     instance = new PaddleSDK(VENDOR_ID, VENDOR_API_KEY, '', {
       server: SERVER,
     });
+  });
+
+  afterEach(() => {
+    fetchMock.hardReset();
   });
 
   describe('getOrderDetails', () => {
@@ -70,9 +78,7 @@ describe('orders methods', () => {
 
       const response = await instance.getOrderDetails(checkoutId);
 
-      expect(response).toEqual(body.response);
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHaveGot(PATH);
+      assert.deepStrictEqual(response, body.response);
       expectGetHeaders(PATH);
     });
 
@@ -82,12 +88,11 @@ describe('orders methods', () => {
         body: DEFAULT_ERROR,
       });
 
-      await expect(instance.getOrderDetails(checkoutId)).rejects.toThrow(
-        'Request failed with status code 400',
+      await assert.rejects(
+        instance.getOrderDetails(checkoutId),
+        /Request failed with status code 400/,
       );
 
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHaveGot(PATH);
       expectGetHeaders(PATH);
     });
   });

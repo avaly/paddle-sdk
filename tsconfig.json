@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "erasableSyntaxOnly": true,
     "esModuleInterop": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "isolatedModules": true,
@@ -7,11 +8,13 @@
     "moduleResolution": "NodeNext",
     "noEmit": true,
     "noErrorTruncation": true,
+    "rewriteRelativeImportExtensions": true,
     "skipLibCheck": true,
     "strict": true,
     "strictFunctionTypes": false,
     "target": "ESNext",
-    "types": ["node", "jest"]
+    "types": ["node"],
+    "verbatimModuleSyntax": true
   },
   "include": ["src", "utils"]
 }

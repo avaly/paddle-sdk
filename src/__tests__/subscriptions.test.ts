@@ -1,13 +1,16 @@
+import assert from 'node:assert/strict';
+import { afterEach, beforeEach, describe, test } from 'node:test';
+
 import {
   DEFAULT_ERROR,
   EXPECTED_BODY,
   VENDOR_API_KEY,
   VENDOR_ID,
   SERVER,
-} from '../../utils/constants.js';
-import fetchMock from '@fetch-mock/jest';
-import { expectFormPostBody } from '../../utils/fetchMock.js';
-import { PaddleSDK } from '../sdk.js';
+} from '../../utils/constants.ts';
+import fetchMock from 'fetch-mock';
+import { expectFormPostBody } from '../../utils/assertions.ts';
+import { PaddleSDK } from '../sdk.ts';
 
 describe('subscription methods', () => {
   let instance: PaddleSDK;
@@ -19,9 +22,14 @@ describe('subscription methods', () => {
   const NEW_PAYMENT_DATE = new Date('2023-01-01');
 
   beforeEach(() => {
+    fetchMock.mockGlobal();
     instance = new PaddleSDK(VENDOR_ID, VENDOR_API_KEY, '', {
       server: SERVER,
     });
+  });
+
+  afterEach(() => {
+    fetchMock.hardReset();
   });
 
   describe('getSubscriptionPlans', () => {
@@ -74,9 +82,7 @@ describe('subscription methods', () => {
 
       const response = await instance.getSubscriptionPlans();
 
-      expect(response).toEqual(responseBody.response);
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
+      assert.deepStrictEqual(response, responseBody.response);
       expectFormPostBody(PATH, EXPECTED_BODY);
     });
 
@@ -86,12 +92,8 @@ describe('subscription methods', () => {
         body: DEFAULT_ERROR,
       });
 
-      await expect(instance.getSubscriptionPlans()).rejects.toThrow(
-        'Request failed with status code 400',
-      );
+      await assert.rejects(instance.getSubscriptionPlans(), /Request failed with status code 400/);
 
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
       expectFormPostBody(PATH, EXPECTED_BODY);
     });
   });
@@ -138,9 +140,7 @@ describe('subscription methods', () => {
 
       const response = await instance.getSubscriptionPlan(PLAN_ID);
 
-      expect(response).toEqual(responseBody.response[0]);
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
+      assert.deepStrictEqual(response, responseBody.response[0]);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -150,12 +150,11 @@ describe('subscription methods', () => {
         body: DEFAULT_ERROR,
       });
 
-      await expect(instance.getSubscriptionPlan(PLAN_ID)).rejects.toThrow(
-        'Request failed with status code 400',
+      await assert.rejects(
+        instance.getSubscriptionPlan(PLAN_ID),
+        /Request failed with status code 400/,
       );
 
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
   });
@@ -199,9 +198,7 @@ describe('subscription methods', () => {
 
       const response = await instance.getUsers({ planID: PLAN_ID });
 
-      expect(response).toEqual(body.response);
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
+      assert.deepStrictEqual(response, body.response);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -211,12 +208,11 @@ describe('subscription methods', () => {
         body: DEFAULT_ERROR,
       });
 
-      await expect(instance.getUsers({ planID: PLAN_ID })).rejects.toThrow(
-        'Request failed with status code 400',
+      await assert.rejects(
+        instance.getUsers({ planID: PLAN_ID }),
+        /Request failed with status code 400/,
       );
 
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -259,9 +255,7 @@ describe('subscription methods', () => {
         subscriptionID: SUBSCRIPTION_ID,
       });
 
-      expect(response).toEqual(body.response);
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
+      assert.deepStrictEqual(response, body.response);
       expectFormPostBody(PATH, expectedBody);
     });
   });
@@ -295,9 +289,7 @@ describe('subscription methods', () => {
 
       const response = await instance.getSubscriptionPayments(PLAN_ID);
 
-      expect(response).toEqual(body.response);
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
+      assert.deepStrictEqual(response, body.response);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -329,9 +321,7 @@ describe('subscription methods', () => {
         subscriptionID: SUBSCRIPTION_ID,
       });
 
-      expect(response).toEqual(body.response);
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
+      assert.deepStrictEqual(response, body.response);
       expectFormPostBody(PATH, expectedBodyOptions);
     });
 
@@ -341,12 +331,11 @@ describe('subscription methods', () => {
         body: DEFAULT_ERROR,
       });
 
-      await expect(instance.getSubscriptionPayments(PLAN_ID)).rejects.toThrow(
-        'Request failed with status code 400',
+      await assert.rejects(
+        instance.getSubscriptionPayments(PLAN_ID),
+        /Request failed with status code 400/,
       );
 
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
   });
@@ -374,9 +363,7 @@ describe('subscription methods', () => {
 
       const response = await instance.reschedulePayment(PAYMENT_ID, NEW_PAYMENT_DATE);
 
-      expect(response).toEqual(body.response);
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
+      assert.deepStrictEqual(response, body.response);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -386,12 +373,11 @@ describe('subscription methods', () => {
         body: DEFAULT_ERROR,
       });
 
-      await expect(instance.reschedulePayment(PAYMENT_ID, NEW_PAYMENT_DATE)).rejects.toThrow(
-        'Request failed with status code 400',
+      await assert.rejects(
+        instance.reschedulePayment(PAYMENT_ID, NEW_PAYMENT_DATE),
+        /Request failed with status code 400/,
       );
 
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
   });
@@ -428,9 +414,7 @@ describe('subscription methods', () => {
         passthrough: '12345',
       });
 
-      expect(response).toEqual(responseBody.response);
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
+      assert.deepStrictEqual(response, responseBody.response);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -447,9 +431,7 @@ describe('subscription methods', () => {
         quantity: 2,
       });
 
-      expect(response).toEqual(responseBody.response);
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
+      assert.deepStrictEqual(response, responseBody.response);
       expectFormPostBody(PATH, expectedBodyQuantity);
     });
 
@@ -468,9 +450,7 @@ describe('subscription methods', () => {
         pause: true,
       });
 
-      expect(response).toEqual(responseBody.response);
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
+      assert.deepStrictEqual(response, responseBody.response);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -487,9 +467,7 @@ describe('subscription methods', () => {
         pause: false,
       });
 
-      expect(response).toEqual(responseBody.response);
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
+      assert.deepStrictEqual(response, responseBody.response);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -504,12 +482,11 @@ describe('subscription methods', () => {
         body: DEFAULT_ERROR,
       });
 
-      await expect(
+      await assert.rejects(
         instance.updateSubscription(SUBSCRIPTION_ID, { planID: PLAN_ID }),
-      ).rejects.toThrow('Request failed with status code 400');
+        /Request failed with status code 400/,
+      );
 
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
       expectFormPostBody(PATH, errorRequestBody);
     });
   });
@@ -531,9 +508,7 @@ describe('subscription methods', () => {
 
       const response = await instance.cancelSubscription(SUBSCRIPTION_ID);
 
-      expect(response).toEqual(true);
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
+      assert.strictEqual(response, true);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -543,12 +518,11 @@ describe('subscription methods', () => {
         body: DEFAULT_ERROR,
       });
 
-      await expect(instance.cancelSubscription(SUBSCRIPTION_ID)).rejects.toThrow(
-        'Request failed with status code 400',
+      await assert.rejects(
+        instance.cancelSubscription(SUBSCRIPTION_ID),
+        /Request failed with status code 400/,
       );
 
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
   });
@@ -576,9 +550,7 @@ describe('subscription methods', () => {
 
       const response = await instance.getSubscriptionModifiers();
 
-      expect(response).toEqual(responseBody.response);
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
+      assert.deepStrictEqual(response, responseBody.response);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -598,9 +570,7 @@ describe('subscription methods', () => {
         planID: PLAN_ID,
       });
 
-      expect(response).toEqual(responseBody.response);
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
+      assert.deepStrictEqual(response, responseBody.response);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -610,12 +580,11 @@ describe('subscription methods', () => {
         body: DEFAULT_ERROR,
       });
 
-      await expect(instance.getSubscriptionModifiers()).rejects.toThrow(
-        'Request failed with status code 400',
+      await assert.rejects(
+        instance.getSubscriptionModifiers(),
+        /Request failed with status code 400/,
       );
 
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
   });
@@ -641,9 +610,7 @@ describe('subscription methods', () => {
 
       const response = await instance.createSubscriptionModifier(SUBSCRIPTION_ID, 10);
 
-      expect(response).toEqual(responseBody.response);
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
+      assert.deepStrictEqual(response, responseBody.response);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -665,9 +632,7 @@ describe('subscription methods', () => {
         recurring: false,
       });
 
-      expect(response).toEqual(responseBody.response);
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
+      assert.deepStrictEqual(response, responseBody.response);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -677,12 +642,11 @@ describe('subscription methods', () => {
         body: DEFAULT_ERROR,
       });
 
-      await expect(instance.createSubscriptionModifier(SUBSCRIPTION_ID, 10)).rejects.toThrow(
-        'Request failed with status code 400',
+      await assert.rejects(
+        instance.createSubscriptionModifier(SUBSCRIPTION_ID, 10),
+        /Request failed with status code 400/,
       );
 
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
   });
@@ -703,9 +667,7 @@ describe('subscription methods', () => {
 
       const response = await instance.deleteSubscriptionModifier(MODIFIER_ID);
 
-      expect(response).toEqual(true);
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
+      assert.strictEqual(response, true);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -715,12 +677,11 @@ describe('subscription methods', () => {
         body: DEFAULT_ERROR,
       });
 
-      await expect(instance.deleteSubscriptionModifier(MODIFIER_ID)).rejects.toThrow(
-        'Request failed with status code 400',
+      await assert.rejects(
+        instance.deleteSubscriptionModifier(MODIFIER_ID),
+        /Request failed with status code 400/,
       );
 
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
   });
@@ -751,9 +712,7 @@ describe('subscription methods', () => {
 
       const response = await instance.createOneOffCharge(SUBSCRIPTION_ID, 10, 'Charge 1');
 
-      expect(response).toEqual(responseBody.response);
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
+      assert.deepStrictEqual(response, responseBody.response);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -763,12 +722,11 @@ describe('subscription methods', () => {
         body: DEFAULT_ERROR,
       });
 
-      await expect(instance.createOneOffCharge(SUBSCRIPTION_ID, 10, 'Charge 1')).rejects.toThrow(
-        'Request failed with status code 400',
+      await assert.rejects(
+        instance.createOneOffCharge(SUBSCRIPTION_ID, 10, 'Charge 1'),
+        /Request failed with status code 400/,
       );
 
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
   });

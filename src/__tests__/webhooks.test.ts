@@ -1,8 +1,11 @@
-import { PaddleSDK } from '../sdk.js';
-import { DEFAULT_ERROR, EXPECTED_BODY, VENDOR_API_KEY, VENDOR_ID } from '../../utils/constants.js';
-import fetchMock from '@fetch-mock/jest';
-import { expectFormPostBody } from '../../utils/fetchMock.js';
-import { SERVER } from '../../utils/constants.js';
+import assert from 'node:assert/strict';
+import { afterEach, beforeEach, describe, test } from 'node:test';
+
+import { PaddleSDK } from '../sdk.ts';
+import { DEFAULT_ERROR, EXPECTED_BODY, VENDOR_API_KEY, VENDOR_ID } from '../../utils/constants.ts';
+import fetchMock from 'fetch-mock';
+import { expectFormPostBody } from '../../utils/assertions.ts';
+import { SERVER } from '../../utils/constants.ts';
 
 const PATH = `${SERVER}/alert/webhooks`;
 
@@ -15,9 +18,14 @@ describe('webhooks methods', () => {
   ).toString();
 
   beforeEach(() => {
+    fetchMock.mockGlobal();
     instance = new PaddleSDK(VENDOR_ID, VENDOR_API_KEY, VENDOR_PUBLIC_KEY, {
       server: SERVER,
     });
+  });
+
+  afterEach(() => {
+    fetchMock.hardReset();
   });
 
   describe('getWebhooksHistory', () => {
@@ -86,9 +94,7 @@ describe('webhooks methods', () => {
 
       const response = await instance.getWebhooksHistory();
 
-      expect(response).toEqual(body.response);
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
+      assert.deepStrictEqual(response, body.response);
       expectFormPostBody(PATH, EXPECTED_BODY);
     });
 
@@ -98,12 +104,8 @@ describe('webhooks methods', () => {
         body: DEFAULT_ERROR,
       });
 
-      await expect(instance.getWebhooksHistory()).rejects.toThrow(
-        'Request failed with status code 400',
-      );
+      await assert.rejects(instance.getWebhooksHistory(), /Request failed with status code 400/);
 
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
       expectFormPostBody(PATH, EXPECTED_BODY);
     });
   });
@@ -128,13 +130,13 @@ describe('webhooks methods', () => {
     });
 
     test('validates a valid data set', async () => {
-      expect(instance.verifyWebhookData(data)).toBe(true);
+      assert.strictEqual(instance.verifyWebhookData(data), true);
     });
 
     test('does not validate an invalid data set', async () => {
       data.source = 'tampered field';
 
-      expect(instance.verifyWebhookData(data)).toBe(false);
+      assert.strictEqual(instance.verifyWebhookData(data), false);
     });
 
     test('does not validate a valid data set with an invalid public key', async () => {
@@ -142,7 +144,7 @@ describe('webhooks methods', () => {
         server: SERVER,
       });
 
-      expect(invalidKeyClient.verifyWebhookData(data)).toBe(false);
+      assert.strictEqual(invalidKeyClient.verifyWebhookData(data), false);
     });
   });
 });

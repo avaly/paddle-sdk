@@ -1,13 +1,16 @@
-import { PaddleSDK } from '../sdk.js';
+import assert from 'node:assert/strict';
+import { afterEach, beforeEach, describe, test } from 'node:test';
+
+import { PaddleSDK } from '../sdk.ts';
 import {
   DEFAULT_ERROR,
   EXPECTED_BODY,
   VENDOR_API_KEY,
   VENDOR_ID,
   SERVER,
-} from '../../utils/constants.js';
-import fetchMock from '@fetch-mock/jest';
-import { expectFormPostBody } from '../../utils/fetchMock.js';
+} from '../../utils/constants.ts';
+import fetchMock from 'fetch-mock';
+import { expectFormPostBody } from '../../utils/assertions.ts';
 
 const PATH = `${SERVER}/product/get_products`;
 
@@ -15,9 +18,14 @@ describe('products methods', () => {
   let instance: PaddleSDK;
 
   beforeEach(() => {
+    fetchMock.mockGlobal();
     instance = new PaddleSDK(VENDOR_ID, VENDOR_API_KEY, '', {
       server: SERVER,
     });
+  });
+
+  afterEach(() => {
+    fetchMock.hardReset();
   });
 
   describe('getProducts', () => {
@@ -55,9 +63,7 @@ describe('products methods', () => {
 
       const response = await instance.getProducts();
 
-      expect(response).toEqual(body.response);
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
+      assert.deepStrictEqual(response, body.response);
       expectFormPostBody(PATH, EXPECTED_BODY);
     });
 
@@ -67,10 +73,8 @@ describe('products methods', () => {
         body: DEFAULT_ERROR,
       });
 
-      await expect(instance.getProducts()).rejects.toThrow('Request failed with status code 400');
+      await assert.rejects(instance.getProducts(), /Request failed with status code 400/);
 
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
       expectFormPostBody(PATH, EXPECTED_BODY);
     });
 
@@ -80,12 +84,11 @@ describe('products methods', () => {
         body: DEFAULT_ERROR,
       });
 
-      await expect(instance.getProducts()).rejects.toThrow(
-        'Request https://test.paddle.com/product/get_products returned an error!',
+      await assert.rejects(
+        instance.getProducts(),
+        /Request https:\/\/test\.paddle\.com\/product\/get_products returned an error!/,
       );
 
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
       expectFormPostBody(PATH, EXPECTED_BODY);
     });
 
@@ -95,13 +98,11 @@ describe('products methods', () => {
         body: DEFAULT_ERROR,
       });
 
-      await expect(instance.getProducts()).rejects.toMatchObject({
+      await assert.rejects(instance.getProducts(), {
         paddleCode: DEFAULT_ERROR.error.code,
         paddleMessage: DEFAULT_ERROR.error.message,
       });
 
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
       expectFormPostBody(PATH, EXPECTED_BODY);
     });
   });
