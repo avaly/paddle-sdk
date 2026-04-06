@@ -2,7 +2,6 @@
   "$schema": "https://typedoc.org/schema.json",
   "darkHighlightTheme": "dark-plus",
   "includeVersion": true,
-  "includes": "./CHANGELOG.md",
   "entryPoints": ["src/"],
   "name": "Paddle SDK",
   "navigationLinks": {
