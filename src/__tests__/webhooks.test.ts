@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, test } from 'node:test';
 import { PaddleSDK } from '../sdk.ts';
 import { DEFAULT_ERROR, EXPECTED_BODY, VENDOR_API_KEY, VENDOR_ID } from '../../utils/constants.ts';
 import fetchMock from 'fetch-mock';
-import { expectFormPostBody, expectPosted } from '../../utils/assertions.ts';
+import { expectFormPostBody } from '../../utils/assertions.ts';
 import { SERVER } from '../../utils/constants.ts';
 
 const PATH = `${SERVER}/alert/webhooks`;
@@ -95,7 +95,6 @@ describe('webhooks methods', () => {
       const response = await instance.getWebhooksHistory();
 
       assert.deepStrictEqual(response, body.response);
-      expectPosted(PATH);
       expectFormPostBody(PATH, EXPECTED_BODY);
     });
 
@@ -107,7 +106,6 @@ describe('webhooks methods', () => {
 
       await assert.rejects(instance.getWebhooksHistory(), /Request failed with status code 400/);
 
-      expectPosted(PATH);
       expectFormPostBody(PATH, EXPECTED_BODY);
     });
   });

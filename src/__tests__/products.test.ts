@@ -10,7 +10,7 @@ import {
   SERVER,
 } from '../../utils/constants.ts';
 import fetchMock from 'fetch-mock';
-import { expectFormPostBody, expectPosted } from '../../utils/assertions.ts';
+import { expectFormPostBody } from '../../utils/assertions.ts';
 
 const PATH = `${SERVER}/product/get_products`;
 
@@ -64,7 +64,6 @@ describe('products methods', () => {
       const response = await instance.getProducts();
 
       assert.deepStrictEqual(response, body.response);
-      expectPosted(PATH);
       expectFormPostBody(PATH, EXPECTED_BODY);
     });
 
@@ -76,7 +75,6 @@ describe('products methods', () => {
 
       await assert.rejects(instance.getProducts(), /Request failed with status code 400/);
 
-      expectPosted(PATH);
       expectFormPostBody(PATH, EXPECTED_BODY);
     });
 
@@ -91,7 +89,6 @@ describe('products methods', () => {
         /Request https:\/\/test\.paddle\.com\/product\/get_products returned an error!/,
       );
 
-      expectPosted(PATH);
       expectFormPostBody(PATH, EXPECTED_BODY);
     });
 
@@ -106,7 +103,6 @@ describe('products methods', () => {
         paddleMessage: DEFAULT_ERROR.error.message,
       });
 
-      expectPosted(PATH);
       expectFormPostBody(PATH, EXPECTED_BODY);
     });
   });

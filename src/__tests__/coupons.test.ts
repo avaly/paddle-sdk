@@ -10,7 +10,7 @@ import {
   SERVER,
 } from '../../utils/constants.ts';
 import fetchMock from 'fetch-mock';
-import { expectFormPostBody, expectPosted } from '../../utils/assertions.ts';
+import { expectFormPostBody } from '../../utils/assertions.ts';
 
 const PATH = `${SERVER}/product/list_coupons`;
 
@@ -62,7 +62,6 @@ describe('coupons methods', () => {
       const response = await instance.getProductCoupons(productID);
 
       assert.deepStrictEqual(response, body.response);
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -77,7 +76,6 @@ describe('coupons methods', () => {
         /Request failed with status code 400/,
       );
 
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
   });

@@ -9,7 +9,7 @@ import {
   SERVER,
 } from '../../utils/constants.ts';
 import fetchMock from 'fetch-mock';
-import { expectFormPostBody, expectPosted } from '../../utils/assertions.ts';
+import { expectFormPostBody } from '../../utils/assertions.ts';
 import { PaddleSDK } from '../sdk.ts';
 
 describe('subscription methods', () => {
@@ -83,7 +83,6 @@ describe('subscription methods', () => {
       const response = await instance.getSubscriptionPlans();
 
       assert.deepStrictEqual(response, responseBody.response);
-      expectPosted(PATH);
       expectFormPostBody(PATH, EXPECTED_BODY);
     });
 
@@ -95,7 +94,6 @@ describe('subscription methods', () => {
 
       await assert.rejects(instance.getSubscriptionPlans(), /Request failed with status code 400/);
 
-      expectPosted(PATH);
       expectFormPostBody(PATH, EXPECTED_BODY);
     });
   });
@@ -143,7 +141,6 @@ describe('subscription methods', () => {
       const response = await instance.getSubscriptionPlan(PLAN_ID);
 
       assert.deepStrictEqual(response, responseBody.response[0]);
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -158,7 +155,6 @@ describe('subscription methods', () => {
         /Request failed with status code 400/,
       );
 
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
   });
@@ -203,7 +199,6 @@ describe('subscription methods', () => {
       const response = await instance.getUsers({ planID: PLAN_ID });
 
       assert.deepStrictEqual(response, body.response);
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -218,7 +213,6 @@ describe('subscription methods', () => {
         /Request failed with status code 400/,
       );
 
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -262,7 +256,6 @@ describe('subscription methods', () => {
       });
 
       assert.deepStrictEqual(response, body.response);
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
   });
@@ -297,7 +290,6 @@ describe('subscription methods', () => {
       const response = await instance.getSubscriptionPayments(PLAN_ID);
 
       assert.deepStrictEqual(response, body.response);
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -330,7 +322,6 @@ describe('subscription methods', () => {
       });
 
       assert.deepStrictEqual(response, body.response);
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBodyOptions);
     });
 
@@ -345,7 +336,6 @@ describe('subscription methods', () => {
         /Request failed with status code 400/,
       );
 
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
   });
@@ -374,7 +364,6 @@ describe('subscription methods', () => {
       const response = await instance.reschedulePayment(PAYMENT_ID, NEW_PAYMENT_DATE);
 
       assert.deepStrictEqual(response, body.response);
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -389,7 +378,6 @@ describe('subscription methods', () => {
         /Request failed with status code 400/,
       );
 
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
   });
@@ -427,7 +415,6 @@ describe('subscription methods', () => {
       });
 
       assert.deepStrictEqual(response, responseBody.response);
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -445,7 +432,6 @@ describe('subscription methods', () => {
       });
 
       assert.deepStrictEqual(response, responseBody.response);
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBodyQuantity);
     });
 
@@ -465,7 +451,6 @@ describe('subscription methods', () => {
       });
 
       assert.deepStrictEqual(response, responseBody.response);
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -483,7 +468,6 @@ describe('subscription methods', () => {
       });
 
       assert.deepStrictEqual(response, responseBody.response);
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -503,7 +487,6 @@ describe('subscription methods', () => {
         /Request failed with status code 400/,
       );
 
-      expectPosted(PATH);
       expectFormPostBody(PATH, errorRequestBody);
     });
   });
@@ -526,7 +509,6 @@ describe('subscription methods', () => {
       const response = await instance.cancelSubscription(SUBSCRIPTION_ID);
 
       assert.strictEqual(response, true);
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -541,7 +523,6 @@ describe('subscription methods', () => {
         /Request failed with status code 400/,
       );
 
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
   });
@@ -570,7 +551,6 @@ describe('subscription methods', () => {
       const response = await instance.getSubscriptionModifiers();
 
       assert.deepStrictEqual(response, responseBody.response);
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -591,7 +571,6 @@ describe('subscription methods', () => {
       });
 
       assert.deepStrictEqual(response, responseBody.response);
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -606,7 +585,6 @@ describe('subscription methods', () => {
         /Request failed with status code 400/,
       );
 
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
   });
@@ -633,7 +611,6 @@ describe('subscription methods', () => {
       const response = await instance.createSubscriptionModifier(SUBSCRIPTION_ID, 10);
 
       assert.deepStrictEqual(response, responseBody.response);
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -656,7 +633,6 @@ describe('subscription methods', () => {
       });
 
       assert.deepStrictEqual(response, responseBody.response);
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -671,7 +647,6 @@ describe('subscription methods', () => {
         /Request failed with status code 400/,
       );
 
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
   });
@@ -693,7 +668,6 @@ describe('subscription methods', () => {
       const response = await instance.deleteSubscriptionModifier(MODIFIER_ID);
 
       assert.strictEqual(response, true);
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -708,7 +682,6 @@ describe('subscription methods', () => {
         /Request failed with status code 400/,
       );
 
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
   });
@@ -740,7 +713,6 @@ describe('subscription methods', () => {
       const response = await instance.createOneOffCharge(SUBSCRIPTION_ID, 10, 'Charge 1');
 
       assert.deepStrictEqual(response, responseBody.response);
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -755,7 +727,6 @@ describe('subscription methods', () => {
         /Request failed with status code 400/,
       );
 
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
   });

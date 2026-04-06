@@ -10,7 +10,7 @@ import {
   SERVER,
 } from '../../utils/constants.ts';
 import fetchMock from 'fetch-mock';
-import { expectFormPostBody, expectPosted } from '../../utils/assertions.ts';
+import { expectFormPostBody } from '../../utils/assertions.ts';
 
 describe('transactions methods', () => {
   let instance: PaddleSDK;
@@ -88,7 +88,6 @@ describe('transactions methods', () => {
       const response = await instance.getUserTransactions(123);
 
       assert.deepStrictEqual(response, RESPONSE.response);
-      expectPosted(PATH);
       expectFormPostBody(PATH, EXPECTED_BODY);
     });
 
@@ -99,7 +98,6 @@ describe('transactions methods', () => {
       const response = await instance.getUserTransactions(123, 2);
 
       assert.deepStrictEqual(response, RESPONSE.response);
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -114,7 +112,6 @@ describe('transactions methods', () => {
         /Request failed with status code 400/,
       );
 
-      expectPosted(PATH);
       expectFormPostBody(PATH, EXPECTED_BODY);
     });
 
@@ -129,7 +126,6 @@ describe('transactions methods', () => {
         /Request https:\/\/test\.paddle\.com\/user\/123\/transactions returned an error!/,
       );
 
-      expectPosted(PATH);
       expectFormPostBody(PATH, EXPECTED_BODY);
     });
 
@@ -144,7 +140,6 @@ describe('transactions methods', () => {
         paddleMessage: DEFAULT_ERROR.error.message,
       });
 
-      expectPosted(PATH);
       expectFormPostBody(PATH, EXPECTED_BODY);
     });
   });
@@ -158,7 +153,6 @@ describe('transactions methods', () => {
       const response = await instance.getSubscriptionTransactions(123);
 
       assert.deepStrictEqual(response, RESPONSE.response);
-      expectPosted(PATH);
       expectFormPostBody(PATH, EXPECTED_BODY);
     });
   });
@@ -172,7 +166,6 @@ describe('transactions methods', () => {
       const response = await instance.getOrderTransactions(123);
 
       assert.deepStrictEqual(response, RESPONSE.response);
-      expectPosted(PATH);
       expectFormPostBody(PATH, EXPECTED_BODY);
     });
   });
@@ -186,7 +179,6 @@ describe('transactions methods', () => {
       const response = await instance.getCheckoutTransactions('123');
 
       assert.deepStrictEqual(response, RESPONSE.response);
-      expectPosted(PATH);
       expectFormPostBody(PATH, EXPECTED_BODY);
     });
   });
@@ -200,7 +192,6 @@ describe('transactions methods', () => {
       const response = await instance.getProductTransactions(123);
 
       assert.deepStrictEqual(response, RESPONSE.response);
-      expectPosted(PATH);
       expectFormPostBody(PATH, EXPECTED_BODY);
     });
   });

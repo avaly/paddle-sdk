@@ -10,7 +10,7 @@ import {
   SERVER,
 } from '../../utils/constants.ts';
 import fetchMock from 'fetch-mock';
-import { expectFormPostBody, expectPosted } from '../../utils/assertions.ts';
+import { expectFormPostBody } from '../../utils/assertions.ts';
 
 const PATH = `${SERVER}/subscription/users`;
 
@@ -78,7 +78,6 @@ describe('users methods', () => {
       const response = await instance.getUsers();
 
       assert.deepStrictEqual(response, body.response);
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -90,7 +89,6 @@ describe('users methods', () => {
 
       await assert.rejects(instance.getUsers(), /Request failed with status code 400/);
 
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -105,7 +103,6 @@ describe('users methods', () => {
         /Request https:\/\/test\.paddle\.com\/subscription\/users returned an error!/,
       );
 
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -120,7 +117,6 @@ describe('users methods', () => {
         paddleMessage: DEFAULT_ERROR.error.message,
       });
 
-      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
   });
