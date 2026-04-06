@@ -1,13 +1,16 @@
-import { PaddleSDK } from '../sdk.js';
+import assert from 'node:assert/strict';
+import { afterEach, beforeEach, describe, test } from 'node:test';
+
+import { PaddleSDK } from '../sdk.ts';
 import {
   DEFAULT_ERROR,
   EXPECTED_BODY,
   VENDOR_API_KEY,
   VENDOR_ID,
   SERVER,
-} from '../../utils/constants.js';
-import fetchMock from '@fetch-mock/jest';
-import { expectFormPostBody } from '../../utils/fetchMock.js';
+} from '../../utils/constants.ts';
+import fetchMock from 'fetch-mock';
+import { expectFormPostBody, expectPosted } from '../../utils/fetchMock.ts';
 
 const PATH = `${SERVER}/product/list_coupons`;
 
@@ -15,9 +18,14 @@ describe('coupons methods', () => {
   let instance: PaddleSDK;
 
   beforeEach(() => {
+    fetchMock.mockGlobal();
     instance = new PaddleSDK(VENDOR_ID, VENDOR_API_KEY, '', {
       server: SERVER,
     });
+  });
+
+  afterEach(() => {
+    fetchMock.hardReset();
   });
 
   describe('getProductCoupons', () => {
@@ -53,9 +61,8 @@ describe('coupons methods', () => {
 
       const response = await instance.getProductCoupons(productID);
 
-      expect(response).toEqual(body.response);
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
+      assert.deepStrictEqual(response, body.response);
+      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
 
@@ -65,12 +72,12 @@ describe('coupons methods', () => {
         body: DEFAULT_ERROR,
       });
 
-      await expect(instance.getProductCoupons(productID)).rejects.toThrow(
-        'Request failed with status code 400',
+      await assert.rejects(
+        instance.getProductCoupons(productID),
+        /Request failed with status code 400/,
       );
 
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHavePosted(PATH);
+      expectPosted(PATH);
       expectFormPostBody(PATH, expectedBody);
     });
   });

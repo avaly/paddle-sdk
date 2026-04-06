@@ -34,12 +34,4 @@ export default defineConfig(
       semi: ['error', 'always'],
     },
   },
-  {
-    files: ['**/*.test.ts', 'jest.config.ts', 'jest.setup.js'],
-    languageOptions: {
-      globals: {
-        ...globals.jest,
-      },
-    },
-  },
 );

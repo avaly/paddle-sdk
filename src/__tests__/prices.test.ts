@@ -1,15 +1,23 @@
-import { DEFAULT_ERROR, VENDOR_API_KEY, VENDOR_ID, SERVER } from '../../utils/constants.js';
-import fetchMock from '@fetch-mock/jest';
-import { expectGetHeaders } from '../../utils/fetchMock.js';
-import { PaddleSDK } from '../sdk.js';
+import assert from 'node:assert/strict';
+import { afterEach, beforeEach, describe, test } from 'node:test';
+
+import { DEFAULT_ERROR, VENDOR_API_KEY, VENDOR_ID, SERVER } from '../../utils/constants.ts';
+import fetchMock from 'fetch-mock';
+import { expectGetHeaders, expectGot } from '../../utils/fetchMock.ts';
+import { PaddleSDK } from '../sdk.ts';
 
 describe('prices methods', () => {
   let instance: PaddleSDK;
 
   beforeEach(() => {
+    fetchMock.mockGlobal();
     instance = new PaddleSDK(VENDOR_ID, VENDOR_API_KEY, '', {
       server: SERVER,
     });
+  });
+
+  afterEach(() => {
+    fetchMock.hardReset();
   });
 
   describe('getPrices', () => {
@@ -75,9 +83,8 @@ describe('prices methods', () => {
         customerIp,
       });
 
-      expect(response).toEqual(body.response);
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHaveGot(PATH_WITH_OPTIONS);
+      assert.deepStrictEqual(response, body.response);
+      expectGot(PATH_WITH_OPTIONS);
       expectGetHeaders(PATH_WITH_OPTIONS);
     });
 
@@ -87,12 +94,12 @@ describe('prices methods', () => {
         body: DEFAULT_ERROR,
       });
 
-      await expect(instance.getPrices([product1, product2])).rejects.toThrow(
-        'Request failed with status code 400',
+      await assert.rejects(
+        instance.getPrices([product1, product2]),
+        /Request failed with status code 400/,
       );
 
-      expect(fetchMock).toBeDone();
-      expect(fetchMock).toHaveGot(PATH);
+      expectGot(PATH);
       expectGetHeaders(PATH);
     });
   });

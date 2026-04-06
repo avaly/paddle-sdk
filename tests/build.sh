@@ -11,9 +11,9 @@ tar xf ./build/paddle-sdk.tgz --directory=./build/
 cd tests/esm/
 rm -f pnpm-lock.yaml
 pnpm install
-node ./index.js
+node --test ./index.js
 
 cd ../cjs/
 rm -f pnpm-lock.yaml
 pnpm install
-node ./index.js
+node --test ./index.js

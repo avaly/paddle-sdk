@@ -1,12 +1,21 @@
-const assert = require('assert');
+const assert = require('node:assert/strict');
+const { afterEach, beforeEach, test } = require('node:test');
 const fetchMock = require('fetch-mock').default;
 const { PaddleSDK } = require('paddle-sdk');
 
 const SERVER = 'https://test.paddle.com';
 const PATH = `${SERVER}/product/get_products`;
 
-async function run() {
-  fetchMock.mockGlobal().post(PATH, {
+beforeEach(() => {
+  fetchMock.mockGlobal();
+});
+
+afterEach(() => {
+  fetchMock.hardReset();
+});
+
+test('commonjs package smoke test', async () => {
+  fetchMock.post(PATH, {
     status: 200,
     body: {
       success: true,
@@ -60,15 +69,4 @@ async function run() {
     vendor_id: 'test-id',
     vendor_auth_code: 'test-key',
   });
-
-  fetchMock.hardReset();
-}
-
-run()
-  .then(() => {
-    console.log('OK');
-  })
-  .catch((err) => {
-    console.error(err);
-    process.exit(1);
-  });
+});

@@ -1,12 +1,21 @@
-import assert from 'assert';
+import assert from 'node:assert/strict';
+import { afterEach, beforeEach, test } from 'node:test';
 import fetchMock from 'fetch-mock';
 import { PaddleSDK } from 'paddle-sdk';
 
 const SERVER = 'https://test.paddle.com';
 const PATH = `${SERVER}/product/get_products`;
 
-async function run() {
-  fetchMock.mockGlobal().post(PATH, {
+beforeEach(() => {
+  fetchMock.mockGlobal();
+});
+
+afterEach(() => {
+  fetchMock.hardReset();
+});
+
+test('esm package smoke test', async () => {
+  fetchMock.post(PATH, {
     status: 200,
     body: {
       success: true,
@@ -60,10 +69,4 @@ async function run() {
     vendor_id: 'test-id',
     vendor_auth_code: 'test-key',
   });
-
-  fetchMock.hardReset();
-}
-
-await run();
-
-console.log('OK');
+});
