@@ -1,10 +1,10 @@
 import assert from 'node:assert/strict';
 
-import fetchMock from 'fetch-mock';
+import fetchMock, { type CallLog } from 'fetch-mock';
 
 type HttpMethod = 'GET' | 'POST';
 
-function expectRequest(path: string, method: HttpMethod) {
+function expectRequest(path: string, method: HttpMethod): CallLog {
   const call = fetchMock.callHistory.lastCall(path, { method });
 
   assert.ok(call, `Expected a ${method} request to ${path}`);
@@ -18,14 +18,6 @@ function normalizeExpectedBody(body: Record<string, unknown>) {
 
 function expectUserAgent(headers: Headers) {
   assert.match(headers.get('user-agent') ?? '', /paddle-sdk\/\d+/);
-}
-
-export function expectGot(path: string) {
-  expectRequest(path, 'GET');
-}
-
-export function expectPosted(path: string) {
-  expectRequest(path, 'POST');
 }
 
 export function expectFormPostBody(path: string, expectedBody: Record<string, unknown>) {

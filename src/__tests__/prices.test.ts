@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, test } from 'node:test';
 
 import { DEFAULT_ERROR, VENDOR_API_KEY, VENDOR_ID, SERVER } from '../../utils/constants.ts';
 import fetchMock from 'fetch-mock';
-import { expectGetHeaders, expectGot } from '../../utils/assertions.ts';
+import { expectGetHeaders } from '../../utils/assertions.ts';
 import { PaddleSDK } from '../sdk.ts';
 
 describe('prices methods', () => {
@@ -84,7 +84,6 @@ describe('prices methods', () => {
       });
 
       assert.deepStrictEqual(response, body.response);
-      expectGot(PATH_WITH_OPTIONS);
       expectGetHeaders(PATH_WITH_OPTIONS);
     });
 
@@ -99,7 +98,6 @@ describe('prices methods', () => {
         /Request failed with status code 400/,
       );
 
-      expectGot(PATH);
       expectGetHeaders(PATH);
     });
   });

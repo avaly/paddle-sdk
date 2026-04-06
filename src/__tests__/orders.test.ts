@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, test } from 'node:test';
 import { PaddleSDK } from '../sdk.ts';
 import { DEFAULT_ERROR, VENDOR_API_KEY, VENDOR_ID, SERVER } from '../../utils/constants.ts';
 import fetchMock from 'fetch-mock';
-import { expectGetHeaders, expectGot } from '../../utils/assertions.ts';
+import { expectGetHeaders } from '../../utils/assertions.ts';
 
 describe('orders methods', () => {
   let instance: PaddleSDK;
@@ -79,7 +79,6 @@ describe('orders methods', () => {
       const response = await instance.getOrderDetails(checkoutId);
 
       assert.deepStrictEqual(response, body.response);
-      expectGot(PATH);
       expectGetHeaders(PATH);
     });
 
@@ -94,7 +93,6 @@ describe('orders methods', () => {
         /Request failed with status code 400/,
       );
 
-      expectGot(PATH);
       expectGetHeaders(PATH);
     });
   });
