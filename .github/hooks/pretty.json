@@ -1,0 +1,10 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "type": "command",
+        "command": "pnpm prettier --ignore-unknown --write \"$TOOL_INPUT_FILE_PATH\""
+      }
+    ]
+  }
+}
