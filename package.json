@@ -49,7 +49,7 @@
     "husky": "9.1.7",
     "lint-staged": "16.4.0",
     "prettier": "3.8.1",
-    "typescript-eslint": "8.58.2",
+    "typescript-eslint": "8.59.0",
     "typedoc": "0.28.18",
     "typescript": "6.0.3",
     "validate-commit-msg": "2.14.0"
