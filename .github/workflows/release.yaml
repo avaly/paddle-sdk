@@ -34,7 +34,7 @@ jobs:
         with:
           ref: ${{ needs.release.outputs.tag_name }}
       - if: ${{ needs.release.outputs.release_created }}
-        uses: pnpm/action-setup@v5.0.0
+        uses: pnpm/action-setup@v6.0.3
       - if: ${{ needs.release.outputs.release_created }}
         uses: actions/setup-node@v6.4.0
         with:
