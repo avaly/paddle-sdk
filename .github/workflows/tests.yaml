@@ -9,7 +9,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
     strategy:
       fail-fast: false
       matrix:
@@ -18,9 +17,7 @@ jobs:
           - 22
           - 24
           - 25
-
     name: Node.js ${{ matrix.node }}
-
     steps:
       - uses: actions/checkout@v6.0.2
       - uses: pnpm/action-setup@v6.0.3
