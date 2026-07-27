@@ -30,7 +30,7 @@ jobs:
     if: ${{ needs.release.outputs.release_created }}
     steps:
       - if: ${{ needs.release.outputs.release_created }}
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v6.1.0
         with:
           ref: ${{ needs.release.outputs.tag_name }}
       - if: ${{ needs.release.outputs.release_created }}
