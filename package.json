@@ -41,7 +41,7 @@
   "dependencies": {},
   "devDependencies": {
     "@eslint/js": "10.0.1",
-    "@types/node": "24.12.2",
+    "@types/node": "24.19.0",
     "eslint": "10.4.0",
     "eslint-config-prettier": "10.1.8",
     "fetch-mock": "12.6.0",
