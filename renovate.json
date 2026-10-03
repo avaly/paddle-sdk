@@ -8,6 +8,16 @@
   "internalChecksAsSuccess": true,
   "labels": ["dependencies"],
   "minimumReleaseAge": "7 days",
+  "packageRules": [
+    {
+      "description": "Auto approve and merge minor and patch development dependency updates",
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "autoApprove": true,
+      "automerge": true
+    }
+  ],
+  "pinDigests": true,
   "postUpdateOptions": ["pnpmDedupe"],
   "prCreation": "not-pending",
   "prConcurrentLimit": 3,
