@@ -35,6 +35,7 @@ jobs:
         if: matrix.node == 24
       - name: Upload coverage to Codecov
         if: matrix.node == 24
+        continue-on-error: true
         uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v6.0.2
         with:
           directory: ./coverage/
