@@ -55,5 +55,5 @@
     "typescript": "npm:@typescript/typescript6@6.0.2",
     "validate-commit-msg": "2.14.0"
   },
-  "packageManager": "pnpm@12.8.1"
+  "packageManager": "pnpm@12.9.0"
 }
